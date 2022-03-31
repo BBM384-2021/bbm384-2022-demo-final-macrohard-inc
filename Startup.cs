@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace LinkedHU_Demo1
+namespace LinkedHU_CENG
 {
     public class Startup
     {
