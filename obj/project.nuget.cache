@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "dgSpecHash": "INXBIBn/qvCxZV6kNl00tZ2lEe5rePksJyJIF51+aBo9lT9bx5BtV0FsmnJLWDgJ3EyuKrujjCrHpfyyhCTRtQ==",
+  "success": true,
+  "projectFilePath": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/LinkedHU_CENG.csproj",
+  "expectedPackageFiles": [
+    "/Users/imrekosdik/.nuget/packages/humanizer.core/2.13.14/humanizer.core.2.13.14.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.entityframeworkcore/7.0.0-preview.2.22153.1/microsoft.entityframeworkcore.7.0.0-preview.2.22153.1.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.entityframeworkcore.abstractions/7.0.0-preview.2.22153.1/microsoft.entityframeworkcore.abstractions.7.0.0-preview.2.22153.1.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.entityframeworkcore.analyzers/7.0.0-preview.2.22153.1/microsoft.entityframeworkcore.analyzers.7.0.0-preview.2.22153.1.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.entityframeworkcore.design/7.0.0-preview.2.22153.1/microsoft.entityframeworkcore.design.7.0.0-preview.2.22153.1.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.entityframeworkcore.relational/7.0.0-preview.2.22153.1/microsoft.entityframeworkcore.relational.7.0.0-preview.2.22153.1.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.entityframeworkcore.tools/7.0.0-preview.2.22153.1/microsoft.entityframeworkcore.tools.7.0.0-preview.2.22153.1.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.extensions.caching.abstractions/7.0.0-preview.2.22152.2/microsoft.extensions.caching.abstractions.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.extensions.caching.memory/7.0.0-preview.2.22152.2/microsoft.extensions.caching.memory.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.extensions.configuration.abstractions/7.0.0-preview.2.22152.2/microsoft.extensions.configuration.abstractions.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.extensions.dependencyinjection/7.0.0-preview.2.22152.2/microsoft.extensions.dependencyinjection.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/7.0.0-preview.2.22152.2/microsoft.extensions.dependencyinjection.abstractions.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.extensions.logging/7.0.0-preview.2.22152.2/microsoft.extensions.logging.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.extensions.logging.abstractions/7.0.0-preview.2.22152.2/microsoft.extensions.logging.abstractions.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.extensions.options/7.0.0-preview.2.22152.2/microsoft.extensions.options.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/microsoft.extensions.primitives/7.0.0-preview.2.22152.2/microsoft.extensions.primitives.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/npgsql/7.0.0-preview.2/npgsql.7.0.0-preview.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/npgsql.entityframeworkcore.postgresql/7.0.0-preview.2/npgsql.entityframeworkcore.postgresql.7.0.0-preview.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/system.collections.immutable/7.0.0-preview.2.22152.2/system.collections.immutable.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/system.diagnostics.diagnosticsource/7.0.0-preview.2.22152.2/system.diagnostics.diagnosticsource.7.0.0-preview.2.22152.2.nupkg.sha512",
+    "/Users/imrekosdik/.nuget/packages/system.runtime.compilerservices.unsafe/7.0.0-preview.2.22152.2/system.runtime.compilerservices.unsafe.7.0.0-preview.2.22152.2.nupkg.sha512"
+  ],
+  "logs": []
+}
