@@ -4,59 +4,37 @@
 <div id="blur">
     <head>
         <meta charset="utf-8">
-        <title>Iteractive Login Form </title>
+        <title>LinkedHU_CENG Login</title>
         <link rel="stylesheet" href="~/css/register.css" type="text/css">
     </head>
 
-    <body>
-    <img id ="logo" src="~/img/logoWhite.svg" style="position:absolute; left: 120px ;top: 30px ;width: 200px ;filter: @ViewBag.blur"/>
-    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
-    {
-        
-        <div class="box" id = "box" style="filter: @ViewBag.blur">
-            <img class="schoolLogo" src="~/img/schoolLogo.svg" alt="SchoolLogo">
-            <h1>
-                Login
-            </h1>
-            <p>@Html.ValidationMessageFor(x => x.Email)</p>
-            <input type="email" name="Email" placeholder="Email" id="email">
-            <p>@Html.ValidationMessageFor(x => x.Password)</p>
-            <input type="password" name="Password" placeholder="Password" id="password">
-            <input type="submit" value="Login">
-            <p style="font-size:14px; color:#000000; font-weight:bold;text-align: center; margin-top: 20px">
-                New to linkedHUceng?
-                <a id="register" href='@Url.Action("RedirectToRegister", "Account")'>
-                    Register Now!
-                </a>
-            </p>
-        </div>
-    }
-    
-    </body>
-    
-</div>
-
-<div class="popupContainer" id = "popupContainer" style="visibility: @ViewBag.visibility ;background-color: @ViewBag.backgroundColor2">
-    <div class="popup" id="popup" style=" background-color: @ViewBag.backgroundColor ">
-        <h1 style="text-align: center">
-            ERROR
+<body>
+<img id ="logo" src="~/img/logoWhite.svg" style="position:absolute; left: 120px ;top: 30px ;width: 200px ;filter: @ViewBag.blur"/>
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    <div class="box" id = "box" style="filter: @ViewBag.blur">
+        <img class="schoolLogo" src="~/img/schoolLogo.svg" alt="SchoolLogo">
+        <h1>
+            Login
         </h1>
-        <p style="text-align: center">
-            @ViewBag.text
+        @if (ViewBag.Text != "")
+        {
+           <p style="text-align: center">@ViewBag.Text</p>
+        }
+        <p>@Html.ValidationMessageFor(x => x.Email)</p>
+        <input type="email" name="Email" placeholder="Email" id="email">
+        <p>@Html.ValidationMessageFor(x => x.Password)</p>
+        <input type="password" name="Password" placeholder="Password" id="password">
+        <input type="submit" value="Login">
+        <p style="font-size:14px; color:#000000; font-weight:bold;text-align: center; margin-top: 20px">
+            New to linkedHUceng?
+            <a id="register" href='@Url.Action("RedirectToRegister", "Account")'>
+                Register Now!
+            </a>
         </p>
-        <button class="closeButton" id="closeButton" onclick="closePop()"> close </button>
-    </div> 
+    </div>
+}
     
+</body>
 </div>
-<script>
-       const popup = document.getElementById("popupContainer");
-       const blur = document.getElementById("box");
-       const logo = document.getElementById("logo");
-       function closePop(){
-            popup.style.visibility= "hidden";
-            blur.style.filter = "none";
-            logo.style.filter = "none";
-       }
-</script>
-
 </html>

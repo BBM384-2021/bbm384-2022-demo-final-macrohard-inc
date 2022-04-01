@@ -10,12 +10,10 @@ namespace LinkedHU_CENG.Controllers
     public class AccountController : Controller
     {
         private readonly Context _context = new Context();
-
         public IActionResult RedirectToLogin()
         {
             return View("~/Views/Home/Login.cshtml");
         }
-
         public IActionResult RedirectToRegister()
         {
             return View("~/Views/Home/Register.cshtml");
@@ -41,24 +39,34 @@ namespace LinkedHU_CENG.Controllers
             }
             return View("~/Views/Home/Register.cshtml");
         }
-
+        
         [HttpPost]
         public IActionResult Login(Account account)
         {
-            if (account.Email == "" || account.Password == "")
+            if (!String.IsNullOrEmpty(account.Email) && !String.IsNullOrEmpty(account.Password))
             {
-                return View("~/Views/Home/Login.cshtml");
+                // check emails to see if the user is registered before
+                var user = _context.Accounts.Where(s => s.Email.Equals(account.Email)).ToList();
+                if (user.Any() && user[0].Password != account.Password) // if the user has entered a wrong password
+                {
+                    ViewBag.Text = "Password is Incorrect";
+                }
+                // if the user is not registered or the email entered is not correct
+                else if (!user.Any())
+                {
+                    ViewBag.Text = "You are not registered or you did not enter your email correctly.";
+                }
+                if (user.Any() && user[0].Password == account.Password)
+                {
+                    if (user[0].IsAdmin)
+                    {
+                        return new AdminController().ListUser(); 
+                    }
+                    return View("~/Views/homepage.cshtml"); // some user view - to be updated later
+                }
             }
-            if (_context.Accounts.Where(s => s.Email.Equals(account.Email) && s.Password.Equals(account.Password)).Any())
-            {
-                return View("~/Views/homepage.cshtml");
-            }
-            ViewBag.visibility = "visible";
-            ViewBag.backgroundColor = "white";
-            ViewBag.backgroundColor2 = "rgba(0,0,0,0.1)";
-            ViewBag.blur = "blur(20px)";
-            ViewBag.text = "Invalid E-mail or Password";
             return View("~/Views/Home/Login.cshtml");
+            
         }
     }
 }

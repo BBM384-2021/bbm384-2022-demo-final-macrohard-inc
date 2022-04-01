@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bDunLphnuJtUH1Q7eqMp6V4xhQ7tn4PxJpINtrl0u9s=",
+  "Hash": "m7WeoAtMfnfMfWwUTxXGsQZbR3e+d8phh6jyE+KD9Jk=",
   "Source": "LinkedHU_CENG",
   "BasePath": "_content/LinkedHU_CENG",
   "Mode": "Default",
@@ -32,6 +32,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/.DS_Store"
+    },
+    {
+      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/css/.DS_Store",
+      "SourceId": "LinkedHU_CENG",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "BasePath": "_content/LinkedHU_CENG",
+      "RelativePath": "css/.DS_Store",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/.DS_Store"
+    },
+    {
+      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/css/admin.css",
+      "SourceId": "LinkedHU_CENG",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "BasePath": "_content/LinkedHU_CENG",
+      "RelativePath": "css/admin.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/admin.css"
     },
     {
       "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/css/index.css",
