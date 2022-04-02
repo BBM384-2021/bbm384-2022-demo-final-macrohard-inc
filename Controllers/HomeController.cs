@@ -20,7 +20,6 @@ namespace LinkedHU_CENG.Controllers
 
         public IActionResult Index()
         {
-            
             return View();
         }
 

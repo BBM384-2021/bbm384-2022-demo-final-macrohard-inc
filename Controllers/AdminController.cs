@@ -20,5 +20,10 @@ public class AdminController : Controller
         ViewBag.UserList = _context.Accounts.Where(u => u.IsAdmin == false).ToList();
         return View("~/Views/Home/Admin.cshtml");
     }
-    
+
+    public IActionResult ListNotifications()
+    {
+        var admin = _context.Accounts.Where(u => u.IsAdmin == true).ToList()[0];
+        return new NotificationController().ListNotifications(admin);
+    }
 }
