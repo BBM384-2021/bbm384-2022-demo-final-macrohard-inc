@@ -10,6 +10,7 @@ namespace LinkedHU_CENG.Models
                 "Server=18.212.186.54;Port=5432;Database=linkedhu;User Id=admin;Password=qweasdzxc;");
         }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 
 }

@@ -14,6 +14,18 @@ namespace LinkedHU_CENG.Controllers
         {
             return View("~/Views/Home/Register.cshtml");
         }
+        
+        public void CreateRegisterNotification(Account account)
+        {
+            var notification = new Notification();
+            notification.NotificationType = "register";
+            notification.IsRead = false;
+            notification.NotificationTime = DateTime.Now;
+            notification.NotificationContent = account.FirstName + " " + account.LastName + " has registered to the system.";
+            var admin = _context.Accounts.Where(u => u.IsAdmin == true).ToList()[0];
+            admin.Notifications.Add(notification);
+            _context.SaveChanges();
+        }
 
         [HttpPost]
         public IActionResult RegisterUser(Account account)
@@ -26,11 +38,12 @@ namespace LinkedHU_CENG.Controllers
             newUser.Email = account.Email; // problem showing error messages for invalid email combinations
             newUser.Password = account.Password;
             newUser.IsAdmin = false;
+            newUser.RegistrationDate = DateTime.Now;
             if (ModelState.IsValid)
             {
                 _context.Accounts.Add(newUser);
                 _context.SaveChanges();
-                new NotificationController().CreateRegisterNotification(newUser); // send admin a notification 
+                CreateRegisterNotification(newUser); // send admin a notification 
                 return View("~/Views/homepage.cshtml");
 
             }
@@ -55,7 +68,7 @@ namespace LinkedHU_CENG.Controllers
                 }
                 if (user.Any() && user[0].Password == account.Password)
                 {
-                    return user[0].IsAdmin ? new AdminController().ListUser() : View("~/Views/homepage.cshtml");
+                    return user[0].IsAdmin ? new AdminController().DisplayAdminPanel() : View("~/Views/homepage.cshtml");
                 }
             }
             return View("~/Views/Home/Login.cshtml");

@@ -42,7 +42,7 @@ namespace LinkedHU_CENG
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             app.UseRouting();
 
             app.UseAuthorization();
