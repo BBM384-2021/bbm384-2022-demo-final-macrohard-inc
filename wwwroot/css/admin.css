@@ -1,8 +1,5 @@
-*{
-    margin: 0 ;
-    font-family: 'Poppins' ,sans-serif;
-    overflow: hidden;
-    
+* {
+    font-family: 'Roboto', sans-serif;
 }
 body{
     background-color: #F9F7FC;
@@ -62,5 +59,23 @@ a{
     margin: auto;
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    
 }
+
+.row {
+    display: grid;
+    grid-template-columns: 460px 15px 15px;
+    column-gap: 18px;
+    background-color: ghostwhite;
+    border: solid #240046;
+}
+
+
+.button {
+    color: #240046;
+    background-color: ghostwhite;
+    cursor: pointer;
+    border-radius: 25%;
+    margin-top: 15px;
+}
+
+
