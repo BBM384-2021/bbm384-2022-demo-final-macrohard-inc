@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/LinkedHU_CENG.csproj": {}
+    "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj": {}
   },
   "projects": {
-    "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/LinkedHU_CENG.csproj": {
+    "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/LinkedHU_CENG.csproj",
+        "projectUniqueName": "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj",
         "projectName": "LinkedHU_CENG",
-        "projectPath": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/LinkedHU_CENG.csproj",
-        "packagesPath": "/Users/imrekosdik/.nuget/packages/",
-        "outputPath": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/obj/",
+        "projectPath": "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj",
+        "packagesPath": "C:\\Users\\Cagla\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/imrekosdik/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Cagla\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,9 +40,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "EPPlus": {
+              "target": "Package",
+              "version": "[5.8.8, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.0-preview.2.22153.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.3, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -71,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.201/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

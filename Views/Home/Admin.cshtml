@@ -1,3 +1,5 @@
+@using LinkedHU_CENG.Controllers;
+
 <!DOCTYPE html>
 <html lan="en" and dir="Itr">
 <head>
@@ -17,21 +19,42 @@
     <h1>hello2</h1>
 </div>
 <div class="accounts">
-    
-    @foreach (var user in ViewBag.UserList)
-    {
-        @using(Html.BeginForm("DeleteUser", "Admin", new { AccountId = user.AccountId},  FormMethod.Post))
+        
+
+       
+        <a href=@Url.ActionLink("ExportToExcel","Admin")>Download User Details</a>  
+
+        @using (Html.BeginForm("SearchUser", "Admin", FormMethod.Get))
         {
-            <p>@user.AccountId</p>
-            <input type="submit" value="Delete"/>
+            @Html.TextBox("searchKey")<input type="submit" value="Search"/>
+            
+        
         }
-        <button onclick="closePop()">Show details</button>
-        <div class="userDetails" id="detail" style="visibility: hidden">
-            <p>@user.FirstName</p>
-            <p>@user.LastName</p>
-            <p>@user.AccountId</p>
+        @if(ViewBag.UserList.Count==0){
+            <p>No Matching</p>
+        }else{
+            @foreach (var user in ViewBag.UserList)
+        {
+            
+                @using (Html.BeginForm("DeleteUser", "Admin", new { AccountId = user.AccountId }, FormMethod.Post))
+                {
+
+                    <p>@user.AccountId</p>
+                    <input type="submit" value="Delete"/>
+                }
+                <button onclick="closePop()">Show details</button>
+                <div class="userDetails" id="detail" style="visibility: hidden">
+                    <p>@user.FirstName</p>
+                    <p>@user.LastName</p>
+                    <p>@user.AccountId</p>
+                    <p>@user.PhoneNumber</p>
         </div>
-    }
+        }
+        
+         
+    
+        }
+        
     
     <h1>hello</h1>
 </div>
