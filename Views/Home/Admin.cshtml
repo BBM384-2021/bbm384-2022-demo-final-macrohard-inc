@@ -15,9 +15,15 @@
 </header>
 
 <body>
-<div class="notification">
-    <h1>hello2</h1>
+<div class="notifications">
+    @foreach (var notification in ViewBag.Notifications)
+    {
+        <p>@notification.NotificationContent</p>
+        <p>Registration Date: @notification.NotificationTime</p>
+
+    }
 </div>
+
 <div class="accounts">
         
 

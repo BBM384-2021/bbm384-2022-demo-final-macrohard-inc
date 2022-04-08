@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
 using LinkedHU_CENG.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +15,18 @@ namespace LinkedHU_CENG.Controllers
             return View("~/Views/Home/Register.cshtml");
         }
 
+        public void CreateRegisterNotification(Account account)
+        {
+            var notification = new Notification();
+            notification.NotificationType = "register";
+            notification.IsRead = false;
+            notification.NotificationTime = DateTime.Now;
+            notification.NotificationContent = account.FirstName + " " + account.LastName + " has registered to the system.";
+            var admin = _context.Accounts.Where(u => u.IsAdmin).ToList()[0];
+            admin.Notifications.Add(notification);
+            _context.SaveChanges();
+        }
+
         [HttpPost]
         public IActionResult RegisterUser(Account account)
         {
@@ -30,16 +38,18 @@ namespace LinkedHU_CENG.Controllers
             newUser.Email = account.Email; // problem showing error messages for invalid email combinations
             newUser.Password = account.Password;
             newUser.IsAdmin = false;
+            newUser.RegistrationDate = DateTime.Now;
             if (ModelState.IsValid)
             {
                 _context.Accounts.Add(newUser);
                 _context.SaveChanges();
+                CreateRegisterNotification(newUser); // send admin a notification 
                 return View("~/Views/homepage.cshtml");
 
             }
             return View("~/Views/Home/Register.cshtml");
         }
-        
+
         [HttpPost]
         public IActionResult Login(Account account)
         {
@@ -58,15 +68,10 @@ namespace LinkedHU_CENG.Controllers
                 }
                 if (user.Any() && user[0].Password == account.Password)
                 {
-                    if (user[0].IsAdmin)
-                    {
-                        return new AdminController().ListUser(); 
-                    }
-                    return View("~/Views/homepage.cshtml"); // some user view - to be updated later
+                    return user[0].IsAdmin ? new AdminController().DisplayAdminPanel() : View("~/Views/homepage.cshtml");
                 }
             }
             return View("~/Views/Home/Login.cshtml");
-            
         }
     }
 }

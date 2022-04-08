@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj": {}
+    "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj": {
+    "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj",
+        "projectUniqueName": "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj",
         "projectName": "LinkedHU_CENG",
-        "projectPath": "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj",
+        "projectPath": "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj",
         "packagesPath": "C:\\Users\\Cagla\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cagla\\Source\\Repos\\bbm384-2022-demo-final-macrohard-inc\\obj\\",
+        "outputPath": "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Cagla\\AppData\\Roaming\\NuGet\\NuGet.Config",

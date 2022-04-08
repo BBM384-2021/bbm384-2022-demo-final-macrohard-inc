@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LinkedHU_CENG.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220402125502_Initial")]
-    partial class Initial
+    [Migration("20220408162358_Initial2")]
+    partial class Initial2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,12 +64,59 @@ namespace LinkedHU_CENG.Migrations
                     b.Property<string>("ProfilePhoto")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AccountId");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("LinkedHU_CENG.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"), 1L, 1);
+
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NotificationContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NotificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NotificationType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("NotificationId");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("LinkedHU_CENG.Models.Notification", b =>
+                {
+                    b.HasOne("LinkedHU_CENG.Models.Account", null)
+                        .WithMany("Notifications")
+                        .HasForeignKey("AccountId");
+                });
+
+            modelBuilder.Entity("LinkedHU_CENG.Models.Account", b =>
+                {
+                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }

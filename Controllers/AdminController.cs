@@ -8,10 +8,25 @@ using System.Linq;
 public class AdminController : Controller
 {
     private readonly Context _context = new Context();
-    public IActionResult ListUser()
+
+    public void ListNotifications()
+    {
+        var notificationList = _context.Notifications.Where(u => u.NotificationType == "register").ToList();
+        ViewBag.Notifications = notificationList.Any() ? notificationList : new List<Notification>();
+    }
+
+
+    public void ListUser()
     {
         var userList = _context.Accounts.Where(u => u.IsAdmin == false).ToList();
-        ViewBag.UserList = userList;
+        ViewBag.UserList = userList.Any() ? userList : new List<Account>();
+    }
+
+    // displays the admin panel with notifications and registered users
+    public IActionResult DisplayAdminPanel()
+    {
+        ListNotifications();
+        ListUser();
         return View("~/Views/Home/Admin.cshtml");
     }
 
@@ -20,7 +35,6 @@ public class AdminController : Controller
         var user = _context.Accounts.Find(accountId);
         _context.Accounts.Remove(user);
         _context.SaveChanges();
-        ViewBag.UserList = _context.Accounts.Where(u => u.IsAdmin == false).ToList();
         return View("~/Views/Home/Admin.cshtml");
     }
 
