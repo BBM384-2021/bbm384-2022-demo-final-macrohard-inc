@@ -67,7 +67,7 @@ namespace LinkedHU_CENG.Controllers
             {
                 // check emails to see if the user is registered before
                 var user = _context.Accounts.Where(s => s.Email.Equals(account.Email)).ToList();
-                if (user.Any() && user[0].Password != account.Password) // if the user has entered a wrong password
+                if (user.Any() && ValidatePass(user[0].Password, user[0])) // if the user has entered a wrong password
                 {
                     ViewBag.Text = "Password is Incorrect";
                 }
@@ -78,10 +78,20 @@ namespace LinkedHU_CENG.Controllers
                 }
                 if (user.Any() && user[0].Password == account.Password)
                 {
-                    return View("~/Views/homepage.cshtml");
+                    return View("~/Views/homepage.cshtml"); // some user view - to be updated later
                 }
             }
             return View("~/Views/Home/Login.cshtml");
+            
+        }
+
+        private bool ValidatePass(string enteredPass, Account account)
+        {
+            var salt = account.Salt;
+            var hashedPass = account.Password;
+
+            var checkPass = EncryptPassword.ComputeHash(Encoding.UTF8.GetBytes(enteredPass), Encoding.UTF8.GetBytes(salt));
+            return checkPass == hashedPass;
         }
     }
 }

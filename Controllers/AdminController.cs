@@ -5,7 +5,6 @@ using LinkedHU_CENG.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
-using System.Linq;
 using System.Text;
 
 namespace LinkedHU_CENG.Controllers;
