@@ -4,12 +4,19 @@ using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using LinkedHU_CENG.Models;
 using Microsoft.AspNetCore.Mvc;
+using LinkedHU_CENG.Data;
+using LinkedHU_CENG.Models;
 
 namespace LinkedHU_CENG.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly Context _context = new Context();
+        private readonly Context _context;
+        public AccountController(Context context)
+        {
+            _context = context;
+        }
+
         public IActionResult RedirectToLogin()
         {
             return View("~/Views/Home/Login.cshtml");
@@ -58,10 +65,6 @@ namespace LinkedHU_CENG.Controllers
                 }
                 if (user.Any() && user[0].Password == account.Password)
                 {
-                    if (user[0].IsAdmin)
-                    {
-                        return new AdminController().ListUser(); 
-                    }
                     return View("~/Views/homepage.cshtml"); // some user view - to be updated later
                 }
             }

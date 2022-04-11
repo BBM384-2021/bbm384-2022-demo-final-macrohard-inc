@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/LinkedHU_CENG.csproj": {}
+    "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/LinkedHU_CENG.csproj": {}
   },
   "projects": {
-    "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/LinkedHU_CENG.csproj": {
+    "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/LinkedHU_CENG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/LinkedHU_CENG.csproj",
+        "projectUniqueName": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/LinkedHU_CENG.csproj",
         "projectName": "LinkedHU_CENG",
-        "projectPath": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/LinkedHU_CENG.csproj",
-        "packagesPath": "/Users/imrekosdik/.nuget/packages/",
-        "outputPath": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/obj/",
+        "projectPath": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/LinkedHU_CENG.csproj",
+        "packagesPath": "/Users/arda/.nuget/packages/",
+        "outputPath": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/imrekosdik/.nuget/NuGet/NuGet.Config"
+          "/Users/arda/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -38,15 +38,31 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.0-preview.2.22153.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.3, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.0-preview.2.22153.1, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.2, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",

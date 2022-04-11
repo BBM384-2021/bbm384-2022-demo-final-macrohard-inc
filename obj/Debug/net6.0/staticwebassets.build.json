@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "m7WeoAtMfnfMfWwUTxXGsQZbR3e+d8phh6jyE+KD9Jk=",
+  "Hash": "YmU32i5RfgJEFiszRCRnoNJpLWA5POTb1CF92XgG4wI=",
   "Source": "LinkedHU_CENG",
   "BasePath": "_content/LinkedHU_CENG",
   "Mode": "Default",
@@ -10,51 +10,17 @@
     {
       "Name": "LinkedHU_CENG/wwwroot",
       "Source": "LinkedHU_CENG",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/.DS_Store",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/css/admin.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
-      "BasePath": "_content/LinkedHU_CENG",
-      "RelativePath": ".DS_Store",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/.DS_Store"
-    },
-    {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/css/.DS_Store",
-      "SourceId": "LinkedHU_CENG",
-      "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
-      "BasePath": "_content/LinkedHU_CENG",
-      "RelativePath": "css/.DS_Store",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/css/.DS_Store"
-    },
-    {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/css/admin.css",
-      "SourceId": "LinkedHU_CENG",
-      "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "css/admin.css",
       "AssetKind": "All",
@@ -68,10 +34,10 @@
       "OriginalItemSpec": "wwwroot/css/admin.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/css/index.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/css/index.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "css/index.css",
       "AssetKind": "All",
@@ -85,10 +51,10 @@
       "OriginalItemSpec": "wwwroot/css/index.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/css/layout.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/css/layout.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "css/layout.css",
       "AssetKind": "All",
@@ -102,10 +68,27 @@
       "OriginalItemSpec": "wwwroot/css/layout.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/css/register.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/css/profile.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
+      "BasePath": "_content/LinkedHU_CENG",
+      "RelativePath": "css/profile.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/profile.css"
+    },
+    {
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/css/register.css",
+      "SourceId": "LinkedHU_CENG",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "css/register.css",
       "AssetKind": "All",
@@ -119,10 +102,10 @@
       "OriginalItemSpec": "wwwroot/css/register.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/css/site.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/css/site.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -136,10 +119,10 @@
       "OriginalItemSpec": "wwwroot/css/site.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/favicon.ico",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/favicon.ico",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -153,10 +136,10 @@
       "OriginalItemSpec": "wwwroot/favicon.ico"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/img/arrow-down.svg",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/img/arrow-down.svg",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "img/arrow-down.svg",
       "AssetKind": "All",
@@ -170,10 +153,10 @@
       "OriginalItemSpec": "wwwroot/img/arrow-down.svg"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/img/background.svg",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/img/background.svg",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "img/background.svg",
       "AssetKind": "All",
@@ -187,10 +170,10 @@
       "OriginalItemSpec": "wwwroot/img/background.svg"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/img/index.svg",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/img/index.svg",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "img/index.svg",
       "AssetKind": "All",
@@ -204,10 +187,10 @@
       "OriginalItemSpec": "wwwroot/img/index.svg"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/img/indir.jpg",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/img/indir.jpg",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "img/indir.jpg",
       "AssetKind": "All",
@@ -221,10 +204,10 @@
       "OriginalItemSpec": "wwwroot/img/indir.jpg"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/img/logoWhite.svg",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/img/logoWhite.svg",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "img/logoWhite.svg",
       "AssetKind": "All",
@@ -238,10 +221,10 @@
       "OriginalItemSpec": "wwwroot/img/logoWhite.svg"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/img/schoolLogo.svg",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/img/schoolLogo.svg",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "img/schoolLogo.svg",
       "AssetKind": "All",
@@ -255,10 +238,44 @@
       "OriginalItemSpec": "wwwroot/img/schoolLogo.svg"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/js/register.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/img/studentback.png",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
+      "BasePath": "_content/LinkedHU_CENG",
+      "RelativePath": "img/studentback.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/img/studentback.png"
+    },
+    {
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/img/studentProfile.png",
+      "SourceId": "LinkedHU_CENG",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
+      "BasePath": "_content/LinkedHU_CENG",
+      "RelativePath": "img/studentProfile.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/img/studentProfile.png"
+    },
+    {
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/js/register.js",
+      "SourceId": "LinkedHU_CENG",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "js/register.js",
       "AssetKind": "All",
@@ -272,10 +289,10 @@
       "OriginalItemSpec": "wwwroot/js/register.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/js/site.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/js/site.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -289,10 +306,10 @@
       "OriginalItemSpec": "wwwroot/js/site.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css",
       "AssetKind": "All",
@@ -306,10 +323,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css.map",
       "AssetKind": "All",
@@ -323,10 +340,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css",
       "AssetKind": "All",
@@ -340,10 +357,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
       "AssetKind": "All",
@@ -357,10 +374,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css",
       "AssetKind": "All",
@@ -374,10 +391,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css.map",
       "AssetKind": "All",
@@ -391,10 +408,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css",
       "AssetKind": "All",
@@ -408,10 +425,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
       "AssetKind": "All",
@@ -425,10 +442,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css",
       "AssetKind": "All",
@@ -442,10 +459,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css.map",
       "AssetKind": "All",
@@ -459,10 +476,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.css.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css",
       "AssetKind": "All",
@@ -476,10 +493,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.min.css"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -493,10 +510,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js",
       "AssetKind": "All",
@@ -510,10 +527,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js.map",
       "AssetKind": "All",
@@ -527,10 +544,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js",
       "AssetKind": "All",
@@ -544,10 +561,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
       "AssetKind": "All",
@@ -561,10 +578,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js",
       "AssetKind": "All",
@@ -578,10 +595,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js.map",
       "AssetKind": "All",
@@ -595,10 +612,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.js.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js",
       "AssetKind": "All",
@@ -612,10 +629,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.min.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js.map",
       "AssetKind": "All",
@@ -629,10 +646,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/bootstrap/LICENSE",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/bootstrap/LICENSE",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/bootstrap/LICENSE",
       "AssetKind": "All",
@@ -646,10 +663,10 @@
       "OriginalItemSpec": "wwwroot/lib/bootstrap/LICENSE"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -663,10 +680,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -680,10 +697,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",
@@ -697,10 +714,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery-validation/dist/additional-methods.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -714,10 +731,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery-validation/dist/additional-methods.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -731,10 +748,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery-validation/dist/additional-methods.min.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -748,10 +765,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery-validation/dist/jquery.validate.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -765,10 +782,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery-validation/dist/jquery.validate.min.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery-validation/LICENSE.md",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery-validation/LICENSE.md",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -782,10 +799,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery-validation/LICENSE.md"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery/dist/jquery.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery/dist/jquery.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -799,10 +816,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery/dist/jquery.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery/dist/jquery.min.js",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery/dist/jquery.min.js",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -816,10 +833,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery/dist/jquery.min.js"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery/dist/jquery.min.map",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery/dist/jquery.min.map",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -833,10 +850,10 @@
       "OriginalItemSpec": "wwwroot/lib/jquery/dist/jquery.min.map"
     },
     {
-      "Identity": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/lib/jquery/LICENSE.txt",
+      "Identity": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/lib/jquery/LICENSE.txt",
       "SourceId": "LinkedHU_CENG",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/imrekosdik/RiderProjects/LinkedHU_CENG/LinkedHU_CENG/wwwroot/",
+      "ContentRoot": "/Users/arda/Programming/bbm384-2022-demo-final-macrohard-inc/wwwroot/",
       "BasePath": "_content/LinkedHU_CENG",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",
