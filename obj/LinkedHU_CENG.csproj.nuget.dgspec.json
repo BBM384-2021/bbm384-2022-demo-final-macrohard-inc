@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj": {}
+    "/Users/arda/Programming/LinkedHU/bbm384-2022-demo-final-macrohard-inc/LinkedHU_CENG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj": {
+    "/Users/arda/Programming/LinkedHU/bbm384-2022-demo-final-macrohard-inc/LinkedHU_CENG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj",
+        "projectUniqueName": "/Users/arda/Programming/LinkedHU/bbm384-2022-demo-final-macrohard-inc/LinkedHU_CENG.csproj",
         "projectName": "LinkedHU_CENG",
-        "projectPath": "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\LinkedHU_CENG.csproj",
-        "packagesPath": "C:\\Users\\Cagla\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cagla\\source\\repos\\bbm384-2022-demo-final-macrohard-inc\\obj\\",
+        "projectPath": "/Users/arda/Programming/LinkedHU/bbm384-2022-demo-final-macrohard-inc/LinkedHU_CENG.csproj",
+        "packagesPath": "/Users/arda/.nuget/packages/",
+        "outputPath": "/Users/arda/Programming/LinkedHU/bbm384-2022-demo-final-macrohard-inc/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Cagla\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/arda/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,11 +42,19 @@
               "target": "Package",
               "version": "[5.8.8, )"
             },
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.0-preview.2.22153.1, )"
+              "version": "[6.0.3, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[6.0.3, )"
             },
@@ -56,11 +62,15 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0-preview.2.22153.1, )"
+              "version": "[6.0.3, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.2, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[7.0.0-preview.2, )"
+              "version": "[6.0.3, )"
             }
           },
           "imports": [
@@ -81,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.201/RuntimeIdentifierGraph.json"
         }
       }
     }

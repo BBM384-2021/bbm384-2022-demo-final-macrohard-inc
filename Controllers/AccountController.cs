@@ -1,11 +1,18 @@
+using System.Text;
 using LinkedHU_CENG.Models;
+using LinkedHU_CENG.Data;
+using LinkedHU_CENG.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LinkedHU_CENG.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly Context _context = new Context();
+        private readonly Context _context;
+        public AccountController(Context context)
+        {
+            _context = context;
+        }
         public IActionResult RedirectToLogin()
         {
             return View("~/Views/Home/Login.cshtml");
@@ -32,11 +39,14 @@ namespace LinkedHU_CENG.Controllers
         {
             // implement popup for already registered users
             var newUser = new Account(); // create new user instance
+            var rawPass = account.Password;
+            var salt = EncryptPassword.GenerateSalt();
+            newUser.Salt = salt;
+            newUser.Password = EncryptPassword.ComputeHash(Encoding.UTF8.GetBytes(rawPass), Encoding.UTF8.GetBytes(salt));
             newUser.FirstName = account.FirstName;
             newUser.LastName = account.LastName;
             newUser.AccountType = account.AccountType;
             newUser.Email = account.Email; // problem showing error messages for invalid email combinations
-            newUser.Password = account.Password;
             newUser.IsAdmin = false;
             newUser.RegistrationDate = DateTime.Now;
             if (ModelState.IsValid)
@@ -68,7 +78,7 @@ namespace LinkedHU_CENG.Controllers
                 }
                 if (user.Any() && user[0].Password == account.Password)
                 {
-                    return user[0].IsAdmin ? new AdminController().DisplayAdminPanel() : View("~/Views/homepage.cshtml");
+                    return View("~/Views/homepage.cshtml");
                 }
             }
             return View("~/Views/Home/Login.cshtml");

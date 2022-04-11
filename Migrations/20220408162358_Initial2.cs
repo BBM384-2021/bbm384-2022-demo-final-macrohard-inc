@@ -1,4 +1,5 @@
 ﻿using System;
+using LinkedHU_CENG.Data;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
