@@ -1,10 +1,12 @@
 using LinkedHU_CENG.Models;
 using LinkedHU_CENG.Data;
 using LinkedHU_CENG.Models.AdminViewModels;
+using LinkedHU_CENG.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using System.Linq;
+using System.Text;
 
 namespace LinkedHU_CENG.Controllers;
 
@@ -61,6 +63,11 @@ public class AdminController : Controller
         [Bind("Url,PhoneNumber,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
         Account account)
     {
+        var rawPass = account.Password;
+        var salt = EncryptPassword.GenerateSalt();
+        account.Salt = salt;
+        account.Password = EncryptPassword.ComputeHash(Encoding.UTF8.GetBytes(rawPass), Encoding.UTF8.GetBytes(salt));
+
         if (ModelState.IsValid)
         {
             _context.Add(account);
@@ -170,8 +177,7 @@ public class AdminController : Controller
         return View("Index");
     }
 
-
-
+    
     public void ExportToExcel()
     {
         ViewBag.userList = (List<AccountViewModel>) _context.Accounts.Select(x => new AccountViewModel
@@ -216,9 +222,7 @@ public class AdminController : Controller
         Response.Headers["content-disposition"] = "attachment: filename=" + "ExcelReport.xlsx";
         Response.Body.WriteAsync(pck.GetAsByteArray());
 
-
-
-
+        
 
     }
 }
