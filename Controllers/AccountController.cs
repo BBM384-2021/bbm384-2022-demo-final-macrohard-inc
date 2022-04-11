@@ -2,10 +2,12 @@ using System;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
+using System.Text;
 using LinkedHU_CENG.Models;
 using Microsoft.AspNetCore.Mvc;
 using LinkedHU_CENG.Data;
 using LinkedHU_CENG.Models;
+using LinkedHU_CENG.Utils;
 
 namespace LinkedHU_CENG.Controllers
 {
@@ -31,11 +33,14 @@ namespace LinkedHU_CENG.Controllers
         {
             // implement popup for already registered users
             var newUser = new Account(); // create new user instance
+            var rawPass = account.Password;
+            var salt = EncryptPassword.GenerateSalt();
+            newUser.Salt = salt;
+            newUser.Password = EncryptPassword.ComputeHash(Encoding.UTF8.GetBytes(rawPass), Encoding.UTF8.GetBytes(salt));
             newUser.FirstName = account.FirstName;
             newUser.LastName = account.LastName;
             newUser.AccountType = account.AccountType;
             newUser.Email = account.Email; // problem showing error messages for invalid email combinations
-            newUser.Password = account.Password;
             newUser.IsAdmin = false;
             if (ModelState.IsValid)
             {
@@ -44,6 +49,13 @@ namespace LinkedHU_CENG.Controllers
                 return View("~/Views/homepage.cshtml");
 
             }
+            else
+            {
+                var errors = ModelState.Select(x => x.Value.Errors)
+                    .Where(y=>y.Count>0)
+                    .ToList();
+            }
+
             return View("~/Views/Home/Register.cshtml");
         }
         
@@ -54,7 +66,7 @@ namespace LinkedHU_CENG.Controllers
             {
                 // check emails to see if the user is registered before
                 var user = _context.Accounts.Where(s => s.Email.Equals(account.Email)).ToList();
-                if (user.Any() && user[0].Password != account.Password) // if the user has entered a wrong password
+                if (user.Any() && ValidatePass(user[0].Password, user[0])) // if the user has entered a wrong password
                 {
                     ViewBag.Text = "Password is Incorrect";
                 }
@@ -70,6 +82,15 @@ namespace LinkedHU_CENG.Controllers
             }
             return View("~/Views/Home/Login.cshtml");
             
+        }
+
+        private bool ValidatePass(string enteredPass, Account account)
+        {
+            var salt = account.Salt;
+            var hashedPass = account.Password;
+
+            var checkPass = EncryptPassword.ComputeHash(Encoding.UTF8.GetBytes(enteredPass), Encoding.UTF8.GetBytes(salt));
+            return checkPass == hashedPass;
         }
     }
 }
