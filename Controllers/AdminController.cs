@@ -20,12 +20,18 @@ public class AdminController : Controller
     }
 
     // GET: Admin
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string searchString)
     {
+        var accounts = from a in _context.Accounts
+            select a;
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            accounts = accounts.Where(a => a.FirstName.Contains(searchString)
+                                           || a.LastName.Contains(searchString) || a.Email.Contains(searchString));
+        }
         var viewModel = new AccountNotificationData();
         var notificationList = await _context.Notifications.Where(u => u.NotificationType == "register").ToListAsync();
-        var userList = await _context.Accounts.Where(u => u.IsAdmin == false).ToListAsync();
-        viewModel.Accounts = userList.Any() ? userList : new List<Account>();
+        viewModel.Accounts = accounts.Any() ? accounts: new List<Account>();
         viewModel.Notifications = notificationList.Any() ? notificationList : new List<Notification>();
         return View(viewModel);
     }
@@ -168,16 +174,6 @@ public class AdminController : Controller
         return _context.Accounts.Any(e => e.AccountId == id);
     }
 
-    // displays the admin panel with notifications and registered users
-
-    public IActionResult SearchUser(string searchKey)
-    {
-        var userList = _context.Accounts.Where(x => x.FirstName.Contains(searchKey) || searchKey == null)
-            .ToList(); // searchs for name that contains searchkey
-        return View("Index");
-    }
-
-    
     public void ExportToExcel()
     {
         ViewBag.userList = (List<AccountViewModel>) _context.Accounts.Select(x => new AccountViewModel
