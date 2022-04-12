@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LinkedHU_CENG.Controllers;
 
@@ -96,7 +97,8 @@ public class AdminController : Controller
         {
             return NotFound();
         }
-
+        
+        GenerateDropDownList();
         return View(account);
     }
 
@@ -135,7 +137,8 @@ public class AdminController : Controller
 
             return RedirectToAction(nameof(Index));
         }
-
+        
+        GenerateDropDownList();
         return View(account);
     }
 
@@ -166,6 +169,20 @@ public class AdminController : Controller
         _context.Accounts.Remove(account);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
+    }
+
+    private void GenerateDropDownList()
+    {
+        var dropDownList = new List<string>
+        {
+            "Student",
+            "StudentRep",
+            "Admin",
+            "Academician",
+            "Graduate"
+        };
+        ViewBag.DropDownList = new SelectList(dropDownList, "AccountType", "AccountType");
+
     }
 
     private bool AccountExists(int id)
