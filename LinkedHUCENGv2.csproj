@@ -30,4 +30,9 @@
       <Folder Include="Data\Migrations" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\migrate\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\migrate\Register.cshtml" />
+    </ItemGroup>
+
 </Project>

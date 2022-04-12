@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedHUCENGv2", "LinkedHUCENGv2\LinkedHUCENGv2.csproj", "{FCB25431-1A40-4EB9-9ADC-1E5C87C2CB7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedHUCENGv2", "LinkedHUCENGv2.csproj", "{FCB25431-1A40-4EB9-9ADC-1E5C87C2CB7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
