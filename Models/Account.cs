@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace LinkedHU_CENG.Models;
 
 public class Account
@@ -25,6 +27,10 @@ public class Account
     [Required(ErrorMessage = "Please write your email!")]
     [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Please enter a valid email")]
     public string? Email { get; set; }
+    [NotMapped]
+    public List<Follow>? Following { get; set; }
+    [NotMapped]
+    public List<Follow>? Followers { get; set; }
     public List<Notification> Notifications { get; set; } = new List<Notification>();
     [Required]
     public DateTime RegistrationDate { get; set; }
