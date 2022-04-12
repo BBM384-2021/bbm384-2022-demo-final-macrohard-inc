@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;  
 using LinkedHU_CENG.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -66,7 +67,38 @@ namespace LinkedHU_CENG.Controllers
                 }
             }
             return View("~/Views/Home/Login.cshtml");
-            
         }
+
+        [HttpPost]
+        public JsonResult Follow(int account1Id, int account2Id)
+        {
+            var account1 = _context.Accounts.Find(account1Id);
+            var account2 = _context.Accounts.Find(account2Id);
+            IDictionary<int, int> returnDict = new Dictionary<int, int>();
+            if (account1 != null && account2 != null && account1Id != account2Id)
+            {
+                var existingFollow = _context.Follows.FirstOrDefault(f => f.Account1Id == account1Id && f.Account2Id == account2Id);
+                if (existingFollow != null)
+                {
+                    _context.Follows.Remove(existingFollow);
+                    _context.SaveChanges();
+                    return Json(returnDict);
+                }
+                
+                var newFollow = new Follow
+                {
+                    Account1 = account1,
+                    Account2 = account2,
+                    DateCreated = DateTime.UtcNow
+                };
+                // Add to context
+                _context.Follows.Add(newFollow);
+                _context.SaveChanges();
+                // Returns JSON {followerID: followingID}
+                returnDict.Add(account1Id, account2Id);
+            }
+            return Json(returnDict);
+        }
+        
     }
 }
