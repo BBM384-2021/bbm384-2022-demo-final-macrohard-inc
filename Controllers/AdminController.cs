@@ -1,20 +1,19 @@
-using LinkedHU_CENG.Models;
-using LinkedHU_CENG.Data;
-using LinkedHU_CENG.Models.AdminViewModels;
-using LinkedHU_CENG.Utils;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using OfficeOpenXml;
+using System.ComponentModel;
 using System.Text;
+using LinkedHUCENGv2.Models;
+using LinkedHUCENGv2.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
-namespace LinkedHU_CENG.Controllers;
+namespace LinkedHUCENGv2.Controllers;
 
+/*
 public class AdminController : Controller
 {
-    private readonly Context _context;
+    private readonly ApplicationDbContext _context;
 
-    public AdminController(Context context)
+    public AdminController(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -237,4 +236,4 @@ public class AdminController : Controller
         
 
     }
-}
+}*/

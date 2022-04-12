@@ -1,47 +1,8 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-    
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
 
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - LinkedHU</title>
-    <link rel="stylesheet" href="~/css/index.css?v=3.4.1"/>
-</head>
-
-<body>
-<div class="background">
-    <img src = "img/background.svg" style="position:absolute; right: -300px ; bottom: -200px ;size: 1200px ;margin: 20px 20px"/>
-    <img src = "img/background.svg" style="position:absolute;left: -300px ; top: -200px ;size: 1200px ;margin: 20px 20px"/>
-    
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<div class="mainPart">
-    <h1>
-        Welcome to
-        Hacettepe University
-        Work Station!
-    </h1>
-    <h2>
-        <p >
-            <span style="font-size:30px; color:#240046; font-weight:bold ; font-style: italic ; margin-top: 20px ">
-                linked HU_CENG
-            </span>
-            <span id="2"> is a platform to connect with people who are either Academician,
-                Student or Graduate from Hacettepe University Computer Science Department.</span>
-        </p>
-    </h2>
-    <img src = "img/index.svg" style="position:fixed; right: 0px ;top: 0px ;width: 500px ;height: auto;margin: 20px 20px"/>
-    
-</div>
-
-<header>
-    <input class="nav-link1" id="register" type="button" value="Register" onclick='window.location = "@Url.Action("RedirectToRegister", "Account")";' />
-    <input class="nav-link2" id="login" type="button" value="Login" onclick='window.location = "@Url.Action("RedirectToLogin", "Account")";' />
-    <img src="img/logoWhite.svg" style="position:absolute; left: 80px ;top: 0px ;width: 200px;height: auto ;margin: 20px 20px ;filter: brightness(0)"/>
-</header>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-</body>
-</html>
