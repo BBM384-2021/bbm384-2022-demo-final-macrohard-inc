@@ -1,13 +1,12 @@
-using System.ComponentModel;
-using System.Text;
 using LinkedHUCENGv2.Models;
 using LinkedHUCENGv2.Data;
+using LinkedHUCENGv2.Models.AdminViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkedHUCENGv2.Controllers;
-/*
+
 public class AdminController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -61,26 +60,6 @@ public class AdminController : Controller
     // POST: Admin/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(
-        [Bind("Url,PhoneNumber,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
-        Account account)
-    {
-        var rawPass = account.Password;
-        var salt = EncryptPassword.GenerateSalt();
-        account.Salt = salt;
-        account.Password = EncryptPassword.ComputeHash(Encoding.UTF8.GetBytes(rawPass), Encoding.UTF8.GetBytes(salt));
-
-        if (ModelState.IsValid)
-        {
-            _context.Add(account);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        return View(account);
-    }
 
     // GET: Admin/Edit/5
     public async Task<IActionResult> Edit(int? id)
@@ -187,7 +166,7 @@ public class AdminController : Controller
     {
         return _context.Accounts.Any(e => e.AccountId == id);
     }
-
+/*
     public void ExportToExcel()
     {
         ViewBag.userList = (List<AccountViewModel>) _context.Accounts.Select(x => new AccountViewModel
@@ -234,5 +213,5 @@ public class AdminController : Controller
 
         
 
-    }
-}*/
+    }*/
+}
