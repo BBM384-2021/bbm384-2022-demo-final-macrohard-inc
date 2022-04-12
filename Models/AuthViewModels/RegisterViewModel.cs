@@ -11,7 +11,7 @@ public class RegisterViewModel
     [Display(Name = "Last name")]
     public string LastName { get; set; }
     [Required]
-    public int AccountType { get; set; }
+    public string AccountType { get; set; }
     [Required]
     [EmailAddress]
     public string Email { get; set; }

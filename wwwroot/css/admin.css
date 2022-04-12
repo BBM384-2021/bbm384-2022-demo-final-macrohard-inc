@@ -1,0 +1,83 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #F9F7FC;
+}
+
+    body .accounts {
+        position: absolute;
+        right: 100px;
+        top: 100px;
+        min-height: 100vh;
+        width: 550px;
+        display: block;
+        background-color: white;
+        border-radius: 10px;
+        margin: auto;
+    }
+
+    body .notification {
+        position: absolute;
+        left: 100px;
+        top: 100px;
+        min-height: 100vh;
+        display: block;
+        flex-grow: 1;
+        width: 550px;
+        background-color: white;
+        border-radius: 10px;
+        margin: auto;
+    }
+
+.meButton {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.leftBar {
+    background-color: #8000FF;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 60px;
+    min-height: 100vh;
+    left: 0;
+    border-radius: 0 25px 25px 0;
+}
+
+a {
+    height: 50px;
+}
+
+.logo {
+    width: auto;
+    height: auto;
+    margin: 20px 13px;
+}
+
+.home {
+    display: block;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 460px 15px 15px;
+    column-gap: 18px;
+    background-color: ghostwhite;
+    border: solid #240046;
+}
+
+
+.button {
+    color: #240046;
+    background-color: ghostwhite;
+    cursor: pointer;
+    border-radius: 25%;
+    margin-top: 15px;
+}

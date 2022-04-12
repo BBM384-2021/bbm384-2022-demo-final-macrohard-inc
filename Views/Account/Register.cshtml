@@ -1,4 +1,4 @@
-﻿@model LinkedHUCENGv2.Models.Account
+﻿@model LinkedHUCENGv2.Models.AuthViewModels.RegisterViewModel
 <!DOCTYPE html>
 <html lan ="en" and dir="Itr">
 <head>
@@ -40,6 +40,7 @@
         <p>@Html.ValidationMessageFor(m => m.Email)</p>
         <input type="email" name="Email" placeholder="Email" id="email">
         <input type="password" name="Password" placeholder="Password" id="password">
+        <input type="password" name="ConfirmPassword" placeholder="Confirm Password" id="password">
         <input type="submit" value="Sign up">
         <p style="font-size:14px; color:#000000; font-weight:bold;text-align: center; margin-top: 20px">
             Already in linkedHUceng?
