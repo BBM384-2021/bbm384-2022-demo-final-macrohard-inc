@@ -42,7 +42,7 @@ public class AccountController : Controller
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
-                return RedirectToAction("index", "Home");
+                return RedirectToAction("Homepage", "Home");
             }
 
             foreach (var error in result.Errors)
@@ -72,15 +72,20 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Homepage", "Home");
             }
 
             ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-            Console.WriteLine("Suceesss!!!!!!!");
 
         }
         return View(user);
-    } 
+    }
 
+    [HttpGet]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
 
+    }
 }

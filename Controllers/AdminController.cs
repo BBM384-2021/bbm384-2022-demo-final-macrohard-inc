@@ -34,7 +34,7 @@ public class AdminController : Controller
     }
 
     // GET: Admin/Details/5
-    public async Task<IActionResult> Details(int? id)
+    public async Task<IActionResult> Details(string? id)
     {
         if (id == null)
         {
@@ -42,7 +42,7 @@ public class AdminController : Controller
         }
 
         var account = await _context.Accounts
-            .FirstOrDefaultAsync(m => m.AccountId == id);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (account == null)
         {
             return NotFound();
@@ -51,18 +51,8 @@ public class AdminController : Controller
         return View(account);
     }
 
-    // GET: Admin/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-    // POST: Admin/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
     // GET: Admin/Edit/5
-    public async Task<IActionResult> Edit(int? id)
+    public async Task<IActionResult> Edit(string? id)
     {
         if (id == null)
         {
@@ -84,11 +74,11 @@ public class AdminController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id,
+    public async Task<IActionResult> Edit(string id,
         [Bind("Url,PhoneNumber,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
         Account account)
     {
-        if (id != account.AccountId)
+        if (id != account.Id)
         {
             return NotFound();
         }
@@ -120,7 +110,7 @@ public class AdminController : Controller
     }
 
     // GET: Admin/Delete/5
-    public async Task<IActionResult> Delete(int? id)
+    public async Task<IActionResult> Delete(string? id)
     {
         if (id == null)
         {
@@ -128,7 +118,7 @@ public class AdminController : Controller
         }
 
         var account = await _context.Accounts
-            .FirstOrDefaultAsync(m => m.AccountId == id);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (account == null)
         {
             return NotFound();
@@ -140,7 +130,7 @@ public class AdminController : Controller
     // POST: Admin/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
+    public async Task<IActionResult> DeleteConfirmed(string id)
     {
         var account = await _context.Accounts.FindAsync(id);
         _context.Accounts.Remove(account);
