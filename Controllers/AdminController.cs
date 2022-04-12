@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkedHUCENGv2.Controllers;
-
 /*
 public class AdminController : Controller
 {

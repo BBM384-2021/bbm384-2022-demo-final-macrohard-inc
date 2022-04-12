@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using LinkedHU_CENG.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace LinkedHUCENGv2.Models;
@@ -22,11 +21,11 @@ public class Account : IdentityUser
     public string? LastName { get; set; }
     [Required(ErrorMessage = "You should choose the type!")]
     public string? AccountType { get; set; }
-    //[NotMapped]
-    //public List<Follow>? Following { get; set; }
-    //[NotMapped]
-    //public List<Follow>? Followers { get; set; }
-    //public List<Notification> Notifications { get; set; } = new List<Notification>();
+    [NotMapped]
+    public List<Follow>? Following { get; set; }
+    [NotMapped]
+    public List<Follow>? Followers { get; set; }
+    public List<Notification> Notifications { get; set; } = new List<Notification>();
     [Required]
     public DateTime RegistrationDate { get; set; }
 }

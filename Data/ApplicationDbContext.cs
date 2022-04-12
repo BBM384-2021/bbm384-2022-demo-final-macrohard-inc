@@ -1,5 +1,4 @@
-﻿using LinkedHU_CENG.Models;
-using LinkedHUCENGv2.Models;
+﻿using LinkedHUCENGv2.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-       /* modelBuilder.Entity<Follow>()
+       modelBuilder.Entity<Follow>()
             .HasOne<Account>(f => f.Account1)
             .WithMany(a => a.Following)
             .HasForeignKey(f => f.Account1Id);
@@ -23,7 +22,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<Follow>()
             .HasOne<Account>(f => f.Account2)
             .WithMany(a => a.Followers)
-            .HasForeignKey(f => f.Account2Id);*/
+            .HasForeignKey(f => f.Account2Id);
         base.OnModelCreating(modelBuilder);
 
     }

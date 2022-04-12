@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LinkedHU_CENG.Models;
+namespace LinkedHUCENGv2.Models;
 
 public class Notification
 {
