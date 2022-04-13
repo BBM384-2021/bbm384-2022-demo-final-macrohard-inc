@@ -7,8 +7,7 @@ namespace LinkedHUCENGv2.Models;
 public class Account : IdentityUser
 {
     public string? Url { get; set; }
-    [Phone]
-    public int? PhoneNumber { get; set; }
+    public string? Phone { get; set; }
     public string? ProfilePhoto { get; set; }
     public int AccountId { get; set; }
     [Required]
@@ -22,9 +21,9 @@ public class Account : IdentityUser
     [Required(ErrorMessage = "You should choose the type!")]
     public string? AccountType { get; set; }
     [NotMapped]
-    public List<Follow> Following { get; set; }
+    public List<Follow>? Following { get; set; }
     [NotMapped]
-    public List<Follow> Followers { get; set; }
+    public List<Follow>? Followers { get; set; }
     public List<Notification> Notifications { get; set; } = new List<Notification>();
     [Required]
     public DateTime RegistrationDate { get; set; }

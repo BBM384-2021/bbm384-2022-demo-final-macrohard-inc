@@ -41,37 +41,39 @@
         </div>
     </div>
 
-    <div class = "settingsModalContainer" id = "settingsModalContainer" style="z-index:7;position: absolute;text-align: center;">
-        <div class="settingsModal" >
-            <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
-                <h1>Settings</h1>
-            </div>
-            <img src="~/img/studentProfile.png" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;" >
-            <div class="forms" style="box-sizing: border-box;margin: 0;">
-                <div class = "settingsModal-container" >
-                    <input type="text" placeholder="Name*">
-                    <input type="text" placeholder="Surname*">
+    @using (Html.BeginForm("Edit", "Account", FormMethod.Post))
+    {
+        <div class="settingsModalContainer" id="settingsModalContainer" style="z-index:7;position: absolute;text-align: center;">
+            <div class="settingsModal">
+                <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
+                    <h1>Edit Profile</h1>
+                </div>
+                <img src="~/img/studentProfile.png" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;">
+                <div class="forms" style="box-sizing: border-box;margin: 0;">
+                    <div class="settingsModal-container">
+                         <input type="hidden" name="Id" value=@Model.Id>
+                         <input type="text" placeholder="Firstname*" value="@Model.FirstName" name="FirstName">
+                        <input type="text" placeholder="Lastname*" value="@Model.LastName" name="LastName">
+                    </div>
+                    <div>
+                        <input type="number" placeholder="Phone Number*" value="@Model.Phone" name="Phone">
+                    </div>
+                    <div>
+                        <input type="url" name="url" placeholder="Linkedin Url" value="@Model.Url" name="Url">
+                    </div>
+
                 </div>
                 <div>
-                    <input type="number" placeholder="Number*">
+                    <div class="settingsModal-container" style="justify-items: center; align-items: center;">
+                        <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" value="Submit" type="submit">
+
+                        <button style="width: 100px;height: 40px;background-color: #eee;border-radius: 30px;border: none;font-weight: bold;" onclick="popup3()">Cancel</button>
+                    </div>
+
                 </div>
-                <div>
-                    <input type="url" placeholder="Linkedin Url">
-                </div>
-                <div>
-                    <input type="password" placeholder="Password*">
-                </div>
-            </div>
-            <div>
-                <div class = "settingsModal-container" style="justify-items: center; align-items: center;">
-                    <button style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" onclick="popup3()">Save Changes</button>
-                    <button style="width: 100px;height: 40px;background-color: #eee;border-radius: 30px;border: none;font-weight: bold;" onclick="popup3()">Cancel</button>
-                </div>
-                
             </div>
         </div>
-    </div>
-
+    }
     <body style="background-color: white ; position : relative ;height:auto;"> <!-- height� de�i�tirme-->
 
         <header style="z-index: 2; background-color: white;position: sticky; top: 0;">

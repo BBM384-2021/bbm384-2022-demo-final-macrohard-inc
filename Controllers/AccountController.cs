@@ -4,6 +4,7 @@ using LinkedHUCENGv2.Models.AuthViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkedHUCENGv2.Controllers;
@@ -96,6 +97,33 @@ public class AccountController : Controller
         }
         return View(user);
     }
+    
+    
+    // POST: Account/Edit/5
+    [HttpPost]
+    public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url")] Account account)
+    {
+        Console.WriteLine("INNN");
+        var user = await _context.Accounts.FindAsync(id);
+        if (id != user.Id)
+        {
+            return NotFound();
+        }
+
+        ModelState.Remove("AccountType");
+        if (ModelState.IsValid)
+        {
+            user.FirstName = account.FirstName;
+            user.LastName = account.LastName;
+            user.Phone = account.Phone;
+            user.Url = account.Url;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
+        }
+        return RedirectToAction("Index", "Home");
+    }
+
 
     [HttpGet]
     public async Task<IActionResult> Logout()

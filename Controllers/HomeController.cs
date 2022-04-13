@@ -35,9 +35,11 @@ public class HomeController : Controller
             .FirstOrDefaultAsync();
         UserProfileModel userProfileModel = new UserProfileModel
         {
+            Id = currAcc.Id,
             FirstName = currAcc.FirstName,
             LastName = currAcc.LastName,
             ProfileBio = currAcc.ProfileBio,
+            Phone = currAcc.Phone,
             Url = currAcc.Url,
             ProfilePhoto = currAcc.ProfilePhoto,
             //FollowersCount = currAcc.Followers.Count(),
@@ -46,6 +48,9 @@ public class HomeController : Controller
         };
         return View(userProfileModel);
     }
+    
+    
+    
     
     [AllowAnonymous]
     public IActionResult Privacy()
