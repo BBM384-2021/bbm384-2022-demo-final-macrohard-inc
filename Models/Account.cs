@@ -7,8 +7,7 @@ namespace LinkedHUCENGv2.Models;
 public class Account : IdentityUser
 {
     public string? Url { get; set; }
-    [Phone]
-    public int? PhoneNumber { get; set; }
+    public string? Phone { get; set; }
     public string? ProfilePhoto { get; set; }
     public int AccountId { get; set; }
     [Required]
@@ -28,4 +27,6 @@ public class Account : IdentityUser
     public List<Notification> Notifications { get; set; } = new List<Notification>();
     [Required]
     public DateTime RegistrationDate { get; set; }
+    public string? ProfileBio { get; set; }
+    public string? StudentNumber { get; set; }
 }

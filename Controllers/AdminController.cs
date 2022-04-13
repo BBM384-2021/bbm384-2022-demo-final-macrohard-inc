@@ -75,7 +75,7 @@ public class AdminController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(string id,
-        [Bind("Url,PhoneNumber,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
+        [Bind("Url,Phone,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
         Account account)
     {
         if (id != account.Id)
