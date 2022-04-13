@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
+using LinkedHUCENGv2.Data;
 using Microsoft.AspNetCore.Mvc;
 using LinkedHUCENGv2.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace LinkedHUCENGv2.Controllers;
 
@@ -9,10 +11,13 @@ namespace LinkedHUCENGv2.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private ApplicationDbContext _context;
+    
+    public HomeController(ILogger<HomeController> logger,
+                          ApplicationDbContext context)
     {
         _logger = logger;
+        _context = context;
     }
     
     [AllowAnonymous]
@@ -24,9 +29,22 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Homepage()
+    public async Task<IActionResult> Homepage()
     {
-        return View();
+        Account currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        UserProfileModel userProfileModel = new UserProfileModel
+        {
+            FirstName = currAcc.FirstName,
+            LastName = currAcc.LastName,
+            ProfileBio = currAcc.ProfileBio,
+            Url = currAcc.Url,
+            ProfilePhoto = currAcc.ProfilePhoto,
+            //FollowersCount = currAcc.Followers.Count(),
+            //FollowingCount = currAcc.Following.Count(),
+            StudentNumber = currAcc.StudentNumber
+        };
+        return View(userProfileModel);
     }
     
     [AllowAnonymous]

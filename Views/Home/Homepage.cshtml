@@ -1,3 +1,5 @@
+@model LinkedHUCENGv2.Models.UserProfileModel
+
 <!DOCTYPE html>
 <html lan="en" style="height: auto;">
 
@@ -18,8 +20,8 @@
                 <div class = "littleProfile">
                     <img src="~/img/studentProfile.png" style=" height: 80px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;" >
                     <div style="position: relative; margin: 20px 20px 20px 0px; top : 20px;text-align:left">
-                        <h4>Maddy London</h4>
-                        <p style="font-weight: lighter; font-size: 13px;">Project Manager at Google</p>
+                        <h4>@Model.FirstName @Model.LastName</h4>
+                        <p style="font-weight: lighter; font-size: 13px;">@Model.ProfileBio</p>
                     </div>
                 </div >
 
@@ -151,15 +153,15 @@
                         </div>
                         <div class="profileText" >
                             <h1 style="text-align: left;">
-                                Maddy London
+                                @Model.FirstName @Model.LastName
                             </h1>
                             <h2 style="text-align: left; font-weight: lighter;">
-                                Project Manager at Google
+                                @Model.ProfileBio
                             </h2>
                             <p style="text-align: left;font-weight: bolder;">
-                                30
+                                @Model.FollowingCount
                                 <span style="color:rgba(0, 0, 0, 0.3)">Following</span>
-                                20 
+                                @Model.FollowersCount
                                 <span style="color:rgba(0, 0, 0, 0.3)">Followers</span>
                             </p>
                         </div>

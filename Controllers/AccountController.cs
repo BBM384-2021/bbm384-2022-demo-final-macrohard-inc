@@ -38,7 +38,13 @@ public class AccountController : Controller
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                AccountType = model.AccountType
+                AccountType = model.AccountType,
+                Followers = new List<Follow>(),
+                Following = new List<Follow>(),
+                Url = "",
+                StudentNumber = "",
+                ProfileBio = "",
+                ProfilePhoto = ""
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);

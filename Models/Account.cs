@@ -22,10 +22,12 @@ public class Account : IdentityUser
     [Required(ErrorMessage = "You should choose the type!")]
     public string? AccountType { get; set; }
     [NotMapped]
-    public List<Follow>? Following { get; set; }
+    public List<Follow> Following { get; set; }
     [NotMapped]
-    public List<Follow>? Followers { get; set; }
+    public List<Follow> Followers { get; set; }
     public List<Notification> Notifications { get; set; } = new List<Notification>();
     [Required]
     public DateTime RegistrationDate { get; set; }
+    public string? ProfileBio { get; set; }
+    public string? StudentNumber { get; set; }
 }
