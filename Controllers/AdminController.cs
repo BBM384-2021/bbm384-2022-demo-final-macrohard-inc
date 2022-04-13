@@ -1,20 +1,18 @@
-using LinkedHU_CENG.Models;
-using LinkedHU_CENG.Data;
-using LinkedHU_CENG.Models.AdminViewModels;
-using LinkedHU_CENG.Utils;
+using LinkedHUCENGv2.Models;
+using LinkedHUCENGv2.Data;
+using LinkedHUCENGv2.Models.AdminViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
-using System.Text;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace LinkedHU_CENG.Controllers;
+namespace LinkedHUCENGv2.Controllers;
 
 public class AdminController : Controller
 {
-    private readonly Context _context;
+    private readonly ApplicationDbContext _context;
 
-    public AdminController(Context context)
+    public AdminController(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -37,7 +35,7 @@ public class AdminController : Controller
     }
 
     // GET: Admin/Details/5
-    public async Task<IActionResult> Details(int? id)
+    public async Task<IActionResult> Details(string? id)
     {
         if (id == null)
         {
@@ -45,7 +43,7 @@ public class AdminController : Controller
         }
 
         var account = await _context.Accounts
-            .FirstOrDefaultAsync(m => m.AccountId == id);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (account == null)
         {
             return NotFound();
@@ -54,38 +52,8 @@ public class AdminController : Controller
         return View(account);
     }
 
-    // GET: Admin/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-    // POST: Admin/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(
-        [Bind("Url,PhoneNumber,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
-        Account account)
-    {
-        var rawPass = account.Password;
-        var salt = EncryptPassword.GenerateSalt();
-        account.Salt = salt;
-        account.Password = EncryptPassword.ComputeHash(Encoding.UTF8.GetBytes(rawPass), Encoding.UTF8.GetBytes(salt));
-
-        if (ModelState.IsValid)
-        {
-            _context.Add(account);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        return View(account);
-    }
-
     // GET: Admin/Edit/5
-    public async Task<IActionResult> Edit(int? id)
+    public async Task<IActionResult> Edit(string? id)
     {
         if (id == null)
         {
@@ -98,7 +66,6 @@ public class AdminController : Controller
             return NotFound();
         }
         
-        GenerateDropDownList();
         return View(account);
     }
 
@@ -107,11 +74,11 @@ public class AdminController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id,
+    public async Task<IActionResult> Edit(string id,
         [Bind("Url,PhoneNumber,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
         Account account)
     {
-        if (id != account.AccountId)
+        if (id != account.Id)
         {
             return NotFound();
         }
@@ -138,12 +105,11 @@ public class AdminController : Controller
             return RedirectToAction(nameof(Index));
         }
         
-        GenerateDropDownList();
         return View(account);
     }
 
     // GET: Admin/Delete/5
-    public async Task<IActionResult> Delete(int? id)
+    public async Task<IActionResult> Delete(string? id)
     {
         if (id == null)
         {
@@ -151,7 +117,7 @@ public class AdminController : Controller
         }
 
         var account = await _context.Accounts
-            .FirstOrDefaultAsync(m => m.AccountId == id);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (account == null)
         {
             return NotFound();
@@ -163,7 +129,7 @@ public class AdminController : Controller
     // POST: Admin/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
+    public async Task<IActionResult> DeleteConfirmed(string id)
     {
         var account = await _context.Accounts.FindAsync(id);
         _context.Accounts.Remove(account);
@@ -171,19 +137,6 @@ public class AdminController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private void GenerateDropDownList()
-    {
-        var dropDownList = new List<string>
-        {
-            "Student",
-            "StudentRep",
-            "Admin",
-            "Academician",
-            "Graduate"
-        };
-        ViewBag.DropDownList = new SelectList(dropDownList, "AccountType", "AccountType");
-
-    }
 
     private bool AccountExists(int id)
     {
@@ -192,12 +145,12 @@ public class AdminController : Controller
 
     public void ExportToExcel()
     {
-        ViewBag.userList = (List<AccountViewModel>) _context.Accounts.Select(x => new AccountViewModel
+        ViewBag.userList = _context.Accounts.Select(x => new AccountViewModel
             {
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                PhoneNumber = x.PhoneNumber,
-                Url = x.Url
+                Url = x.Url,
+                Email = x.Email
 
             }
 
@@ -211,8 +164,8 @@ public class AdminController : Controller
         ws.Cells["A1"].Value = "First Name";
         ws.Cells["B1"].Value = "Last Name";
 
-        ws.Cells["C1"].Value = "PhoneNumber";
-        ws.Cells["D1"].Value = "LinkedHU_CENG Url";
+        ws.Cells["C1"].Value = "LinkedHU_CENG Url";
+        ws.Cells["D1"].Value = "Mail Address";
 
 
 

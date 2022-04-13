@@ -1,5 +1,4 @@
-@model LinkedHU_CENG.Models.Account
-
+@model LinkedHUCENGv2.Models.Account
 @{
     ViewData["Title"] = "Details";
 }
@@ -51,12 +50,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.AccountType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Email)

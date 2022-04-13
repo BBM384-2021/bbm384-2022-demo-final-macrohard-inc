@@ -1,15 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
-namespace LinkedHU_CENG.Models;
+namespace LinkedHUCENGv2.Models;
 
-public class Account
+public class Account : IdentityUser
 {
     public string? Url { get; set; }
     [Phone]
     public int? PhoneNumber { get; set; }
     public string? ProfilePhoto { get; set; }
-    [Key]
     public int AccountId { get; set; }
     [Required]
     public bool IsAdmin { get; set; }
@@ -21,12 +21,6 @@ public class Account
     public string? LastName { get; set; }
     [Required(ErrorMessage = "You should choose the type!")]
     public string? AccountType { get; set; }
-    [Required(ErrorMessage = "Please choose a password!")]
-    public string? Password { get; set; }
-    public string? Salt { get; set; }
-    [Required(ErrorMessage = "Please write your email!")]
-    [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Please enter a valid email")]
-    public string? Email { get; set; }
     [NotMapped]
     public List<Follow>? Following { get; set; }
     [NotMapped]

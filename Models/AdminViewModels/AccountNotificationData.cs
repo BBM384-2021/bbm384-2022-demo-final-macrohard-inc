@@ -1,4 +1,4 @@
-namespace LinkedHU_CENG.Models.AdminViewModels;
+namespace LinkedHUCENGv2.Models.AdminViewModels;
 
 public class AccountNotificationData
 {
