@@ -4,6 +4,7 @@ using LinkedHUCENGv2.Models.AdminViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 
 namespace LinkedHUCENGv2.Controllers;
 
@@ -141,15 +142,15 @@ public class AdminController : Controller
     {
         return _context.Accounts.Any(e => e.AccountId == id);
     }
-/*
+
     public void ExportToExcel()
     {
-        ViewBag.userList = (List<AccountViewModel>) _context.Accounts.Select(x => new AccountViewModel
+        ViewBag.userList = _context.Accounts.Select(x => new AccountViewModel
             {
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                PhoneNumber = x.PhoneNumber,
-                Url = x.Url
+                Url = x.Url,
+                Email = x.Email
 
             }
 
@@ -163,8 +164,8 @@ public class AdminController : Controller
         ws.Cells["A1"].Value = "First Name";
         ws.Cells["B1"].Value = "Last Name";
 
-        ws.Cells["C1"].Value = "PhoneNumber";
-        ws.Cells["D1"].Value = "LinkedHU_CENG Url";
+        ws.Cells["C1"].Value = "LinkedHU_CENG Url";
+        ws.Cells["D1"].Value = "Mail Address";
 
 
 
@@ -188,5 +189,5 @@ public class AdminController : Controller
 
         
 
-    }*/
+    }
 }

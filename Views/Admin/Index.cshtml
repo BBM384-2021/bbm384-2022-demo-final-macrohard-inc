@@ -31,6 +31,7 @@
 <div class="accounts">
 <p>
     <a asp-action="Create">Add New User</a>
+    <a href=@Url.ActionLink("ExportToExcel","Admin")>Download User Details</a>  
 </p>
 
 <form asp-action="Index" method="get">
