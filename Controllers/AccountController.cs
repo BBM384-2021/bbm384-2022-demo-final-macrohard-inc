@@ -1,8 +1,10 @@
+using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
 using LinkedHUCENGv2.Models.AuthViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LinkedHUCENGv2.Controllers;
 
@@ -10,12 +12,15 @@ public class AccountController : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
+    private ApplicationDbContext _context;
 
     public AccountController(UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager)
+        SignInManager<IdentityUser> signInManager,
+        ApplicationDbContext context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _context = context;
     }
     public IActionResult Register()
     {
@@ -72,6 +77,11 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
+                var acc = await _context.Accounts.Where(s => s.Email.Equals(user.Email)).ToListAsync();
+                if (acc.First().IsAdmin)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
                 return RedirectToAction("Homepage", "Home");
             }
 
