@@ -24,7 +24,6 @@ namespace LinkedHUCENGv2.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Follows.Include(f => f.Account1).Include(f => f.Account2);
-            Console.WriteLine("sadfasdfasdfasdf");
             return View(await applicationDbContext.ToListAsync());
         }
 

@@ -46,7 +46,7 @@ public class AccountController : Controller
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
-
+                CreateRegisterNotification(user);
                 return RedirectToAction("Homepage", "Home");
             }
 
@@ -97,5 +97,20 @@ public class AccountController : Controller
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
 
+    }
+    
+    public void CreateRegisterNotification(Account account)
+    {
+        var notification = new Notification
+        {
+            NotificationType = "register",
+            IsRead = false,
+            NotificationTime = DateTime.Now,
+            NotificationContent = account.FirstName + " " + account.LastName + " has registered to the system."
+        };
+        var admin = _context.Accounts.Where(u => u.IsAdmin).ToList().FirstOrDefault();
+        if (admin is null) return;
+        admin.Notifications.Add(notification);
+        _context.SaveChanges();
     }
 }

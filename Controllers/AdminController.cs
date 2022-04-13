@@ -65,7 +65,6 @@ public class AdminController : Controller
             return NotFound();
         }
         
-        GenerateDropDownList();
         return View(account);
     }
 
@@ -105,7 +104,6 @@ public class AdminController : Controller
             return RedirectToAction(nameof(Index));
         }
         
-        GenerateDropDownList();
         return View(account);
     }
 
@@ -138,19 +136,6 @@ public class AdminController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private void GenerateDropDownList()
-    {
-        var dropDownList = new List<string>
-        {
-            "Student",
-            "StudentRep",
-            "Admin",
-            "Academician",
-            "Graduate"
-        };
-        ViewBag.DropDownList = new SelectList(dropDownList, "AccountType", "AccountType");
-
-    }
 
     private bool AccountExists(int id)
     {

@@ -27,7 +27,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
     }
 
-    //public DbSet<IdentityUser> IdentityUsers { get; set; }
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<Follow> Follows { get; set; }

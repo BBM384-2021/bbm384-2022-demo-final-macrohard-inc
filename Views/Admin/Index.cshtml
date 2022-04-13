@@ -1,11 +1,34 @@
 @model LinkedHUCENGv2.Models.AdminViewModels.AccountNotificationData;
 
+<!DOCTYPE html>
+<html lan="en" and dir="Itr">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin</title>
+    <link rel="stylesheet" href="~css/admin.css?v=3.4.1"/>
+</head>
+<header>
+    <div>
+        <button class="meButton">Me</button>
+    </div>
+</header>
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Admin Panel</h1>
+<div class="notifications">
+    @foreach (var notification in Model.Notifications)
+    {
+        <p>@notification.NotificationContent</p>
+        <p>Registration Date: @notification.NotificationTime</p>
 
+    }
+</div>
+
+<h1>Admin Panel</h1>
+<div class="accounts">
 <p>
     <a asp-action="Create">Add New User</a>
 </p>
@@ -69,3 +92,4 @@
 }
     </tbody>
 </table>
+</div>
