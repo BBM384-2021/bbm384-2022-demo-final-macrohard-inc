@@ -142,7 +142,7 @@ public async Task<IActionResult> Delete(string? id)
 
     public void ExportToExcel()
     {
-        ViewBag.userList = _context.Accounts.Select(x => new AccountViewModel
+        ViewBag.userList = _context.Accounts.Where(u => u.IsAdmin == false).Select(x => new AccountViewModel
             {
                 FirstName = x.FirstName,
                 LastName = x.LastName,
@@ -173,8 +173,8 @@ public async Task<IActionResult> Delete(string? id)
 
             ws.Cells[string.Format("A{0}", rowStart)].Value = item.FirstName;
             ws.Cells[string.Format("B{0}", rowStart)].Value = item.LastName;
-            ws.Cells[string.Format("C{0}", rowStart)].Value = item.PhoneNumber;
-            ws.Cells[string.Format("D{0}", rowStart)].Value = item.Url;
+            ws.Cells[string.Format("C{0}", rowStart)].Value = item.Url;
+            ws.Cells[string.Format("D{0}", rowStart)].Value = item.Email;
             rowStart++;
         }
 
