@@ -10637,11 +10637,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/imrekosdik/Downloads/bbm384-2022-demo-final-macrohard-inc-main-2/LinkedHUCENGv2.csproj",
+      "projectUniqueName": "/Users/imrekosdik/Desktop/bbm384-2022-demo-final-macrohard-inc-main-3/LinkedHUCENGv2.csproj",
       "projectName": "LinkedHUCENGv2",
-      "projectPath": "/Users/imrekosdik/Downloads/bbm384-2022-demo-final-macrohard-inc-main-2/LinkedHUCENGv2.csproj",
+      "projectPath": "/Users/imrekosdik/Desktop/bbm384-2022-demo-final-macrohard-inc-main-3/LinkedHUCENGv2.csproj",
       "packagesPath": "/Users/imrekosdik/.nuget/packages/",
-      "outputPath": "/Users/imrekosdik/Downloads/bbm384-2022-demo-final-macrohard-inc-main-2/obj/",
+      "outputPath": "/Users/imrekosdik/Desktop/bbm384-2022-demo-final-macrohard-inc-main-3/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/imrekosdik/.nuget/NuGet/NuGet.Config"
