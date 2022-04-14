@@ -1,77 +1,123 @@
-using LinkedHU_CENG.Models;
+using LinkedHUCENGv2.Data;
+using LinkedHUCENGv2.Models;
+using LinkedHUCENGv2.Models.AuthViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
-namespace LinkedHU_CENG.Controllers
+namespace LinkedHUCENGv2.Controllers;
+
+public class AccountController : Controller
 {
-    public class AccountController : Controller
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly SignInManager<IdentityUser> _signInManager;
+    private ApplicationDbContext _context;
+
+    public AccountController(UserManager<IdentityUser> userManager,
+        SignInManager<IdentityUser> signInManager,
+        ApplicationDbContext context)
     {
-        private readonly Context _context = new Context();
-        public IActionResult RedirectToLogin()
-        {
-            return View("~/Views/Home/Login.cshtml");
-        }
-        public IActionResult RedirectToRegister()
-        {
-            return View("~/Views/Home/Register.cshtml");
-        }
-        
-        public void CreateRegisterNotification(Account account)
-        {
-            var notification = new Notification();
-            notification.NotificationType = "register";
-            notification.IsRead = false;
-            notification.NotificationTime = DateTime.Now;
-            notification.NotificationContent = account.FirstName + " " + account.LastName + " has registered to the system.";
-            var admin = _context.Accounts.Where(u => u.IsAdmin == true).ToList()[0];
-            admin.Notifications.Add(notification);
-            _context.SaveChanges();
-        }
+        _userManager = userManager;
+        _signInManager = signInManager;
+        _context = context;
+    }
+    public IActionResult Register()
+    {
+        return View();
+    }
 
-        [HttpPost]
-        public IActionResult RegisterUser(Account account)
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterViewModel model)
+    {
+        if (ModelState.IsValid)
         {
-            // implement popup for already registered users
-            var newUser = new Account(); // create new user instance
-            newUser.FirstName = account.FirstName;
-            newUser.LastName = account.LastName;
-            newUser.AccountType = account.AccountType;
-            newUser.Email = account.Email; // problem showing error messages for invalid email combinations
-            newUser.Password = account.Password;
-            newUser.IsAdmin = false;
-            newUser.RegistrationDate = DateTime.Now;
-            if (ModelState.IsValid)
+            var user = new Account
             {
-                _context.Accounts.Add(newUser);
-                _context.SaveChanges();
-                CreateRegisterNotification(newUser); // send admin a notification 
-                return View("~/Views/homepage.cshtml");
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                AccountType = model.AccountType,
+                Followers = new List<Follow>(),
+                Following = new List<Follow>(),
+                Url = "",
+                StudentNumber = "",
+                ProfileBio = "",
+                ProfilePhoto = ""
+            };
 
-            }
-            return View("~/Views/Home/Register.cshtml");
-        }
-        
-        [HttpPost]
-        public IActionResult Login(Account account)
-        {
-            if (!String.IsNullOrEmpty(account.Email) && !String.IsNullOrEmpty(account.Password))
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
             {
-                // check emails to see if the user is registered before
-                var user = _context.Accounts.Where(s => s.Email.Equals(account.Email)).ToList();
-                if (user.Any() && user[0].Password != account.Password) // if the user has entered a wrong password
-                {
-                    ViewBag.Text = "Password is Incorrect";
-                }
-                // if the user is not registered or the email entered is not correct
-                else if (!user.Any())
-                {
-                    ViewBag.Text = "You are not registered or you did not enter your email correctly.";
-                }
-                if (user.Any() && user[0].Password == account.Password)
-                {
-                    return user[0].IsAdmin ? new AdminController().DisplayAdminPanel() : View("~/Views/homepage.cshtml");
-                }
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                CreateRegisterNotification(user);
+                return RedirectToAction("Homepage", "Home");
             }
-            return View("~/Views/Home/Login.cshtml");
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+
         }
+        return View(model);
+    }
+    
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Login()
+    {
+        return View();
+    }
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(LoginViewModel user)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, false);
+
+            if (result.Succeeded)
+            {
+                var acc = await _context.Accounts.Where(s => s.Email.Equals(user.Email)).ToListAsync();
+                if (acc.First().IsAdmin)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                return RedirectToAction("Homepage", "Home");
+            }
+
+            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+
+        }
+        return View(user);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+
+    }
+    
+    public void CreateRegisterNotification(Account account)
+    {
+        var notification = new Notification
+        {
+            NotificationType = "register",
+            IsRead = false,
+            NotificationTime = DateTime.Now,
+            NotificationContent = account.FirstName + " " + account.LastName + " has registered to the system."
+        };
+        var admin = _context.Accounts.Where(u => u.IsAdmin).ToList().FirstOrDefault();
+        if (admin is null) return;
+        admin.Notifications.Add(notification);
+        _context.SaveChanges();
     }
 }

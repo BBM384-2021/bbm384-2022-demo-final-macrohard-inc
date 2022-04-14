@@ -1,0 +1,56 @@
+﻿@model LinkedHUCENGv2.Models.AuthViewModels.RegisterViewModel
+<!DOCTYPE html>
+<html lan ="en" and dir="Itr">
+<head>
+    <meta charset = "utf-8">
+    <title>Iteractive Login Form </title>
+    <link rel="stylesheet" href="~/css/register.css" type="text/css">
+</head>
+<body>
+<img src = "~/img/logoWhite.svg" style="position:absolute; left: 120px ;top: 30px ;width: 200px "/>
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    <div class="box">
+        <img class="schoolLogo" src="~/img/schoolLogo.svg" alt="SchoolLogo">
+        <h1>
+            Sign Up
+        </h1>
+        <p>@Html.ValidationMessageFor(m => m.AccountType)</p>
+         <button id="button" class="button">
+            <span id="select-label" >Please Select One</span>
+            <div id="arrow" class="arrow"></div>
+        </button>
+        <div class="dropdown hidden"  id="dropdown">
+            <input type="radio" id="select-student" name="AccountType" value="Student" class="option">
+            <label for="select-student" class="select-item">Student</label>
+
+            <input type="radio" id="select-studentRep" name="AccountType" value="StudentRep" class="option">
+            <label for="select-studentRep" class="select-item">Student Representative</label>
+
+            <input type="radio" id="select-academician" name="AccountType" value="Academician" class="option">
+            <label for="select-academician" class="select-item">Academician</label>
+
+            <input type="radio" id="select-graduate" name="AccountType" value="Graduate" class="option">
+            <label for="select-graduate" class="select-item">Graduate</label>
+        </div>
+        <p>@Html.ValidationMessageFor(m => m.FirstName)</p>
+        <input type="text" name="FirstName" placeholder="Name" id="name">
+        <p>@Html.ValidationMessageFor(m => m.LastName)</p>
+        <input type="text" name="LastName" placeholder="Surname" id="surname">
+        <p>@Html.ValidationMessageFor(m => m.Email)</p>
+        <input type="email" name="Email" placeholder="Email" id="email">
+        <input type="password" name="Password" placeholder="Password" id="password">
+        <input type="password" name="ConfirmPassword" placeholder="Confirm Password" id="password">
+        <input type="submit" value="Sign up">
+        <p style="font-size:14px; color:#000000; font-weight:bold;text-align: center; margin-top: 20px">
+            Already in linkedHUceng?
+            <a id="login" href='@Url.Action("Login", "Account")'>
+                Login!
+            </a>
+        </p>
+    </div>
+    <script src="~/js/register.js" type="text/javascript"></script>
+}
+    </body>
+</html>
+

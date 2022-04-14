@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace LinkedHU_CENG.Models;
+namespace LinkedHUCENGv2.Models;
 
 public class Notification
 {
@@ -11,7 +11,7 @@ public class Notification
     [Required]
     public string? NotificationContent { get; set; }
     [Required] // "connection" notification for users and "register" notification for admin
-    public string? NotificationType { get; set; } 
+    public string? NotificationType { get; set; }
     [Required]
     public bool IsRead { get; set; }
 }
