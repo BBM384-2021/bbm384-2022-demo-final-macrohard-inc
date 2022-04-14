@@ -20,19 +20,6 @@ function listUsers() {
     });
 }
 
-function viewUserProfile(mail) {
-    $.ajax({
-        type: "GET",
-        url: "/Home/ViewProfile",
-        data: { mail : mail },
-        success: function() {
-            return mail
-        },
-        error: function () {
-        }
-    });
-}
-
 function filter() {
     let input, filter, table, tr, td1, td2, i, txtValue1,  txtValue2;
     input = document.getElementById("myInput");
