@@ -9,7 +9,7 @@ function listUsers() {
                 const firstName = response[i].firstName;
                 const lastName = response[i].lastName;
                 const mail = response[i].email;
-                let str = "<tr><td>" + firstName + "</td><td>" + lastName + "</td><td>" + mail + "</td><td>" +
+                let str = "<tr><td>" + firstName + "</td><td>" + lastName + "</td><td>" +
                     '<a href="/Home/ViewProfile?mail=' + mail + '"' + '> View </a>';
                 tableBody.append(str);
             }
@@ -21,7 +21,7 @@ function listUsers() {
 }
 
 function filter() {
-    let input, filter, table, tr, td1, td2, i, txtValue1,  txtValue2;
+    let input, filter, table, tr, td1, td2, i, txtValue1, txtValue2;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     table = document.getElementById("grid-basic");
@@ -47,27 +47,27 @@ function filter() {
     }
 }
 
-function popup(tagName){
+function popup(tagName) {
     var modalCont = document.getElementById("modalContainer");
     var modal = document.getElementById("modal");
     modalCont.classList.toggle(tagName.value)
     modal.classList.toggle(tagName.value)
 };
 
-function popup2(){
+function popup2() {
     var modalCont = document.getElementById("modalContainer");
     var modal = document.getElementById("modal");
     modalCont.classList.remove("hide");
     modal.classList.remove("hide");
 };
 
-function popup3(){
+function popup3() {
     var modalCont2 = document.getElementById("modalContainer2");
     var modal = document.getElementById("settingsModalContainer");
     modalCont2.classList.remove("hide");
     modal.classList.remove("hide");
 };
-function popup4(){
+function popup4() {
 
     var modalCont2 = document.getElementById("modalContainer2");
     var modal = document.getElementById("settingsModalContainer");
