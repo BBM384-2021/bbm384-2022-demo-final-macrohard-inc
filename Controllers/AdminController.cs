@@ -24,8 +24,9 @@ public class AdminController : Controller
             select a;
         if (!String.IsNullOrEmpty(searchString))
         {
-            accounts = accounts.Where(a => a.FirstName.Contains(searchString)
-                                           || a.LastName.Contains(searchString) || a.Email.Contains(searchString));
+            accounts = accounts.Where(a => a.FirstName.ToLower().Contains(searchString.ToLower())
+                                           || a.LastName.ToLower().Contains(searchString.ToLower()) 
+                                           || a.Email.ToLower().Contains(searchString.ToLower()));
         }
         var viewModel = new AccountNotificationData();
         var notificationList = await _context.Notifications.Where(u => u.NotificationType == "register").ToListAsync();
