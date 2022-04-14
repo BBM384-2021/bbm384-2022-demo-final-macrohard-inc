@@ -41,21 +41,37 @@ public class HomeController : Controller
     public async Task<IActionResult> ViewProfile(string? mail)
     {
         var accounts = await _context.Accounts.Where(a => a.Email == mail).ToListAsync();
-        var currAcc = accounts[0];
-        UserProfileModel userProfileModel = new UserProfileModel
+        var account = accounts[0];
+        var viewedUser = new UserProfileModel
         {
-            Id = currAcc.Id,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            ProfileBio = currAcc.ProfileBio,
-            Phone = currAcc.Phone,
-            Url = currAcc.Url,
-            ProfilePhoto = currAcc.ProfilePhoto,
-            //FollowersCount = currAcc.Followers.Count(),
-            //FollowingCount = currAcc.Following.Count(),
-            StudentNumber = currAcc.StudentNumber
+            Id = account.Id,
+            FirstName = account.FirstName,
+            LastName = account.LastName,
+            ProfileBio = account.ProfileBio,
+            Phone = account.Phone,
+            Url = account.Url,
+            ProfilePhoto = account.ProfilePhoto,
+            StudentNumber = account.StudentNumber
         };
-        return View(userProfileModel);
+        
+        var currentAccounts = await _context.Accounts.Where(m => m.Email == User.Identity.Name).ToListAsync();
+        var currentAccount = currentAccounts[0];
+        var currUserProfileModel = new UserProfileModel
+        {
+            Id = currentAccount.Id,
+            FirstName = currentAccount.FirstName,
+            LastName = currentAccount.LastName,
+            ProfileBio = currentAccount.ProfileBio,
+            Phone = currentAccount.Phone,
+            Url = currentAccount.Url,
+            ProfilePhoto = currentAccount.ProfilePhoto,
+            StudentNumber = currentAccount.StudentNumber
+        };
+        
+        var list = new List<UserProfileModel>();
+        list.Add(currUserProfileModel);
+        list.Add(viewedUser);
+        return View(list);
     }
     
 

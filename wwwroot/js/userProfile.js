@@ -10,25 +10,12 @@ function listUsers() {
                 const lastName = response[i].lastName;
                 const mail = response[i].email;
                 let str = "<tr><td>" + firstName + "</td><td>" + lastName + "</td><td>" + mail + "</td><td>" +
-                    '<input type="button" onClick="viewUserProfile(\'' + mail + '\')" value="View"/>';
+                    '<a href="/Home/ViewProfile?mail=' + mail + '"' + '> View </a>';
                 tableBody.append(str);
             }
         },
         error: function () {
             alert("An error occured");
-        }
-    });
-}
-
-function viewUserProfile(mail) {
-    $.ajax({
-        type: "GET",
-        url: "/Home/ViewProfile",
-        data: { mail : mail },
-        success: function() {
-            
-        },
-        error: function () {
         }
     });
 }
