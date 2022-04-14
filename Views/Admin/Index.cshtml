@@ -15,7 +15,14 @@
 <body>
 <div class="notification">
     <h1>Notifications</h1>
+    <br/>
+    @foreach (var item in Model.Notifications)
+    {
+                    @item.NotificationContent
+        <br/><br/>
+    }
 </div>
+
 <div class="accounts" style = "padding:30px">
         <h1>Account List</h1>
 
