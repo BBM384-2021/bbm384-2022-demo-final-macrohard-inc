@@ -13,23 +13,23 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private ApplicationDbContext _context;
-    
+
     public HomeController(ILogger<HomeController> logger,
                           ApplicationDbContext context)
     {
         _logger = logger;
         _context = context;
     }
-    
+
     [AllowAnonymous]
     public IActionResult Index()
     {
         if (User.Identity.IsAuthenticated)
             return RedirectToAction("Homepage");
-        
+
         return View();
     }
-    
+
     [HttpGet]
     public async Task<JsonResult> ListUsers()
     {
@@ -53,7 +53,7 @@ public class HomeController : Controller
             ProfilePhoto = account.ProfilePhoto,
             StudentNumber = account.StudentNumber
         };
-        
+
         var currentAccounts = await _context.Accounts.Where(m => m.Email == User.Identity.Name).ToListAsync();
         var currentAccount = currentAccounts[0];
         var currUserProfileModel = new UserProfileModel
@@ -67,13 +67,13 @@ public class HomeController : Controller
             ProfilePhoto = currentAccount.ProfilePhoto,
             StudentNumber = currentAccount.StudentNumber
         };
-        
+
         var list = new List<UserProfileModel>();
         list.Add(currUserProfileModel);
         list.Add(viewedUser);
         return View(list);
     }
-    
+
 
     public async Task<IActionResult> Homepage()
     {
@@ -94,7 +94,7 @@ public class HomeController : Controller
         };
         return View(userProfileModel);
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url, ProfileBio")] Account account)
     {
@@ -118,7 +118,7 @@ public class HomeController : Controller
         }
         return RedirectToAction("Index", "Home");
     }
- 
+
     [AllowAnonymous]
     public IActionResult Privacy()
     {
@@ -129,6 +129,6 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
