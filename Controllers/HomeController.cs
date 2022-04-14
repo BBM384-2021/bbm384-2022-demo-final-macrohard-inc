@@ -22,12 +22,13 @@ public class HomeController : Controller
     }
 
     [AllowAnonymous]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        if (User.Identity.IsAuthenticated)
-            return RedirectToAction("Homepage");
+        if (!User.Identity.IsAuthenticated) return View();
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        return currAcc.IsAdmin ? RedirectToAction("Index", "Admin") : RedirectToAction("Homepage");
 
-        return View();
     }
 
     [HttpGet]
