@@ -52,6 +52,7 @@ public class AdminController : Controller
         return View(account);
     }
 
+
     // GET: Admin/Edit/5
     public async Task<IActionResult> Edit(string? id)
     {
@@ -65,51 +66,46 @@ public class AdminController : Controller
         {
             return NotFound();
         }
-        
+
         return View(account);
     }
 
-    // POST: Admin/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+
     public async Task<IActionResult> Edit(string id,
-        [Bind("Url,Phone,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
+         [Bind("Url,Phone,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
         Account account)
-    {
-        if (id != account.Id)
         {
-            return NotFound();
-        }
 
-        if (ModelState.IsValid)
-        {
-            try
+            var user = await _context.Accounts.FindAsync(id);
+            if (id != user.Id)
             {
-                _context.Update(account);
+                return NotFound();
+            }
+
+            ModelState.Remove("AccountType");
+            if (ModelState.IsValid)
+            {
+                user.FirstName = account.FirstName;
+                user.LastName = account.LastName;
+                user.Phone = account.Phone;
+                user.Url = account.Url;
+                user.Email = account.Email;
+                _context.Update(user);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AccountExists(account.AccountId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
         }
-        
-        return View(account);
+
+
+       return  RedirectToAction(nameof(Index));
     }
 
-    // GET: Admin/Delete/5
-    public async Task<IActionResult> Delete(string? id)
+    
+    
+
+// GET: Admin/Delete/5
+public async Task<IActionResult> Delete(string? id)
     {
         if (id == null)
         {
