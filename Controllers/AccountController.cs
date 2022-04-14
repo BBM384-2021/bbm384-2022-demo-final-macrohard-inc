@@ -92,6 +92,7 @@ public class AccountController : Controller
                 return RedirectToAction("Homepage", "Home");
             }
 
+            ViewBag.Text = "Invalid login! Check your mail and password.";
             ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
 
         }
@@ -103,7 +104,6 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url")] Account account)
     {
-        Console.WriteLine("INNN");
         var user = await _context.Accounts.FindAsync(id);
         if (id != user.Id)
         {
