@@ -5,6 +5,7 @@
 
     <head>
         <link rel="stylesheet" href="~/css/profile.css?v=3.4.1"/>
+        <link href="~/js/userProfile.js"/>
     </head>
 
     <div class = "modalContainer" id = "modalContainer" style="z-index: 4;background-color: rgba(0, 0, 0, 0.3);"onclick = "popup2()">
@@ -21,6 +22,8 @@
                     <img src="~/img/studentProfile.png" style=" height: 80px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;" >
                     <div style="position: relative; margin: 20px 20px 20px 0px; top : 20px;text-align:left">
                         <h4>@Model.FirstName @Model.LastName</h4>
+                        <p style="font-weight: lighter; font-size: 13px;">@Model.Url</p>
+                        <p style="font-weight: lighter; font-size: 13px;">@Model.Phone</p>
                         <p style="font-weight: lighter; font-size: 13px;">@Model.ProfileBio</p>
                     </div>
                 </div >
@@ -41,7 +44,7 @@
         </div>
     </div>
 
-    @using (Html.BeginForm("Edit", "Account", FormMethod.Post))
+    @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
     {
         <div class="settingsModalContainer" id="settingsModalContainer" style="z-index:7;position: absolute;text-align: center;">
             <div class="settingsModal">
@@ -59,8 +62,12 @@
                         <input type="number" placeholder="Phone Number*" value="@Model.Phone" name="Phone">
                     </div>
                     <div>
-                        <input type="url" name="url" placeholder="Linkedin Url" value="@Model.Url" name="Url">
+                        <input type="url" name="Url" placeholder="Linkedin Url*" value="@Model.Url">
                     </div>
+                    <div>
+                        <input type="text" name="ProfileBio" placeholder="Bio*" value="@Model.ProfileBio">
+                    </div>
+                    
 
                 </div>
                 <div>
@@ -133,90 +140,65 @@
                             <circle cx="26" cy="27" r="5.5" stroke="#CBCBCB" stroke-width="3" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <div class="searchButton">
-                        <p>Search</p>
-                        <svg class = "search" width="15" height="15" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="search" width="15" height="15" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path opacity="0.75" d="M20.2023 18.1388L14.9465 12.8829C14.8371 12.7735 14.7044 12.6977 14.5571 12.6554C15.489 11.3473 16.0417 9.75042 16.0417 8.02083C16.0417 3.59188 12.4498 0 8.02083 0C3.59188 0 0 3.59188 0 8.02083C0 12.4498 3.59188 16.0417 8.02083 16.0417C9.75042 16.0417 11.3473 15.489 12.6583 14.5571C12.6992 14.7044 12.775 14.8356 12.8844 14.9465L18.1402 20.2023C18.5792 20.6413 19.3915 20.5333 19.9617 19.9617C20.5319 19.3915 20.6398 18.5777 20.2023 18.1388ZM8.02083 13.125C5.20333 13.125 2.91667 10.8383 2.91667 8.02083C2.91667 5.20333 5.20333 2.91667 8.02083 2.91667C10.8383 2.91667 13.125 5.20333 13.125 8.02083C13.125 10.8383 10.8383 13.125 8.02083 13.125Z" fill="black"/>
                         </svg>
-                    </div>
                 </div> 
             </div>
         </header>
 
 
 
-        <div class="wrapper" style="position: relative;" style="z-index: 0;">
-            <div class="profileBodyContainer">
-                <div class="profileBody">
-                    <img src="~/img/studentback.png" style="width: 100%; border-radius: 20px 20px 0px 0px;height: 75%;">
-                    <div class="profile-grid-container">
-                        <div class = "studentProfile" >
-                            <img src="~/img/studentProfile.png" style="border-radius:50px;border: 10px solid white;" >
-                        </div>
-                        <div class="profileText" >
-                            <h1 style="text-align: left;">
-                                @Model.FirstName @Model.LastName
-                            </h1>
-                            <h2 style="text-align: left; font-weight: lighter;">
-                                @Model.ProfileBio
-                            </h2>
-                            <p style="text-align: left;font-weight: bolder;">
-                                @Model.FollowingCount
-                                <span style="color:rgba(0, 0, 0, 0.3)">Following</span>
-                                @Model.FollowersCount
-                                <span style="color:rgba(0, 0, 0, 0.3)">Followers</span>
-                            </p>
-                        </div>
-                        <div style="text-align: right;">
-                            <button onclick="popup4()" >
-                                Settings
-                            </button>
-                        </div>
+    <div class="wrapper" style="position: relative;" style="z-index: 0;">
+        <div class="profileBodyContainer">
+            <div class="profileBody">
+                <img src="~/img/studentback.png" style="width: 100%; border-radius: 20px 20px 0px 0px;height: 75%;">
+                <div class="profile-grid-container">
+                    <div class = "studentProfile" >
+                        <img src="~/img/studentProfile.png" style="border-radius:50px;border: 10px solid white;" >
                     </div>
-                </div>                
-            </div>
-            <div class="posts">
-                <div style="display: block; width: 500px;height: 1000000px;background-color: black; display: none;">
-
+                    <div class="profileText" >
+                        <h1 style="text-align: left;">
+                            @Model.FirstName @Model.LastName
+                        </h1>
+                        <p style="text-align: left;font-weight: bolder;">
+                            @Model.FollowingCount
+                            <span style="color:rgba(0, 0, 0, 0.3)">Following</span>
+                            @Model.FollowersCount
+                            <span style="color:rgba(0, 0, 0, 0.3)">Followers</span>
+                        </p>
+                        <p style="text-align: left; font-weight: lighter;">
+                            @Model.ProfileBio
+                        </p>
+                           
+                    </div>
+                    <div style="text-align: right;">
+                        <button onclick="popup4()" >
+                            Settings
+                        </button>
+                    </div>
                 </div>
+            </div>                
+        </div>
+        <div class="posts">
+            <div style="display: block; width: 500px;height: 1000000px;background-color: black; display: none;">
+
             </div>
         </div>
-
-    </body> 
-
-    <script >
-        
-        function popup(tagName){
-            var modalCont = document.getElementById("modalContainer");
-            var modal = document.getElementById("modal");
-            modalCont.classList.toggle(tagName.value)
-            modal.classList.toggle(tagName.value)
-        };
-
-        function popup2(){
-            var modalCont = document.getElementById("modalContainer");
-            var modal = document.getElementById("modal");
-            modalCont.classList.remove("hide");
-            modal.classList.remove("hide");
-        };
-
-        function popup3(){
-            console.log("yes wroks")
-            
-            var modalCont2 = document.getElementById("modalContainer2");
-            var modal = document.getElementById("settingsModalContainer");
-            modalCont2.classList.remove("hide");
-            modal.classList.remove("hide");
-        };
-        function popup4(){
-            console.log("yes wroks4")
-            
-            var modalCont2 = document.getElementById("modalContainer2");
-            var modal = document.getElementById("settingsModalContainer");
-            
-            modalCont2.classList.add("hide");
-            modal.classList.add("hide");
-        };
-
-    </script>
+    </div>
+    
+    <input type="text" id="myInput" onclick="listUsers()" onkeyup="filter()" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+           
+    <table id="grid-basic" style="display: none;" class="table table-condensed table-hover table-striped">
+    <tbody id="body">
+    </tbody>
+    <tfoot>
+    <tr><td colspan="4"><button type="button" id="x" class="btn btn-danger" onclick="close()">Close</button></td></tr>
+    </tfoot>
+    </table>
+    </body>
+<script src="~/js/userProfile.js" type="text/javascript"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 </html>
