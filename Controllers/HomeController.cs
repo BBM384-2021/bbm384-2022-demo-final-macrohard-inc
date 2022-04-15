@@ -46,6 +46,8 @@ public class HomeController : Controller
         var account = await _context.Accounts.Where(a => a.Email == mail).FirstOrDefaultAsync();
         if (viewerAcc == account)
             return RedirectToAction("Homepage");
+        if (account is null)
+            return NotFound();
         var viewedUser = new UserProfileModel
         {
             Id = account.Id,
