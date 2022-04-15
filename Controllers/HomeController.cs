@@ -41,8 +41,13 @@ public class HomeController : Controller
     [HttpGet]
     public async Task<IActionResult> ViewProfile(string? mail)
     {
-        var accounts = await _context.Accounts.Where(a => a.Email == mail).ToListAsync();
-        var account = accounts[0];
+        var viewerAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        var account = await _context.Accounts.Where(a => a.Email == mail).FirstOrDefaultAsync();
+        if (viewerAcc == account)
+            return RedirectToAction("Homepage");
+        if (account is null)
+            return NotFound();
         var viewedUser = new UserProfileModel
         {
             Id = account.Id,
