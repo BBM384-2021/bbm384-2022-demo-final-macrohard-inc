@@ -29,4 +29,5 @@ public class Account : IdentityUser
     public DateTime RegistrationDate { get; set; }
     public string? ProfileBio { get; set; }
     public string? StudentNumber { get; set; }
+    public List<Post>? Posts { get; set; }
 }

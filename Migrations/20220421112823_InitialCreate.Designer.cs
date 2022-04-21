@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LinkedHUCENGv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220412145037_UserMigration2")]
-    partial class UserMigration2
+    [Migration("20220421112823_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace LinkedHUCENGv2.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("LinkedHU_CENG.Models.Follow", b =>
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Follow", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace LinkedHUCENGv2.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -52,7 +52,7 @@ namespace LinkedHUCENGv2.Migrations
                     b.ToTable("Follows");
                 });
 
-            modelBuilder.Entity("LinkedHU_CENG.Models.Notification", b =>
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Notification", b =>
                 {
                     b.Property<int>("NotificationId")
                         .ValueGeneratedOnAdd()
@@ -71,7 +71,7 @@ namespace LinkedHUCENGv2.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("NotificationTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("NotificationType")
                         .IsRequired()
@@ -82,6 +82,35 @@ namespace LinkedHUCENGv2.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
+                {
+                    b.Property<int>("PostId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PostId"));
+
+                    b.Property<string>("PostContent")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("PostTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("PostType")
+                        .IsRequired()
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PosterId")
+                        .HasColumnType("text");
+
+                    b.HasKey("PostId");
+
+                    b.HasIndex("PosterId");
+
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -314,11 +343,20 @@ namespace LinkedHUCENGv2.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProfileBio")
+                        .HasColumnType("text");
+
                     b.Property<string>("ProfilePhoto")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("RegistrationDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("StudentNumber")
+                        .HasColumnType("text");
 
                     b.Property<string>("Url")
                         .HasColumnType("text");
@@ -326,7 +364,7 @@ namespace LinkedHUCENGv2.Migrations
                     b.HasDiscriminator().HasValue("Account");
                 });
 
-            modelBuilder.Entity("LinkedHU_CENG.Models.Follow", b =>
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Follow", b =>
                 {
                     b.HasOne("LinkedHUCENGv2.Models.Account", "Account1")
                         .WithMany("Following")
@@ -345,11 +383,20 @@ namespace LinkedHUCENGv2.Migrations
                     b.Navigation("Account2");
                 });
 
-            modelBuilder.Entity("LinkedHU_CENG.Models.Notification", b =>
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Notification", b =>
                 {
                     b.HasOne("LinkedHUCENGv2.Models.Account", null)
                         .WithMany("Notifications")
                         .HasForeignKey("AccountId");
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
+                {
+                    b.HasOne("LinkedHUCENGv2.Models.Account", "Poster")
+                        .WithMany("Posts")
+                        .HasForeignKey("PosterId");
+
+                    b.Navigation("Poster");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -410,6 +457,8 @@ namespace LinkedHUCENGv2.Migrations
                     b.Navigation("Following");
 
                     b.Navigation("Notifications");
+
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }
