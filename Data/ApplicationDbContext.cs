@@ -1,4 +1,4 @@
-﻿using LinkedHUCENGv2.Models;
+using LinkedHUCENGv2.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -30,5 +30,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<Follow> Follows { get; set; }
+    public DbSet<LinkedHUCENGv2.Models.Post> Post { get; set; }
 
 }
