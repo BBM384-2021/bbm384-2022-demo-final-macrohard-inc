@@ -25,11 +25,11 @@ public class ProfileController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> ViewProfile(string? mail)
+    public async Task<IActionResult> ViewProfile(string? id)
     {
         var viewerAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        var account = await _context.Accounts.Where(a => a.Email == mail).FirstOrDefaultAsync();
+        var account = await _context.Accounts.Where(a => a.Id == id).FirstOrDefaultAsync();
         var followControl = new FollowController(_context);
         if (viewerAcc == account)
             return RedirectToAction("Homepage", "Home");
