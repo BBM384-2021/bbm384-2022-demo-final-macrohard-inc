@@ -2,7 +2,6 @@
 using LinkedHUCENGv2.Data;
 using Microsoft.AspNetCore.Mvc;
 using LinkedHUCENGv2.Models;
-using LinkedHUCENGv2.Models.UserViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,9 +33,11 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Homepage()
     {
-        Account currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        UserProfileModel userProfileModel = new UserProfileModel
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var userProfileModel = new UserProfileModel
         {
             Id = currAcc.Id,
             FirstName = currAcc.FirstName,
@@ -56,10 +57,10 @@ public class HomeController : Controller
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url, ProfileBio")] Account account)
     {
         var user = await _context.Accounts.FindAsync(id);
-        if (id != user.Id)
-        {
+        if (user is null)
             return NotFound();
-        }
+        if (id != user.Id)
+            return NotFound();
 
         ModelState.Remove("AccountType");
         if (ModelState.IsValid)

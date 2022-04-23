@@ -30,6 +30,7 @@ public class ProfileController : Controller
         var viewerAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
         var account = await _context.Accounts.Where(a => a.Email == mail).FirstOrDefaultAsync();
+        var followControl = new FollowController(_context);
         if (viewerAcc == account)
             return RedirectToAction("Homepage", "Home");
         if (account is null)
@@ -43,7 +44,10 @@ public class ProfileController : Controller
             Phone = account.Phone,
             Url = account.Url,
             ProfilePhoto = account.ProfilePhoto,
-            StudentNumber = account.StudentNumber
+            StudentNumber = account.StudentNumber,
+            FollowStatus = followControl.IsUserFollowed(viewerAcc.Id, account.Id) ? "Following" : "Follow",
+            FollowersCount = followControl.GetFollowerCount(account.Id),
+            FollowingCount = followControl.GetFollowingCount(account.Id)
         };
 
         var currentAccounts = await _context.Accounts.Where(m => m.Email == User.Identity.Name).ToListAsync();
@@ -57,12 +61,17 @@ public class ProfileController : Controller
             Phone = currentAccount.Phone,
             Url = currentAccount.Url,
             ProfilePhoto = currentAccount.ProfilePhoto,
-            StudentNumber = currentAccount.StudentNumber
+            StudentNumber = currentAccount.StudentNumber,
+            FollowStatus = followControl.IsUserFollowed(viewerAcc.Id, account.Id) ? "Following" : "Follow",
+            FollowersCount = followControl.GetFollowerCount(account.Id),
+            FollowingCount = followControl.GetFollowingCount(account.Id)
         };
 
-        var list = new List<UserProfileModel>();
-        list.Add(currUserProfileModel);
-        list.Add(viewedUser);
+        var list = new List<UserProfileModel>
+        {
+            currUserProfileModel,
+            viewedUser
+        };
         return View(list);
     }
 
