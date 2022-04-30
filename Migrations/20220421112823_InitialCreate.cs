@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LinkedHUCENGv2.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -216,6 +216,27 @@ namespace LinkedHUCENGv2.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Post",
+                columns: table => new
+                {
+                    PostId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PosterId = table.Column<string>(type: "text", nullable: true),
+                    PostContent = table.Column<string>(type: "text", nullable: false),
+                    PostTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PostType = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Post", x => x.PostId);
+                    table.ForeignKey(
+                        name: "FK_Post_AspNetUsers_PosterId",
+                        column: x => x.PosterId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -267,6 +288,11 @@ namespace LinkedHUCENGv2.Migrations
                 name: "IX_Notifications_AccountId",
                 table: "Notifications",
                 column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Post_PosterId",
+                table: "Post",
+                column: "PosterId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -291,6 +317,9 @@ namespace LinkedHUCENGv2.Migrations
 
             migrationBuilder.DropTable(
                 name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "Post");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

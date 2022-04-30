@@ -4,16 +4,16 @@ function listUsers() {
     if (!isListed) {
         $.ajax({
             type: "GET",
-            url: "/Home/ListUsers",
+            url: "/Profile/ListUsers",
             dataType: 'json',
             success: function (response) {
                 let tableBody = $("table tbody")
                 for (let i = 0; i < response.length; i++) {
                     const firstName = response[i].firstName;
                     const lastName = response[i].lastName;
-                    const mail = response[i].email;
+                    const id = response[i].id;
                     let str = "<tr><td>" + firstName + "</td><td>" + lastName + "</td><td>" +
-                        '<a href="/Home/ViewProfile?mail=' + mail + '"' + '> View </a>';
+                        '<a href="/Profile/ViewProfile?id=' + id + '"' + '> View </a>';
                     tableBody.append(str);
                     isListed = true;
                 }

@@ -82,6 +82,35 @@ namespace LinkedHUCENGv2.Migrations
                     b.ToTable("Notifications");
                 });
 
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
+                {
+                    b.Property<int>("PostId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PostId"));
+
+                    b.Property<string>("PostContent")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("PostTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("PostType")
+                        .IsRequired()
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PosterId")
+                        .HasColumnType("text");
+
+                    b.HasKey("PostId");
+
+                    b.HasIndex("PosterId");
+
+                    b.ToTable("Post");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -359,6 +388,15 @@ namespace LinkedHUCENGv2.Migrations
                         .HasForeignKey("AccountId");
                 });
 
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
+                {
+                    b.HasOne("LinkedHUCENGv2.Models.Account", "Poster")
+                        .WithMany("Posts")
+                        .HasForeignKey("PosterId");
+
+                    b.Navigation("Poster");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -417,6 +455,8 @@ namespace LinkedHUCENGv2.Migrations
                     b.Navigation("Following");
 
                     b.Navigation("Notifications");
+
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }
