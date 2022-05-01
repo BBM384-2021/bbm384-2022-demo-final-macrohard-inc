@@ -1,31 +1,32 @@
-*{
+* {
     margin: 0;
     box-sizing: border-box;
     padding: 0;
     /* text-align: center; */
-    font-family: 'Poppins' ,sans-serif;
+    font-family: 'Poppins',sans-serif;
     height: fit-content;
 }
 
-.profileHeader{
+.profileHeader {
     position: sticky;
     left: 50%;
-    top : 0 ;
+    top: 0;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     background-color: #F4F1F7;
-    width: 500px ;
+    width: 500px;
     padding: 8px;
     border-radius: 0 0 10px 10px;
 }
 
-.mainHeader{
+.mainHeader {
     display: grid;
     width: fit-content;
     grid-template-columns: repeat(2,1fr);
     gap: 0px 30px;
 }
-.icons{
+
+.icons {
     margin-left: 15px;
     width: fit-content;
     display: grid;
@@ -33,7 +34,7 @@
     gap: 0px 20px;
 }
 
-.searchButton{
+.searchButton {
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
@@ -49,26 +50,24 @@
     right: 15px;
 }
 
-.searchButton p{
-    font-size: small;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    left: 20px;
-}
+    .searchButton p {
+        font-size: small;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        left: 20px;
+    }
 
-.search{
-   
+.search {
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    
     right: 10px;
 }
 
-.logo{
+.logo {
     position: absolute;
     margin: 0%;
     width: fit-content;
@@ -77,12 +76,12 @@
     height: 100%;
 }
 
-.logosvg{
+.logosvg {
     position: sticky;
     top: 15px;
 }
 
-.profileBodyContainer{
+.profileBodyContainer {
     background-color: transparent;
     width: 80%;
     height: fit-content;
@@ -90,7 +89,7 @@
 
 
 
-.rightSideContainer{
+.rightSideContainer {
     background-color: transparent;
     position: absolute;
     z-index: 3;
@@ -98,7 +97,8 @@
     width: 20%;
     height: 100%;
 }
-.rightSide{
+
+.rightSide {
     background-color: #F4F1F7;
     position: sticky;
     top: 0;
@@ -106,8 +106,8 @@
     height: 100vh;
 }
 
-.rightSideInclude{
-    position:absolute;
+.rightSideInclude {
+    position: absolute;
     display: grid;
     grid-template-columns: 1fr 2.5fr;
     top: 15px;
@@ -115,41 +115,39 @@
     gap: 15px;
 }
 
-.rightSideInclude  button{
-    margin: 0;
-    padding: 0;
-    height: 40px;
-}
+    .rightSideInclude button {
+        margin: 0;
+        padding: 0;
+        height: 40px;
+    }
 
-.rightSideInclude button[id = "me"]{
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    font-size: 15px;
-    font-weight: bold;
-    background-color: transparent;
-    text-align: right;
-    border-radius: 10px;
-    border: none;
-    width: 100px;
-    background-color: #eee;
-    
-}
+        .rightSideInclude button[id = "me"] {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            font-size: 15px;
+            font-weight: bold;
+            background-color: transparent;
+            text-align: right;
+            border-radius: 10px;
+            border: none;
+            width: 100px;
+            background-color: #eee;
+        }
 
-.rightSideInclude button[id = "notification"]{
-    
-    width: 40px;
-    border-radius: 50px;
-    border: none;
-    background-color: #eee;
-    right: 0;
-}
-.rightSideInclude p{
-    text-align: right;
-}
+        .rightSideInclude button[id = "notification"] {
+            width: 40px;
+            border-radius: 50px;
+            border: none;
+            background-color: #eee;
+            right: 0;
+        }
+
+    .rightSideInclude p {
+        text-align: right;
+    }
 
 
-.profileBody{
+.profileBody {
     box-shadow: 0px 0px 30px rgba(128, 0, 255, 0.1);
     height: 600px;
     margin: 50px 80px 0px 80px;
@@ -157,7 +155,7 @@
 }
 
 
-.modalContainer{
+.modalContainer {
     position: fixed;
     height: 100vh;
     width: 100%;
@@ -165,7 +163,7 @@
 }
 
 
-.modal-layout{
+.modal-layout {
     background-color: #240046;
     display: block;
     right: 25px;
@@ -176,8 +174,8 @@
     height: 200px;
     margin: 10px;
 }
-.modal{
-    
+
+.modal {
     display: block;
     right: 25px;
     width: 300px;
@@ -186,16 +184,16 @@
     visibility: hidden;
     border-radius: 20px;
     margin: 10px;
-    
 }
 
 
 
-.littleProfile{
+.littleProfile {
     display: grid;
     grid-template-columns: 1fr 4fr;
 }
-.line{
+
+.line {
     top: 5px;
     position: relative;
     margin: auto;
@@ -204,30 +202,30 @@
 }
 
 
-.profile-grid-container{
+.profile-grid-container {
     display: inline-grid;
     grid-template-columns: 1fr 5fr 1fr;
     z-index: 1;
-    gap: 15px ;
+    gap: 15px;
     margin: -40px 50px 0px 50px;
-
-}
-.profile-grid-container div:nth-child(2){
-    position: relative;
-    top: 60%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
 }
 
-.profile-grid-container div:nth-child(3){
-    position: relative;
-    top: 65%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    margin-right: 10px;
-}
+    .profile-grid-container div:nth-child(2) {
+        position: relative;
+        top: 60%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
 
-.settingsModalContainer{
+    .profile-grid-container div:nth-child(3) {
+        position: relative;
+        top: 65%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        margin-right: 10px;
+    }
+
+.settingsModalContainer {
     position: absolute;
     top: 60%;
     left: 50%;
@@ -238,17 +236,19 @@
     width: 600px;
     height: 600px;
     visibility: hidden;
-
 }
-.settingsModal{
+
+.settingsModal {
     margin: 40px;
 }
-.settingsModal-container{
+
+.settingsModal-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
-.forms input{
+
+.forms input {
     padding: 20px;
     margin-bottom: 20px;
     height: 50px;
@@ -258,14 +258,46 @@
     width: 100%;
 }
 
-.hide{
+.hide {
     visibility: visible;
 }
-.wrapper button{
+
+.wrapper button {
     border: none;
     border-radius: 30px;
     background-color: #EBE8F1;
     font-weight: bold;
     width: 120px;
     height: 40px;
+}
+
+
+
+tbody[id="body"] {
+    width: 17em;
+}
+
+    tbody[id="body"] tr {
+        display: grid;
+        grid-template-columns: 2fr 5fr 1fr;
+        padding: 10px;
+    }
+
+    tbody[id="body"] a {
+        text-align: center;
+        color: #240046;
+        display: block;
+        margin: auto;
+        text-decoration: none;
+        background-color: #EBE8F1;
+        font-weight: bold;
+        border: none;
+        border-radius: 20px;
+        height: 1em;
+        width: 5em;
+    }
+
+.searchButton input[type = "text"]:focus {
+    border: none;
+    outline: none;
 }

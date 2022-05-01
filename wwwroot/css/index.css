@@ -57,15 +57,19 @@ span[id = "2"]{
     border-radius: 20px;
     background-color: rgba(0,0,0,0.1);
 }
-.nav-link1{
+.nav-link1 {
+    border-color: black;
     position: absolute;
     top: 30px;
     right: 250px;
+    background-color: transparent;
 }
-.nav-link3{
+.nav-link3 {
+    
     position: absolute;
     top: 350px;
     left: 250px;
+    background-color: transparent;
 }
 .nav-link2{
     display:block;

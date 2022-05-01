@@ -1,95 +1,181 @@
 @model LinkedHUCENGv2.Models.AdminViewModels.AccountNotificationData;
 
-<!DOCTYPE html>
-<html lan="en" and dir="Itr">
+@{
+    ViewData["Title"] = "Index";
+    
+}
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Admin</title>
-    <link rel="stylesheet" href="~css/admin.css?v=3.4.1"/>
+    <link rel="stylesheet" href="~/css/admin.css"/>
 </head>
-<header>
-    <div>
-        <button class="meButton">Me</button>
-    </div>
-</header>
 
-@{
-    ViewData["Title"] = "Index";
-}
 
-<div class="notifications">
-    @foreach (var notification in Model.Notifications)
+<body>
+<div class="notification">
+    <h1>Notifications</h1>
+    <br/>
+    @foreach (var item in Model.Notifications)
     {
-        <p>@notification.NotificationContent</p>
-        <p>Registration Date: @notification.NotificationTime</p>
-
+                    @item.NotificationContent
+        <br/><br/>
     }
 </div>
 
-<h1>Admin Panel</h1>
-<div class="accounts">
-<p>
-    <a href=@Url.ActionLink("ExportToExcel","Admin")>Download User Details</a>  
-</p>
+<div class="accounts" style = "padding:30px">
+        <h1>Account List</h1>
 
-<form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Find by name or mail: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
-        </p>
-    </div>
-</form>
+        <div style = "display:grid ; grid-template-columns : 6fr 4fr;height : 50px;margin:10px 0px 10px 0;column-gap:20px;">
+            <div >
+                <form asp-action="Index" method="get">
+                    <div class="form-actions no-color" style = "display:grid ; grid-template-columns : 8fr 1fr ; text-align:center">
+                        <div style = "border:none;border-radius:20px; background-color:rgba(0,0,0,0.10);height:50px ;display:grid ; grid-template-columns : 3fr 1fr">
+                                <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder = "Find"/>
+                                <button type="submit" value="Search" class="btn btn-default" style = "border:none;background-color:transparent;">
+                                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.75" d="M20.2023 18.1388L14.9465 12.8829C14.8371 12.7735 14.7044 12.6977 14.5571 12.6554C15.489 11.3473 16.0417 9.75042 16.0417 8.02083C16.0417 3.59188 12.4498 0 8.02083 0C3.59188 0 0 3.59188 0 8.02083C0 12.4498 3.59188 16.0417 8.02083 16.0417C9.75042 16.0417 11.3473 15.489 12.6583 14.5571C12.6992 14.7044 12.775 14.8356 12.8844 14.9465L18.1402 20.2023C18.5792 20.6413 19.3915 20.5333 19.9617 19.9617C20.5319 19.3915 20.6398 18.5777 20.2023 18.1388ZM8.02083 13.125C5.20333 13.125 2.91667 10.8383 2.91667 8.02083C2.91667 5.20333 5.20333 2.91667 8.02083 2.91667C10.8383 2.91667 13.125 5.20333 13.125 8.02083C13.125 10.8383 10.8383 13.125 8.02083 13.125Z" fill="black"/>
+                                    </svg>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>URL</th>
-            <th>Phone Number</th>
-            <th>Profile Photo</th>
-            <th>Administrator</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Account Type</th>
-            <th>Mail</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Accounts) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Url)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfilePhoto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAdmin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccountType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                                </button> 
+                        </div>
+                        <a asp-action="Index" style = "vertical-align: middle;position:relative;">
+                            <svg class = "crossSVG" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 7L17.253 17.253" stroke="black" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M7 17.2531L17.253 7" stroke="black" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <div style = "position:relative;background-color:#24004640 ; border-radius:25px">
+                <div class = "downloadButton" >
+                    <a href=@Url.ActionLink("ExportToExcel","Admin") style = "text-decoration:none; color :#240046;font-weight:bold; ">Download User Details</a>
+                </div>
+                
+            </div>
+
+        </div>
+        <div style = "background-color:#F4F1F7 ; border-radius:10px;padding:15px">
+            <p style = "font-weight :bold">
+                Name Surname
+            </p>
+        </div>
+        @foreach (var item in Model.Accounts) {
+            
+            <div class="accounts2" style = "padding-left:15px ;font-weight:bold;margin-top:10px" id="@("head" + item.Email)">
+                <div style = "position:relative">
+                    <p class = "nameSurname" >@item.FirstName @item.LastName </p>
+                </div>
+                
+                <a asp-action="Edit" asp-route-id="@item.Id" style = "position:relative;">
+                    <svg class = "SVGs" width="30" height="30" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class = "editPath" d="M30.9625 20L33.3875 17.5C33.6203 17.2658 33.751 16.949 33.751 16.6188C33.751 16.2885 33.6203 15.9717 33.3875 15.7375L29.2125 11.6125C28.9783 11.3797 28.6615 11.249 28.3312 11.249C28.001 11.249 27.6842 11.3797 27.45 11.6125L25 14.0375L30.9625 20ZM23.7 15.3625L11.25 27.8125V33.75H17.1875L29.6375 21.3L23.7 15.3625V15.3625Z" 
+                    />
+                    </svg>
+
+                </a>
+
+
+                <a  asp-action="Delete" asp-route-id="@item.Id" style = "position:relative;">
+                    
+                    <svg class = "SVGs" width="30" height="30" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_473_1969)">
+                            <path class = "deletePath" fill-rule="evenodd" clip-rule="evenodd" d="M14.2572 17.5602H31.1262C31.2617 17.5548 31.3974 17.5657 31.5304 17.5928C31.7501 17.6415 31.9518 17.7515 32.1123 17.9102C32.2988 18.0903 32.4162 18.3309 32.4437 18.5897C32.4489 18.6875 32.4448 18.7856 32.4316 18.8827L30.9949 33.8668V33.8932V33.9502C30.9854 34.0121 30.9719 34.0732 30.9545 34.1333V34.1333V34.1455C30.8782 34.3819 30.7309 34.5886 30.5329 34.7369C30.3348 34.8853 30.0959 34.968 29.8491 34.9736H15.4999C15.4146 34.9694 15.33 34.9565 15.2473 34.9349C15.1661 34.9105 15.0875 34.8777 15.0129 34.8372V34.8372C14.8368 34.7352 14.688 34.5915 14.5796 34.4185C14.4711 34.2454 14.4062 34.0484 14.3905 33.8444L12.976 18.8928C12.9599 18.781 12.9558 18.6678 12.9639 18.5551C12.9922 18.2999 13.1088 18.063 13.2933 17.8857C13.4604 17.7221 13.6709 17.6105 13.8995 17.5643C14.0189 17.5433 14.1401 17.5344 14.2612 17.5378L14.2572 17.5602ZM13.1417 11.7904H19.501V11.2207C19.4999 11.2024 19.4999 11.1841 19.501 11.1658C19.5137 10.8591 19.6407 10.5686 19.8566 10.352V10.352C20.0833 10.1267 20.3888 10.0003 20.7073 10H24.6215H24.6821C24.993 10.0157 25.2861 10.1512 25.5005 10.3784C25.7149 10.6057 25.8343 10.9073 25.8339 11.2207V11.2207V11.7904H32.3003H32.3791C32.6079 11.8092 32.8223 11.9109 32.9824 12.0766C33.1425 12.2423 33.2376 12.4608 33.25 12.6917C33.25 12.7283 33.25 12.7568 33.25 12.7934V14.7994C33.25 14.9392 33.1949 15.0732 33.0967 15.172C32.9986 15.2708 32.8654 15.3263 32.7266 15.3263H12.5234C12.3856 15.3263 12.2534 15.2717 12.1554 15.1742C12.0574 15.0767 12.0016 14.9442 12 14.8055V12.7527C11.9979 12.7317 11.9979 12.7106 12 12.6896V12.6896C12.0138 12.4754 12.0986 12.272 12.2407 12.1119C12.3828 11.9519 12.5741 11.8444 12.784 11.8066C12.9026 11.791 13.0223 11.7855 13.1417 11.7904V11.7904ZM21.649 22.5122C21.6734 22.2733 21.7849 22.0519 21.962 21.891C22.1392 21.7301 22.3693 21.641 22.6078 21.641C22.8464 21.641 23.0765 21.7301 23.2536 21.891C23.4307 22.0519 23.5423 22.2733 23.5667 22.5122V30.0399C23.5423 30.2788 23.4307 30.5002 23.2536 30.6611C23.0765 30.822 22.8464 30.9111 22.6078 30.9111C22.3693 30.9111 22.1392 30.822 21.962 30.6611C21.7849 30.5002 21.6734 30.2788 21.649 30.0399V22.5122ZM26.4442 22.4715C26.4707 22.2276 26.5916 22.0041 26.7808 21.8495C26.97 21.6949 27.212 21.6216 27.4545 21.6455C27.5737 21.6444 27.6918 21.6671 27.8022 21.7122C27.9126 21.7573 28.0131 21.8239 28.0978 21.9083C28.1825 21.9926 28.2498 22.093 28.2958 22.2036C28.3418 22.3142 28.3656 22.433 28.3659 22.5529L27.9618 30.0806C27.9358 30.3247 27.8149 30.5485 27.6257 30.7032C27.4364 30.858 27.194 30.9311 26.9514 30.9066C26.8323 30.9077 26.7141 30.885 26.6037 30.8399C26.4933 30.7948 26.3929 30.7282 26.3082 30.6438C26.2235 30.5595 26.1562 30.4591 26.1101 30.3485C26.0641 30.2378 26.0403 30.1191 26.04 29.9992L26.4442 22.4715ZM17.0518 22.5529C17.0518 22.433 17.0754 22.3144 17.1212 22.2038C17.167 22.0931 17.2341 21.9927 17.3186 21.9084C17.4032 21.824 17.5035 21.7573 17.6138 21.7122C17.7241 21.6671 17.8421 21.6444 17.9612 21.6455C18.2037 21.6216 18.4458 21.6949 18.6349 21.8495C18.8241 22.0041 18.945 22.2276 18.9715 22.4715L19.3757 29.9992C19.3754 30.1191 19.3516 30.2378 19.3056 30.3485C19.2595 30.4591 19.1922 30.5595 19.1075 30.6438C19.0228 30.7282 18.9224 30.7948 18.812 30.8399C18.7016 30.885 18.5834 30.9077 18.4643 30.9066C18.2217 30.9311 17.9793 30.858 17.79 30.7032C17.6008 30.5485 17.4799 30.3247 17.454 30.0806L17.0498 22.5529H17.0518Z" 
+                            />
+                        </g>
+                        
+                    </svg>
+                </a>
+
+                <button onclick="closePop('@item.Email')" >
+                    <svg class = "infobutton" width="30" height="30" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class = "infoPath" d="M33.5 22.5C33.5 28.5751 28.5751 33.5 22.5 33.5C16.4249 33.5 11.5 28.5751 11.5 22.5C11.5 16.4249 16.4249 11.5 22.5 11.5C28.5751 11.5 33.5 16.4249 33.5 22.5Z" 
+                        stroke-width="3" stroke-linejoin="round"/>
+                        <rect class = "infobutton2" x="21" y="21" width="3" height="8" rx="1.5" />
+                        <rect class = "infobutton2" x="21" y="16" width="3" height="3" rx="1.5" />
+                    </svg>
+                </button>
+            </div>
+            <div class="userDetails" id="@("label" + item.Email)">
+                <p>
+                    <span style = "font-weight:bold">
+                        Name:
+                    </span>
+                    @item.FirstName
+                </p>
+                <p>
+                    <span style = "font-weight:bold">
+                        Surname:
+                    </span>
+                    @item.LastName</p>
+                <p>
+                    <span style = "font-weight:bold">
+                        Account Type:
+                    </span>
+                    @item.AccountType</p>
+                <p>
+                    <span style = "font-weight:bold">
+                        Email:
+                    </span>
+                    @item.Email</p>
+                <p>
+                    <span style = "font-weight:bold">
+                        Phone Number:
+                    </span>
+                    @item.PhoneNumber</p>
+                <p>
+                    <span style = "font-weight:bold">
+                        LinkedIn URL:
+                    </span>
+                    @item.Url</p>
+            </div>
+        }
+
 </div>
+
+
+<div class="leftBar">
+    <svg class = "logo"width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M68.46 10.52C67.09 9.05001 65.66 7.52002 64.15 6.03002C62.4967 4.37002 60.87 2.79002 59.27 1.29002C58.4265 0.517394 57.3239 0.0892005 56.18 0.0900147L13.62 1.4598e-05C12.4631 -0.00290792 11.3481 0.433081 10.5 1.22002C7.43 4.06002 4.19 7.29001 1.33 10.35C0.541779 11.194 0.102325 12.3052 0.100002 13.46L1.85104e-06 56C-0.00104568 57.1633 0.442551 58.283 1.24 59.13C4.15 62.21 7.33 65.39 10.38 68.31C11.2222 69.1086 12.3394 69.5526 13.5 69.55L56.01 69.64C57.1874 69.6636 58.3266 69.2216 59.18 68.41C62.25 65.52 65.44 62.34 68.37 59.27C69.1686 58.4278 69.6126 57.3106 69.61 56.15L69.7 13.61C69.6889 12.4609 69.2463 11.358 68.46 10.52ZM45.18 25.31C45.6712 25.4931 46.0878 25.8339 46.3646 26.279C46.6415 26.7242 46.7629 27.2485 46.71 27.77V44.86C46.71 45.1925 46.5786 45.5114 46.3445 45.7475C46.1104 45.9835 45.7924 46.1174 45.46 46.12H41.18C40.8476 46.1174 40.5296 45.9835 40.2955 45.7475C40.0614 45.5114 39.93 45.1925 39.93 44.86V33.59C39.93 33.2585 39.7983 32.9406 39.5639 32.7061C39.3295 32.4717 39.0115 32.34 38.68 32.34H34.84C34.5085 32.34 34.1905 32.4717 33.9561 32.7061C33.7217 32.9406 33.59 33.2585 33.59 33.59V44.86C33.59 45.1925 33.4586 45.5114 33.2245 45.7475C32.9904 45.9835 32.6724 46.1174 32.34 46.12H26.83C26.4976 46.1174 26.1796 45.9835 25.9455 45.7475C25.7114 45.5114 25.58 45.1925 25.58 44.86V13.57C25.58 13.2385 25.7117 12.9206 25.9461 12.6861C26.1805 12.4517 26.4985 12.32 26.83 12.32H32.34C32.6715 12.32 32.9895 12.4517 33.2239 12.6861C33.4583 12.9206 33.59 13.2385 33.59 13.57V24.01C33.59 24.3415 33.7217 24.6595 33.9561 24.8939C34.1905 25.1283 34.5085 25.26 34.84 25.26H39.93L45.18 25.31ZM35.4 56.07C35.4001 56.3964 35.2725 56.7099 35.0446 56.9435C34.8166 57.177 34.5063 57.3122 34.18 57.32H13.58C13.2485 57.32 12.9305 57.1883 12.6961 56.9539C12.4617 56.7195 12.33 56.4015 12.33 56.07V13.57C12.33 13.2385 12.4617 12.9206 12.6961 12.6861C12.9305 12.4517 13.2485 12.32 13.58 12.32H20.28C20.445 12.3187 20.6086 12.3501 20.7614 12.4123C20.9142 12.4745 21.0532 12.5664 21.1704 12.6826C21.2875 12.7988 21.3805 12.937 21.4439 13.0893C21.5073 13.2417 21.54 13.405 21.54 13.57V48.94C21.54 49.2715 21.6717 49.5895 21.9061 49.8239C22.1405 50.0583 22.4585 50.19 22.79 50.19H34.18C34.5115 50.19 34.8295 50.3217 35.0639 50.5561C35.2983 50.7906 35.43 51.1085 35.43 51.44L35.4 56.07ZM51.09 57.32H41.18C41.015 57.3213 40.8514 57.29 40.6986 57.2278C40.5458 57.1655 40.4068 57.0737 40.2896 56.9575C40.1725 56.8412 40.0795 56.703 40.0161 56.5507C39.9527 56.3984 39.92 56.235 39.92 56.07V51.44C39.92 51.275 39.9527 51.1117 40.0161 50.9593C40.0795 50.807 40.1725 50.6688 40.2896 50.5526C40.4068 50.4364 40.5458 50.3445 40.6986 50.2823C40.8514 50.2201 41.015 50.1887 41.18 50.19H49.83C50.1615 50.19 50.4795 50.0583 50.7139 49.8239C50.9483 49.5895 51.08 49.2715 51.08 48.94V21.86C51.0813 21.695 51.05 21.5314 50.9877 21.3786C50.9255 21.2258 50.8336 21.0868 50.7174 20.9697C50.6012 20.8525 50.463 20.7596 50.3107 20.6961C50.1584 20.6327 49.995 20.6 49.83 20.6H39.08C38.7485 20.6 38.4305 20.4683 38.1961 20.2339C37.9617 19.9995 37.83 19.6815 37.83 19.35V13.57C37.83 13.2385 37.9617 12.9206 38.1961 12.6861C38.4305 12.4517 38.7485 12.32 39.08 12.32H56.18L56.38 12.47C56.703 12.6908 56.9644 12.9903 57.1394 13.3403C57.3144 13.6903 57.3972 14.0791 57.38 14.47V55.13C57.4316 55.5571 57.3602 55.9901 57.1742 56.378C56.9882 56.766 56.6953 57.0928 56.33 57.32" fill="white"/>
+    </svg>
+    <a class = "homelink">
+        <svg class = "home" width="45" height="45" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10C0 4.47715 4.47715 0 10 0L42 0C47.5228 0 52 4.47715 52 10V42C52 47.5228 47.5228 52 42 52H10C4.47715 52 0 47.5228 0 42L0 10Z" />
+            <path d="M36.35 23.9384C36.35 23.5787 36.2065 23.2339 35.9513 22.9805L26.9513 14.0421C26.4249 13.5193 25.5751 13.5193 25.0487 14.0421L16.0487 22.9805C15.7935 23.2339 15.65 23.5787 15.65 23.9384L15.65 37.5C15.65 38.2456 16.2544 38.85 17 38.85H21.6667H30.3333H35C35.7456 38.85 36.35 38.2456 36.35 37.5V23.9384Z" stroke="white" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 38V28H31V38" stroke="white" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+    <a asp-controller="Account" asp-action="Logout" style = "margin-top:10px;">
+        <svg style = "display: block;margin:auto;" width="45" height="45" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10C0 4.47715 4.47715 0 10 0H42C47.5228 0 52 4.47715 52 10V42C52 47.5228 47.5228 52 42 52H10C4.47715 52 0 47.5228 0 42V10Z"/>
+            <path d="M19.9723 17.0366C14.864 19.2783 13.8708 24.6422 14.0127 27.0439C14.0127 33.013 19.1585 37.8519 25.5063 37.8519C31.8541 37.8519 37 33.013 37 27.0439C36.9999 24.3753 35.6376 18.6378 30.1888 17.0366M25.5063 14V25.6085" stroke="white" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+    </a>
+</div>
+
+</body>
+<script type = "text/javascript">
+       function closePop(i){
+              console.log("label" + i);
+              const head = document.getElementById("head" + i);
+              const popup = document.getElementById("label" + i);
+              var info = head.querySelector(".infoPath");
+              var edit = head.querySelector(".editPath");
+              var info2 = head.querySelectorAll(".infoButton2");
+              var deleteB = head.querySelector(".deletePath");
+              info.classList.toggle("info");
+              info2[0].classList.toggle("infoButton2D");
+              info2[1].classList.toggle("infoButton2D");
+              deleteB.classList.toggle("deleteB");
+              edit.classList.toggle("deleteB");
+              head.classList.toggle("version");
+              popup.classList.toggle("hide");
+              
+              
+       }
+       function nothing(i){
+           console.log("yes");
+       }
+</script>

@@ -2,7 +2,6 @@ using LinkedHUCENGv2.Models;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models.AdminViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 

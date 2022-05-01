@@ -81,7 +81,7 @@
             </div>
         </div>
     }
-    <body style="background-color: white ; position : relative ;height:auto;"> <!-- height� de�i�tirme-->
+    <body style="background-color: white ; position : relative ;height:auto;"> 
 
         <header style="z-index: 2; background-color: white;position: sticky; top: 0;">
             <div class = "logo">
@@ -140,9 +140,21 @@
                             <circle cx="26" cy="27" r="5.5" stroke="#CBCBCB" stroke-width="3" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <svg class="search" width="15" height="15" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <div class="searchButton">
+                        
+                        <input  style = "background-color:transparent;height:35px;border:none;width:17em;padding-left:15px" class = "searchButton2" type="text" id="myInput" onclick="listUsers()" onkeyup="filter()" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder = "Search">
+                        <svg class = "search" width="15" height="15" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path opacity="0.75" d="M20.2023 18.1388L14.9465 12.8829C14.8371 12.7735 14.7044 12.6977 14.5571 12.6554C15.489 11.3473 16.0417 9.75042 16.0417 8.02083C16.0417 3.59188 12.4498 0 8.02083 0C3.59188 0 0 3.59188 0 8.02083C0 12.4498 3.59188 16.0417 8.02083 16.0417C9.75042 16.0417 11.3473 15.489 12.6583 14.5571C12.6992 14.7044 12.775 14.8356 12.8844 14.9465L18.1402 20.2023C18.5792 20.6413 19.3915 20.5333 19.9617 19.9617C20.5319 19.3915 20.6398 18.5777 20.2023 18.1388ZM8.02083 13.125C5.20333 13.125 2.91667 10.8383 2.91667 8.02083C2.91667 5.20333 5.20333 2.91667 8.02083 2.91667C10.8383 2.91667 13.125 5.20333 13.125 8.02083C13.125 10.8383 10.8383 13.125 8.02083 13.125Z" fill="black"/>
                         </svg>
+                        <table id="grid-basic" style="display: none;background-color:white;width:17em;border-radius:10px ;border:#D2CED9 solid 2px;margin-top:5px;padding:5px;" class="table table-condensed table-hover table-striped">
+    	                    <tbody id="body"></tbody>
+    	                    <tfoot>
+    		                     <tr>
+                                     <td colspan="4">
+                                         <!--<a <button type="button" id="x" class="btn btn-danger" onclick="close()">Close</button></td></tr> -->
+    	                    </tfoot>
+                        </table>
+                    </div>
                 </div> 
             </div>
         </header>
@@ -162,10 +174,10 @@
                             @Model.FirstName @Model.LastName
                         </h1>
                         <p style="text-align: left;font-weight: bolder;">
+                            <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model.Id">Followings</a>
                             @Model.FollowingCount
-                            <span style="color:rgba(0, 0, 0, 0.3)">Following</span>
+                            <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model.Id">Followers</a>
                             @Model.FollowersCount
-                            <span style="color:rgba(0, 0, 0, 0.3)">Followers</span>
                         </p>
                         <p style="text-align: left; font-weight: lighter;">
                             @Model.ProfileBio
@@ -186,17 +198,8 @@
             </div>
         </div>
     </div>
-    
-    <input type="text" id="myInput" onclick="listUsers()" onkeyup="filter()" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-           
-    <table id="grid-basic" style="display: none;" class="table table-condensed table-hover table-striped">
-    <tbody id="body">
-    </tbody>
-    <tfoot>
-    <tr><td colspan="4"><button type="button" id="x" class="btn btn-danger" onclick="close()">Close</button></td></tr>
-    </tfoot>
-    </table>
     </body>
 <script src="~/js/userProfile.js" type="text/javascript"></script>
+<script src="~/js/profile.js" type="text/javascript"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </html>
