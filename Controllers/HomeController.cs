@@ -37,6 +37,7 @@ public class HomeController : Controller
             .FirstOrDefaultAsync();
         if (currAcc is null)
             return RedirectToAction("Login", "Account");
+        var followControl = new FollowController(_context);
         var userProfileModel = new UserProfileModel
         {
             Id = currAcc.Id,
@@ -46,8 +47,8 @@ public class HomeController : Controller
             Phone = currAcc.Phone,
             Url = currAcc.Url,
             ProfilePhoto = currAcc.ProfilePhoto,
-            //FollowersCount = currAcc.Followers.Count(),
-            //FollowingCount = currAcc.Following.Count(),
+            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
+            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
             StudentNumber = currAcc.StudentNumber
         };
         return View(userProfileModel);

@@ -174,10 +174,10 @@
                             @Model.FirstName @Model.LastName
                         </h1>
                         <p style="text-align: left;font-weight: bolder;">
+                            <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model.Id">Followings</a>
                             @Model.FollowingCount
-                            <span style="color:rgba(0, 0, 0, 0.3)">Following</span>
+                            <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model.Id">Followers</a>
                             @Model.FollowersCount
-                            <span style="color:rgba(0, 0, 0, 0.3)">Followers</span>
                         </p>
                         <p style="text-align: left; font-weight: lighter;">
                             @Model.ProfileBio
@@ -200,5 +200,6 @@
     </div>
     </body>
 <script src="~/js/userProfile.js" type="text/javascript"></script>
+<script src="~/js/profile.js" type="text/javascript"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </html>

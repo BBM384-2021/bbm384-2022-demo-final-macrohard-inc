@@ -54,7 +54,6 @@ public class FollowController : Controller
                 return true;
             }
         }
-
         return false;
     }
 
@@ -63,6 +62,7 @@ public class FollowController : Controller
         var followingUsers = _context.Follows.Where(a => a.Account1Id == userId).ToList();
         return followingUsers.Count;
     }
+    
 
     public int GetFollowerCount(string userId)
     {
@@ -71,17 +71,30 @@ public class FollowController : Controller
     }
 
     [HttpGet]
-    public async Task<JsonResult> GetFollowingList(string userId)
+    public async Task<IActionResult> GetFollowingList(string userId)
     {
-        var followingUsers = await _context.Follows.Where(a => a.Account1Id == userId).ToListAsync();
-        return Json(followingUsers);
+        var followings = await _context.Follows.Where(a => a.Account1Id == userId).ToListAsync();
+        var followingUsers = new List<Account>();
+        foreach(var follow in followings)
+        {
+            var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
+            followingUsers.Add(user);
+        }
+        return View("~/Views/Follow/ListAccounts.cshtml", followingUsers);
     }
-    
+
     [HttpGet]
-    public async Task<JsonResult> GetFollowersList(string userId)
+    public async Task<IActionResult> GetFollowersList(string userId)
     {
-        var followerUsers = await _context.Follows.Where(a => a.Account2Id == userId).ToListAsync();
-        return Json(followerUsers);
+        var followers = await _context.Follows.Where(a => a.Account2Id == userId).ToListAsync();
+        var followerUsers = new List<Account>();
+        foreach(var follow in followers)
+        {
+            var user = await _context.Accounts.Where(a => a.Id == follow.Account1Id).FirstOrDefaultAsync();
+            followerUsers.Add(user);
+        }
+        
+        return View("~/Views/Follow/ListAccounts.cshtml", followerUsers);
     }
     
     [HttpPost]
@@ -101,7 +114,7 @@ public class FollowController : Controller
         {
             return NotFound();
         }
-
+        
         var follow = new Follow
         {
             Account1 = currUser,
@@ -110,7 +123,6 @@ public class FollowController : Controller
             Account2Id = userToFollow.Id,
             DateCreated = DateTime.Now
         };
-
         _context.Add(follow);
         await _context.SaveChangesAsync();
         return RedirectToAction("Index");

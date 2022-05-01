@@ -76,7 +76,6 @@ function popup4() {
 
     var modalCont2 = document.getElementById("modalContainer2");
     var modal = document.getElementById("settingsModalContainer");
-
     modalCont2.classList.add("hide");
     modal.classList.add("hide");
-};
+}

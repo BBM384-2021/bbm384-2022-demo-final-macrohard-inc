@@ -63,8 +63,8 @@ public class ProfileController : Controller
             ProfilePhoto = currentAccount.ProfilePhoto,
             StudentNumber = currentAccount.StudentNumber,
             FollowStatus = followControl.IsUserFollowed(viewerAcc.Id, account.Id) ? "Following" : "Follow",
-            FollowersCount = followControl.GetFollowerCount(account.Id),
-            FollowingCount = followControl.GetFollowingCount(account.Id)
+            FollowersCount = followControl.GetFollowerCount(currentAccount.Id),
+            FollowingCount = followControl.GetFollowingCount(currentAccount.Id)
         };
 
         var list = new List<UserProfileModel>

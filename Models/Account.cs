@@ -20,10 +20,11 @@ public class Account : IdentityUser
     public string? LastName { get; set; }
     [Required(ErrorMessage = "You should choose the type!")]
     public string? AccountType { get; set; }
-    [NotMapped]
-    public List<Follow>? Following { get; set; }
-    [NotMapped]
-    public List<Follow>? Followers { get; set; }
+
+    [NotMapped] 
+    public List<Follow> Following { get; set; } = new List<Follow>();
+    [NotMapped] 
+    public List<Follow> Followers { get; set; } = new List<Follow>();
     public List<Notification> Notifications { get; set; } = new List<Notification>();
     [Required]
     public DateTime RegistrationDate { get; set; }
