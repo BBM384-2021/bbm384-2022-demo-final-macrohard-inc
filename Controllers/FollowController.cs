@@ -57,12 +57,14 @@ public class FollowController : Controller
 
         return false;
     }
+    
 
     public int GetFollowingCount(string userId)
     {
         var followingUsers = _context.Follows.Where(a => a.Account1Id == userId).ToList();
         return followingUsers.Count;
     }
+    
 
     public int GetFollowerCount(string userId)
     {
@@ -70,6 +72,7 @@ public class FollowController : Controller
         return followerUsers.Count;
     }
 
+    
     [HttpGet]
     public async Task<JsonResult> GetFollowingList(string userId)
     {
@@ -95,7 +98,7 @@ public class FollowController : Controller
         if (userToFollow is null)
             return NotFound();
         if (currUser is null)
-            return NotFound();
+            return RedirectToAction("Login", "Account");
 
         if (IsUserFollowed(currUser.Id, userId))
         {
@@ -113,7 +116,9 @@ public class FollowController : Controller
 
         _context.Add(follow);
         await _context.SaveChangesAsync();
-        return RedirectToAction("Index");
+        string returl = HttpContext.Request.Headers["Referer"];
+        return Redirect(returl);
+
     }
 
     [HttpPost]
