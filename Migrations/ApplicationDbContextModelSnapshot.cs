@@ -97,9 +97,9 @@ namespace LinkedHUCENGv2.Migrations
                     b.Property<DateTime>("PostTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("PostType")
+                    b.Property<string>("PostType")
                         .IsRequired()
-                        .HasColumnType("integer");
+                        .HasColumnType("text");
 
                     b.Property<string>("PosterId")
                         .HasColumnType("text");

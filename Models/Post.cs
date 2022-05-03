@@ -12,6 +12,6 @@ public class Post
     [Required]
     public DateTime PostTime { get; set; }
     [Required]
-    public int? PostType { get; set; }
+    public string? PostType { get; set; }
 
 }

@@ -52,7 +52,7 @@ public class PostController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CreatePost(string postContent, int postType)
+    public async Task<IActionResult> CreatePost(string postContent, string postType)
     {
         if (!ModelState.IsValid) return await Feed();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
@@ -171,6 +171,7 @@ public class PostController : Controller
         };
         var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         posts.AddRange(currPosts);
+        // get posts from the followings
         var followings = _context.Follows.Where(f => f.Account1.Id == currAcc.Id);
         foreach(var follow in followings)
         {
@@ -180,7 +181,11 @@ public class PostController : Controller
                 posts.AddRange(user.Posts);
             }
         }
-        var tuple = new Tuple<UserProfileModel, List<Post>>(userProfileModel, posts);
+        // get announcements
+        var announcements = await _context.Post.Where(p => p.PostType == "Announcement" && p.Poster.Email != User.Identity.Name).ToListAsync();
+        posts.AddRange(announcements);
+        var sortedPosts = SortPosts(posts);
+        var tuple = new Tuple<UserProfileModel, List<Post>>(userProfileModel, sortedPosts);
         return View("~/Views/Home/Feed.cshtml", tuple);
     }
 
@@ -188,5 +193,13 @@ public class PostController : Controller
     private bool PostExists(int id)
     {
         return _context.Post.Any(e => e.PostId == id);
+    }
+
+    private List<Post> SortPosts(List<Post> posts)
+    {
+        var sort = posts.OrderBy(p => p.PostTime).ToList();
+        sort.Reverse();
+        return sort;
+
     }
 }
