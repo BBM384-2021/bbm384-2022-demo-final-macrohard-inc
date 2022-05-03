@@ -51,6 +51,13 @@ public class HomeController : Controller
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
             StudentNumber = currAcc.StudentNumber
         };
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#8000FF";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "#240046";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "none";
         return View(userProfileModel);
     }
 
@@ -89,5 +96,34 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+    public async Task<IActionResult> Feed()
+    {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var followControl = new FollowController(_context);
+        var userProfileModel = new UserProfileModel
+        {
+            Id = currAcc.Id,
+            FirstName = currAcc.FirstName,
+            LastName = currAcc.LastName,
+            ProfileBio = currAcc.ProfileBio,
+            Phone = currAcc.Phone,
+            Url = currAcc.Url,
+            ProfilePhoto = currAcc.ProfilePhoto,
+            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
+            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
+            StudentNumber = currAcc.StudentNumber
+        };
+        ViewBag.color1 = "#8000FF";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "#240046";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "block";
+        return View(userProfileModel);
     }
 }

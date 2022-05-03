@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LinkedHUCENGv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220421112823_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220502110253_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

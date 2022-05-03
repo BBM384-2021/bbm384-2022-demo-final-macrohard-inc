@@ -2,7 +2,6 @@
     margin: 0;
     box-sizing: border-box;
     padding: 0;
-    /* text-align: center; */
     font-family: 'Poppins',sans-serif;
     height: fit-content;
 }
@@ -102,7 +101,22 @@
     background-color: #F4F1F7;
     position: sticky;
     top: 0;
-    border-radius: 40px 0 0 40px;
+    
+    height: 100vh;
+}
+.leftSideContainer {
+    background-color: transparent;
+    position: absolute;
+    z-index: 0;
+    left: 0px;
+    width: 20%;
+    height: 100%;
+}
+
+.leftSide {
+    background-color: #F4F1F7;
+    position: sticky;
+    top: 0;
     height: 100vh;
 }
 
@@ -131,14 +145,14 @@
             border-radius: 10px;
             border: none;
             width: 100px;
-            background-color: #eee;
+            background-color: rgba(0,0,0,0.07);
         }
 
         .rightSideInclude button[id = "notification"] {
             width: 40px;
             border-radius: 50px;
             border: none;
-            background-color: #eee;
+            background-color: rgba(0,0,0,0.07);
             right: 0;
         }
 
@@ -301,3 +315,4 @@ tbody[id="body"] {
     border: none;
     outline: none;
 }
+
