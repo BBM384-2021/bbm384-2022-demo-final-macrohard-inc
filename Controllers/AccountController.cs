@@ -45,7 +45,8 @@ public class AccountController : Controller
                 Url = "",
                 StudentNumber = "",
                 ProfileBio = "",
-                ProfilePhoto = ""
+                ProfilePhoto = "",
+                Posts = new List<Post>()
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);

@@ -11,7 +11,7 @@ namespace LinkedHUCENGv2.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
     public HomeController(ILogger<HomeController> logger,
                           ApplicationDbContext context)
@@ -23,6 +23,7 @@ public class HomeController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
+        if (User.Identity == null) return View();
         if (!User.Identity.IsAuthenticated) return View();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
@@ -51,7 +52,9 @@ public class HomeController : Controller
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
             StudentNumber = currAcc.StudentNumber
         };
-        return View(userProfileModel);
+        var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).OrderBy(o=>o.PostTime).ToListAsync();
+        var tuple = new Tuple<UserProfileModel, List<Post>>(userProfileModel, currPosts);
+        return View(tuple);
     }
 
     [HttpPost]

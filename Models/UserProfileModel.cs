@@ -13,5 +13,5 @@ public class UserProfileModel
     public int FollowingCount { get; set; }
     public string? StudentNumber { get; set; }
     public string? FollowStatus { get; set; }
-
+    
 }

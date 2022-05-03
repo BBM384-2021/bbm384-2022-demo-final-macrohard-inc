@@ -8,7 +8,7 @@ namespace LinkedHUCENGv2.Controllers;
 public class ProfileController : Controller
 {
     private readonly ILogger<ProfileController> _logger;
-    private ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
     public ProfileController(ILogger<ProfileController> logger,
         ApplicationDbContext context)
@@ -16,7 +16,7 @@ public class ProfileController : Controller
         _logger = logger;
         _context = context;
     }
-
+    
     [HttpGet]
     public async Task<JsonResult> ListUsers()
     {
@@ -47,7 +47,8 @@ public class ProfileController : Controller
             StudentNumber = account.StudentNumber,
             FollowStatus = followControl.IsUserFollowed(viewerAcc.Id, account.Id) ? "Following" : "Follow",
             FollowersCount = followControl.GetFollowerCount(account.Id),
-            FollowingCount = followControl.GetFollowingCount(account.Id)
+            FollowingCount = followControl.GetFollowingCount(account.Id),
+    
         };
 
         var currentAccounts = await _context.Accounts.Where(m => m.Email == User.Identity.Name).ToListAsync();
@@ -64,7 +65,7 @@ public class ProfileController : Controller
             StudentNumber = currentAccount.StudentNumber,
             FollowStatus = followControl.IsUserFollowed(viewerAcc.Id, account.Id) ? "Following" : "Follow",
             FollowersCount = followControl.GetFollowerCount(currentAccount.Id),
-            FollowingCount = followControl.GetFollowingCount(currentAccount.Id)
+            FollowingCount = followControl.GetFollowingCount(currentAccount.Id),
         };
 
         var list = new List<UserProfileModel>

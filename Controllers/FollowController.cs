@@ -125,7 +125,7 @@ public class FollowController : Controller
         };
         _context.Add(follow);
         await _context.SaveChangesAsync();
-        return RedirectToAction("Index");
+        return Redirect("Index");
     }
 
     [HttpPost]

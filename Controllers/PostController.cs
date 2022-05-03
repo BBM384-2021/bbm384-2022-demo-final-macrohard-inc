@@ -52,23 +52,23 @@ public class PostController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("PostId,PostContent,PostType")] Post post)
+    public async Task<IActionResult> CreatePost(string postContent, int postType)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid) return await Feed();
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return NotFound();
+        var post = new Post
         {
-            var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
-                .FirstOrDefaultAsync();
-            if (currAcc is null)
-                return NotFound();
-            post.Poster = currAcc;
-            post.PostTime = DateTime.Now;
-            currAcc.Posts ??= new List<Post>();
-            currAcc.Posts.Add(post);
-            _context.Add(post);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(post);
+            Poster = currAcc,
+            PostContent = postContent,
+            PostTime = DateTime.Now,
+            PostType = postType
+        };
+        _context.Add(post);
+        await _context.SaveChangesAsync();
+        return await Feed();
     }
 
     // GET: Post/Edit/5
@@ -146,13 +146,45 @@ public class PostController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpGet, ActionName("ListPosts")]
-    public async Task<JsonResult> ListPostsOfUser(string mail)
+    
+    [HttpGet]
+    public async Task<IActionResult> Feed()
     {
-        var posts = await _context.Post.Where(p => p.Poster.Email == mail).ToListAsync();
-        return Json(posts);
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var posts = new List<Post>();
+        var followControl = new FollowController(_context);
+        var userProfileModel = new UserProfileModel
+        {
+            Id = currAcc.Id,
+            FirstName = currAcc.FirstName,
+            LastName = currAcc.LastName,
+            ProfileBio = currAcc.ProfileBio,
+            Phone = currAcc.Phone,
+            Url = currAcc.Url,
+            ProfilePhoto = currAcc.ProfilePhoto,
+            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
+            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
+            StudentNumber = currAcc.StudentNumber
+        };
+        var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        posts.AddRange(currPosts);
+        var followings = _context.Follows.Where(f => f.Account1.Id == currAcc.Id);
+        foreach(var follow in followings)
+        {
+            var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
+            if (user != null)
+            {
+                posts.AddRange(user.Posts);
+            }
+        }
+        var tuple = new Tuple<UserProfileModel, List<Post>>(userProfileModel, posts);
+        return View("~/Views/Home/Feed.cshtml", tuple);
     }
 
+    [HttpGet]
     private bool PostExists(int id)
     {
         return _context.Post.Any(e => e.PostId == id);
