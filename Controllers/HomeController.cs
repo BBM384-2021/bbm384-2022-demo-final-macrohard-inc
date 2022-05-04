@@ -51,6 +51,19 @@ public class HomeController : Controller
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
             StudentNumber = currAcc.StudentNumber
         };
+        var posts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync(); 
+        var postModels = posts.Select(post => new PostViewModel
+            {
+                PostContent = post.PostContent,
+                PostTime = post.PostTime,
+                PostId = post.PostId,
+                AccountType = currAcc.AccountType,
+                FirstName = currAcc.FirstName,
+                LastName = currAcc.LastName,
+                PosterId = currAcc.Id,
+                PostType = post.PostType
+            })
+            .ToList();
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#8000FF";
         ViewBag.color3 = "#CBCBCB";
@@ -58,8 +71,7 @@ public class HomeController : Controller
         ViewBag.colorBG2 = "#240046";
         ViewBag.colorBG3 = "none";
         ViewBag.left = "none";
-        var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).OrderBy(o=>o.PostTime).ToListAsync();
-        var tuple = new Tuple<UserProfileModel, List<Post>>(userProfileModel, currPosts);
+        var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(userProfileModel, postModels);
         return View(tuple);
     }
 

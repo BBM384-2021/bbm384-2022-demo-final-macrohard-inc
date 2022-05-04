@@ -1,4 +1,4 @@
-@model Tuple<LinkedHUCENGv2.Models.UserProfileModel, List<LinkedHUCENGv2.Models.Post>>
+@model Tuple<LinkedHUCENGv2.Models.UserProfileModel, List<LinkedHUCENGv2.Models.PostViewModel>>
 @{
     Layout = "~/Views/Home/layout.cshtml";
 }
@@ -41,8 +41,15 @@
             </div>
         </div>                
     </div>
-    @{ 
-        await Html.RenderPartialAsync("~/Views/Post/ViewPosts.cshtml", Model.Item2);
+    @foreach (var  item in Model.Item2)
+    {
+        <div class="posts " style="background-color:white;margin-bottom:25px;height:fit-content; border-radius:20px;box-shadow: 0px 0px 50px rgba(128, 0, 255, 0.1);">
+        <p>@item.FirstName @item.LastName>
+        <p>@item.AccountType</p>
+        <p>@item.PostContent</p>
+        <p>@item.PostTime</p>
+        <a asp-action="DeleteOnProfile" asp-controller="Post" asp-route-id="@item.PostId" asp-route-userId="@item.PosterId">Delete Post</a>
+        </div> 
     }
 </div>
 </html>
