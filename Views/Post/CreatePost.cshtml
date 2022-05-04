@@ -1,0 +1,83 @@
+@model LinkedHUCENGv2.Models.Post
+<head>
+    <link rel="stylesheet" href="~/css/feed.css?v=3.4.1"/>
+</head>
+
+@using (Html.BeginForm("CreatePost", "Post", FormMethod.Post))
+{
+    <div class="createPost" style="background-color:white;margin-bottom:50px;height:fit-content; border-radius:20px;box-shadow: 0px 0px 35px rgba(128, 0, 255, 0.1);">
+        <div class="postTypeContainer" style="padding:10px;text-align:center">
+            <div class="postTypeColumn">
+                <div name="typeContainer" id="PostContainer">
+                    <input type="radio" id="Post" name="PostType" value="Post" class="checkbox" onclick="typeSelector(this)" checked/>
+                    <label for="Post" name="checkBoxLabel" id="postLabel">Post</label>
+                </div>
+                <div name="typeContainer">
+                    <input type="radio" id="JobOpportunity" value="Announcement" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="JobOpportunity" name="checkBoxLabel">Job Opportunity</label>
+                </div>
+                <div name="typeContainer">
+                    <input type="radio" id="Internship" value="Announcement" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="Internship" name="checkBoxLabel">Internship</label>
+                </div>
+                <div name="typeContainer">
+                    <input type="radio" id="Scholarship" value="Announcement" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="Scholarship" name="checkBoxLabel">Scholarship</label>
+                </div>
+                <div name="typeContainer">
+                    <input type="radio" id="LectureMaterials" value="Post" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="LectureMaterials" name="checkBoxLabel">Lecture Materials</label>
+                </div>
+            </div>
+            <div class="postTypeTextContainer" id="postTypeText">
+                <div class="postTypeText">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23.8035 8.61761L21.3827 6.19655C21.2504 6.06429 21.0778 6 20.9051 6C20.7324 6 20.5598 6.06429 20.4276 6.19655L11.062 15.563V18.9393H14.438L23.8035 9.57098C23.9357 9.43872 24 9.26605 24 9.09338C24 8.92071 23.9357 8.74804 23.8035 8.61761ZM13.8741 17.2511H12.75V16.127L20.9051 7.97102L22.031 9.09705L13.8741 17.2511ZM22.031 14.4388C21.5645 14.4388 21.188 14.8154 21.188 15.282V22.3137H7.68796V8.81233H14.719C15.1855 8.81233 15.562 8.43576 15.562 7.96918C15.562 7.5026 15.1855 7.12603 14.719 7.12603H7.12592C6.50327 7.1242 6 7.62935 6 8.25023V22.8758C6 23.4967 6.50327 24 7.12592 24H21.75C22.3708 24 22.8759 23.4967 22.8759 22.874V15.282C22.8741 14.8154 22.4957 14.4388 22.031 14.4388Z" fill="black"/>
+                    </svg>
+                    <textarea name="PostContent" placeholder = "Type Here" id = "myTextArea" ></textarea>
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.656 22.5266C13.6666 24.4996 10.4679 24.4918 8.48959 22.4991C6.51184 20.5075 6.50405 17.2849 8.46298 15.281L8.46133 15.2798L15.6572 8.03191L16.5571 7.12583C18.0474 5.62472 20.4633 5.62472 21.9536 7.12583C23.444 8.62693 23.444 11.0605 21.9536 12.5622L14.0215 20.4688L14.0187 20.4665C13.0412 21.4158 11.4831 21.4091 10.5173 20.4412C9.55139 19.4727 9.54531 17.9114 10.4923 16.9328L10.4895 16.9294L11.3728 16.0453L15.7891 11.6207L16.6718 12.506L11.3728 17.8146C10.8848 18.3028 10.8848 19.0953 11.3728 19.584C11.8607 20.0727 12.6519 20.0727 13.1393 19.584L21.0542 11.655L21.052 11.6533L21.0819 11.6274C22.0756 10.6268 22.0756 9.00368 21.0819 8.00318C20.0883 7.00268 18.4782 7.00262 17.4846 8.00318L17.4579 8.03358L17.4563 8.03242L16.5569 8.93793L9.36067 16.1859C7.8703 17.687 7.8703 20.1206 9.36067 21.6217C10.851 23.1228 13.2674 23.1228 14.7567 21.6217L21.0532 15.2798L21.9525 14.3743L22.8518 15.2798L21.9525 16.1859L15.6572 22.5278L15.656 22.5266Z" fill="#240046"/>
+                    </svg>
+                    <input type="submit" value="Post" class="btn btn-primary"/>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type = "text/javascript">
+        function typeSelector(checkbox){
+            var checked = document.getElementsByClassName("checkbox");
+            var typeContainer = document.getElementsByName("typeContainer");
+            var checkBoxLabel = document.getElementsByName("checkBoxLabel");
+            var textPart = document.getElementById("postTypeText");
+            if(checkbox.id === "Post"){
+                textPart.style.borderRadius = "0 20px 20px 20px"
+            }
+            else if (checkbox.id === "LectureMaterials"){
+                textPart.style.borderRadius = "20px 0px 20px 20px"
+            }
+            else{
+                textPart.style.borderRadius = "20px"
+            }
+            for(let i = 0; i < checked.length;i++){
+                if (checked[i] !== checkbox) {
+                    checked[i].checked = false
+                    typeContainer[i].style.backgroundColor = "white";
+                    checkBoxLabel[i].style.color = "darkslategray";
+                    
+                }
+                else{
+                    typeContainer[i].style.backgroundColor = "#240046";
+                    checkBoxLabel[i].style.color = "#8000FF";
+                }
+            }
+        }
+        
+        const myText = document.getElementById("myTextArea" );
+        /*myText.style.cssText = `height:${myText.scrollHeight}px;overflow-y:hidden`;*/
+        myText.addEventListener("input",function(){
+            this.style.height = "auto";
+            this.style.height = `${this.scrollHeight}px`
+        });
+    </script>

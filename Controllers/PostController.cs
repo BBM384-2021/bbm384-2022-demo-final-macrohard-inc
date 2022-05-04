@@ -46,10 +46,7 @@ public class PostController : Controller
     {
         return View();
     }
-
-    // POST: Post/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<PartialViewResult> CreatePost([Bind("PostId,PostContent,PostTime,PostType")] Post post, string postContent, string postType)
@@ -110,7 +107,7 @@ public class PostController : Controller
     }
 
     // GET: Post/Delete/5
-    public async Task<IActionResult> Delete(int? id)
+    public async Task<IActionResult> Delete(int? id, string userId)
     {
         if (id == null)
         {
@@ -118,13 +115,14 @@ public class PostController : Controller
         }
 
         var post = await _context.Post
-            .FirstOrDefaultAsync(m => m.PostId == id);
+            .FirstOrDefaultAsync(m => m.PostId == id && m.Poster.Id == userId);
         if (post == null)
         {
             return NotFound();
         }
-
-        return View(post);
+        _context.Post.Remove(post);
+        await _context.SaveChangesAsync();
+        return await Feed();
     }
 
     // POST: Post/Delete/5
@@ -140,7 +138,6 @@ public class PostController : Controller
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
-
     
     [HttpGet]
     public async Task<PartialViewResult> Feed()

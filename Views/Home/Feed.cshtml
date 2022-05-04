@@ -1,0 +1,29 @@
+﻿@model Tuple<LinkedHUCENGv2.Models.UserProfileModel, List<LinkedHUCENGv2.Models.Post>>
+@{
+    Layout = "~/Views/Home/layout.cshtml";
+}
+<!DOCTYPE html>
+<html lan="en" style="height: auto;">
+<head>
+        <link rel="stylesheet" href="~/css/feed.css?v=3.4.1"/>
+    </head>
+<body>
+<div style="display:flex;justify-content:center;margin-top:30px">
+    <div style="min-width:50%; max-width:50%;">
+        @{
+            await Html.RenderPartialAsync("~/Views/Post/CreatePost.cshtml", new Post());
+        }
+        @{ 
+            await Html.RenderPartialAsync("~/Views/Post/ViewPosts.cshtml", Model.Item2);
+        }
+    </div>
+</div>
+</body>
+    <script type = "text/javascript">
+        /*myText.style.cssText = `height:${myText.scrollHeight}px;overflow-y:hidden`;*/
+        myText.addEventListener("input",function(){
+            this.style.height = "auto";
+            this.style.height = `${this.scrollHeight}px`
+        });
+    </script>
+</html>
