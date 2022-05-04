@@ -55,7 +55,7 @@ public class AccountController : Controller
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 CreateRegisterNotification(user);
-                return RedirectToAction("Homepage", "Home");
+                return RedirectToAction("Feed", "Post");
             }
 
             foreach (var error in result.Errors)
@@ -90,7 +90,7 @@ public class AccountController : Controller
                 {
                     return RedirectToAction("Index", "Admin");
                 }
-                return RedirectToAction("Homepage", "Home");
+                return RedirectToAction("Feed", "Post");
             }
 
             ViewBag.Text = "Invalid login! Check your mail and password.";

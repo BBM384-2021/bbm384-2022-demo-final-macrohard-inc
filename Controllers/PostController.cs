@@ -52,20 +52,15 @@ public class PostController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CreatePost(string postContent, string postType)
+    public async Task<PartialViewResult> CreatePost([Bind("PostId,PostContent,PostTime,PostType")] Post post, string postContent, string postType)
     {
         if (!ModelState.IsValid) return await Feed();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        if (currAcc is null)
-            return NotFound();
-        var post = new Post
-        {
-            Poster = currAcc,
-            PostContent = postContent,
-            PostTime = DateTime.Now,
-            PostType = postType
-        };
+        post.Poster = currAcc;
+        post.PostContent = postContent;
+        post.PostType = postType;
+        post.PostTime = DateTime.Now;
         _context.Add(post);
         await _context.SaveChangesAsync();
         return await Feed();
@@ -148,12 +143,10 @@ public class PostController : Controller
 
     
     [HttpGet]
-    public async Task<IActionResult> Feed()
+    public async Task<PartialViewResult> Feed()
     {
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        if (currAcc is null)
-            return RedirectToAction("Login", "Account");
         var posts = new List<Post>();
         var followControl = new FollowController(_context);
         var userProfileModel = new UserProfileModel
@@ -186,7 +179,14 @@ public class PostController : Controller
         posts.AddRange(announcements);
         var sortedPosts = SortPosts(posts);
         var tuple = new Tuple<UserProfileModel, List<Post>>(userProfileModel, sortedPosts);
-        return View("~/Views/Home/Feed.cshtml", tuple);
+        ViewBag.color1 = "#8000FF";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "#240046";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "block";
+        return PartialView("~/Views/Home/Feed.cshtml", tuple);
     }
 
     [HttpGet]
@@ -195,7 +195,7 @@ public class PostController : Controller
         return _context.Post.Any(e => e.PostId == id);
     }
 
-    private List<Post> SortPosts(List<Post> posts)
+    private static List<Post> SortPosts(IEnumerable<Post> posts)
     {
         var sort = posts.OrderBy(p => p.PostTime).ToList();
         sort.Reverse();

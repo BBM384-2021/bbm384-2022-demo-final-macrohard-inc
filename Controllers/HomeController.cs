@@ -51,6 +51,13 @@ public class HomeController : Controller
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
             StudentNumber = currAcc.StudentNumber
         };
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#8000FF";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "#240046";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "none";
         var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).OrderBy(o=>o.PostTime).ToListAsync();
         var tuple = new Tuple<UserProfileModel, List<Post>>(userProfileModel, currPosts);
         return View(tuple);

@@ -50,7 +50,6 @@ public class ProfileController : Controller
             FollowingCount = followControl.GetFollowingCount(account.Id),
     
         };
-
         var currentAccounts = await _context.Accounts.Where(m => m.Email == User.Identity.Name).ToListAsync();
         var currentAccount = currentAccounts[0];
         var currUserProfileModel = new UserProfileModel
