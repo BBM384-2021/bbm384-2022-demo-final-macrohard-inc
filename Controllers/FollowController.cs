@@ -62,7 +62,7 @@ public class FollowController : Controller
         var followingUsers = _context.Follows.Where(a => a.Account1Id == userId).ToList();
         return followingUsers.Count;
     }
-    
+
 
     public int GetFollowerCount(string userId)
     {
@@ -75,7 +75,7 @@ public class FollowController : Controller
     {
         var followings = await _context.Follows.Where(a => a.Account1Id == userId).ToListAsync();
         var followingUsers = new List<Account>();
-        foreach(var follow in followings)
+        foreach (var follow in followings)
         {
             var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
             followingUsers.Add(user);
@@ -88,15 +88,15 @@ public class FollowController : Controller
     {
         var followers = await _context.Follows.Where(a => a.Account2Id == userId).ToListAsync();
         var followerUsers = new List<Account>();
-        foreach(var follow in followers)
+        foreach (var follow in followers)
         {
             var user = await _context.Accounts.Where(a => a.Id == follow.Account1Id).FirstOrDefaultAsync();
             followerUsers.Add(user);
         }
-        
+
         return View("~/Views/Follow/ListAccounts.cshtml", followerUsers);
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> FollowUser(string userId)
     {
@@ -114,7 +114,7 @@ public class FollowController : Controller
         {
             return NotFound();
         }
-        
+
         var follow = new Follow
         {
             Account1 = currUser,
@@ -125,17 +125,17 @@ public class FollowController : Controller
         };
         _context.Add(follow);
         await _context.SaveChangesAsync();
-        return RedirectToAction("Index");
+        return Redirect("Index");
     }
 
     [HttpPost]
     public async Task<IActionResult> UnfollowUser(string userId)
     {
-        var userToUnfollow =  await _context.Accounts.Where(m => m.Id == userId)
+        var userToUnfollow = await _context.Accounts.Where(m => m.Id == userId)
             .FirstOrDefaultAsync();
         var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        
+
         if (userToUnfollow is null)
             return NotFound();
         if (currUser is null)

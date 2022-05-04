@@ -1,4 +1,4 @@
-﻿@model LinkedHUCENGv2.Models.UserProfileModel
+﻿@model Tuple<LinkedHUCENGv2.Models.UserProfileModel, List<LinkedHUCENGv2.Models.Post>>
 
 <!DOCTYPE html>
 <html lan="en" style="height: auto;">
@@ -21,10 +21,10 @@
                 <div class = "littleProfile">
                     <img src="~/img/studentProfile.png" style=" height: 80px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;" >
                     <div style="position: relative; margin: 20px 20px 20px 0px; top : 20px;text-align:left">
-                        <h4>@Model.FirstName @Model.LastName</h4>
-                        <p style="font-weight: lighter; font-size: 13px;">@Model.Url</p>
-                        <p style="font-weight: lighter; font-size: 13px;">@Model.Phone</p>
-                        <p style="font-weight: lighter; font-size: 13px;">@Model.ProfileBio</p>
+                        <h4>@Model.Item1.FirstName @Model.Item1.LastName</h4>
+                        <p style="font-weight: lighter; font-size: 13px;">@Model.Item1.Url</p>
+                        <p style="font-weight: lighter; font-size: 13px;">@Model.Item1.Phone</p>
+                        <p style="font-weight: lighter; font-size: 13px;">@Model.Item1.ProfileBio</p>
                     </div>
                 </div >
 
@@ -54,18 +54,18 @@
                 <img src="~/img/studentProfile.png" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;">
                 <div class="forms" style="box-sizing: border-box;margin: 0;">
                     <div class="settingsModal-container">
-                         <input type="hidden" name="Id" value=@Model.Id>
-                         <input type="text" placeholder="Firstname*" value="@Model.FirstName" name="FirstName">
-                        <input type="text" placeholder="Lastname*" value="@Model.LastName" name="LastName">
+                         <input type="hidden" name="Id" value=@Model.Item1.Id>
+                         <input type="text" placeholder="Firstname*" value="@Model.Item1.FirstName" name="FirstName">
+                        <input type="text" placeholder="Lastname*" value="@Model.Item1.LastName" name="LastName">
                     </div>
                     <div>
-                        <input type="number" placeholder="Phone Number*" value="@Model.Phone" name="Phone">
+                        <input type="number" placeholder="Phone Number*" value="@Model.Item1.Phone" name="Phone">
                     </div>
                     <div>
-                        <input type="url" name="Url" placeholder="Linkedin Url*" value="@Model.Url">
+                        <input type="url" name="Url" placeholder="Linkedin Url*" value="@Model.Item1.Url">
                     </div>
                     <div>
-                        <input type="text" name="ProfileBio" placeholder="Bio*" value="@Model.ProfileBio">
+                        <input type="text" name="ProfileBio" placeholder="Bio*" value="@Model.Item1.ProfileBio">
                     </div>
                     
 
@@ -123,28 +123,28 @@
             <div class="leftSideContainer" style = "display:@ViewBag.left " >
                 <div class="leftSide">
                     <div class="leftSideInclude" style = "display:flex;justify-content:center;">
-                        <div style = "position: absolute;top:60px;width:80%;margin-top:10px">
+                        <div style = "position: absolute;top:60px;width:80%;margin-top:30px">
                             
                             <div  style="text-align:center ;background-color:white;border-radius: 20px;height:230px">
                                 <img src="~/img/studentback.png" style="width: 100%; border-radius: 20px 20px 0px 0px;height: 55%;">
                                 <img src="~/img/studentProfile.png" style="width:80px;border-radius:20px;border: 5px solid white;margin-top:-30px;" >
                                 <h4 style="text-align: center;">
-                                    @Model.FirstName @Model.LastName
+                                    @Model.Item1.FirstName @Model.Item1.LastName
                                 </h4>
                                 <p style="text-align: center; font-weight: lighter;">
-                                    @Model.ProfileBio
+                                    @Model.Item1.ProfileBio
                                 </p>
                             </div>
                             <div style = "display: flex;justify-content: left;align-items: center;background-color:white;height:50px;border-radius: 20px;margin-top:10px;padding:20px">
                                 <p style="text-align: left;font-weight: bolder;">
-                                    <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model.Id" style ="text-decoration:none">Followings</a>
-                                    @Model.FollowingCount
+                                    <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model.Item1.Id" style ="text-decoration:none">Followings</a>
+                                    @Model.Item1.FollowingCount
                                 </p>
                             </div>
                             <div style = "display: flex;justify-content: left;align-items: center;background-color:white;height:50px;border-radius: 20px;margin-top:10px;padding:20px">
                                 <p style="text-align: left;font-weight: bolder; ">
-                                    <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model.Id" style ="text-decoration:none">Followers</a>
-                                    @Model.FollowersCount
+                                    <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model.Item1.Id" style ="text-decoration:none">Followers</a>
+                                    @Model.Item1.FollowersCount
                                 </p>
                             </div>
 

@@ -1,4 +1,4 @@
-@model LinkedHUCENGv2.Models.UserProfileModel
+@model Tuple<LinkedHUCENGv2.Models.UserProfileModel, List<LinkedHUCENGv2.Models.Post>>
 @{
     Layout = "~/Views/Home/layout.cshtml";
 }
@@ -20,16 +20,16 @@
                     </div>
                     <div class="profileText" >
                         <h1 style="text-align: left;">
-                            @Model.FirstName @Model.LastName
+                            @Model.Item1.FirstName @Model.Item1.LastName
                         </h1>
                         <p style="text-align: left;font-weight: bolder;">
-                            <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model.Id" style ="text-decoration:none">Followings</a>
-                            @Model.FollowingCount
-                            <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model.Id" style ="text-decoration:none">Followers</a>
-                            @Model.FollowersCount
+                            <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model.Item1.Id" style ="text-decoration:none">Followings</a>
+                            @Model.Item1.FollowingCount
+                            <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model.Item1.Id" style ="text-decoration:none">Followers</a>
+                            @Model.Item1.FollowersCount
                         </p>
                         <p style="text-align: left; font-weight: lighter;">
-                            @Model.ProfileBio
+                            @Model.Item1.ProfileBio
                         </p>
                            
                     </div>
@@ -42,8 +42,25 @@
             </div>                
         </div>
         <div class="posts">
-            <div style="display: block; width: 500px;height: 1000000px;background-color: black; display: none;">
-
+            <div style="display: block; width: 500px;height: 1000000px">
+                <table class="table">
+                    <tbody>
+                    @foreach (var item in Model.Item2)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PostContent)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PostTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PostType)
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

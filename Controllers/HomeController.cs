@@ -11,7 +11,7 @@ namespace LinkedHUCENGv2.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
     public HomeController(ILogger<HomeController> logger,
                           ApplicationDbContext context)
@@ -23,13 +23,13 @@ public class HomeController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
+        if (!_context.Accounts.Any())
+            return View();
         if (!User.Identity.IsAuthenticated) return View();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
         return currAcc.IsAdmin ? RedirectToAction("Index", "Admin") : RedirectToAction("Homepage");
     }
-
-
 
     public async Task<IActionResult> Homepage()
     {
@@ -51,6 +51,8 @@ public class HomeController : Controller
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
             StudentNumber = currAcc.StudentNumber
         };
+        var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).OrderBy(o => o.PostTime).ToListAsync();
+        var tuple = new Tuple<UserProfileModel, List<Post>>(userProfileModel, currPosts);
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#8000FF";
         ViewBag.color3 = "#CBCBCB";
@@ -58,7 +60,7 @@ public class HomeController : Controller
         ViewBag.colorBG2 = "#240046";
         ViewBag.colorBG3 = "none";
         ViewBag.left = "none";
-        return View(userProfileModel);
+        return View(tuple);
     }
 
     [HttpPost]
@@ -117,6 +119,8 @@ public class HomeController : Controller
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
             StudentNumber = currAcc.StudentNumber
         };
+        var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).OrderBy(o => o.PostTime).ToListAsync();
+        var tuple = new Tuple<UserProfileModel, List<Post>>(userProfileModel, currPosts);
         ViewBag.color1 = "#8000FF";
         ViewBag.color2 = "#CBCBCB";
         ViewBag.color3 = "#CBCBCB";
@@ -124,6 +128,6 @@ public class HomeController : Controller
         ViewBag.colorBG2 = "none";
         ViewBag.colorBG3 = "none";
         ViewBag.left = "block";
-        return View(userProfileModel);
+        return View(tuple);
     }
 }

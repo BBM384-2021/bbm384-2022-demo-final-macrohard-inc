@@ -173,26 +173,20 @@
                     <h1 style="text-align: left;">
                         @Model[1].FirstName @Model[1].LastName
                     </h1>
-                     <p style="text-align: left;font-weight: bolder;">
-                     <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model[1].Id">Followings</a>
-                     @Model[1].FollowingCount
-                     <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model[1].Id">Followers</a>
-                     @Model[1].FollowersCount
-                     </p>
+                    <p style="text-align: left;font-weight: bolder;">
+                        <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model[1].Id">Followings</a>
+                        @Model[1].FollowingCount
+                        <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model[1].Id">Followers</a>
+                        @Model[1].FollowersCount
+                    </p>
                     <p style="text-align: left; font-weight: lighter;">
                         @Model[1].ProfileBio
                     </p>
                            
                 </div>
+                <p id="acc" style="visibility:hidden;">@Model[1].Id</p>
                 <div style="text-align: right;">
-                    @if (Model[1].FollowStatus == "Follow")
-                    {
-                        <a asp-controller="Follow" asp-action="FollowUser" asp-route-userId="@Model[1].Id">Follow</a>
-                    }
-                    @if (Model[1].FollowStatus == "Following")
-                    {
-                        <a asp-controller="Follow" asp-action="UnfollowUser" asp-route-userId="@Model[1].Id">Unfollow</a>
-                    }
+                    <button id="follow" onclick="followUser()"></button>
                 </div>
             </div>
         </div>                
@@ -210,4 +204,5 @@
 </body>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/userProfile.js" type="text/javascript"></script>
+<script src="~/js/post.js" type="text/javascript"></script>
 </html>
