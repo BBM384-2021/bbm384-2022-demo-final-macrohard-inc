@@ -184,9 +184,8 @@
                     </p>
                            
                 </div>
-                <p id="acc" style="visibility:hidden;">@Model[1].Id</p>
                 <div style="text-align: right;">
-                    <button id="follow" >Follow</button>
+                    <a asp-action="FollowUser" asp-controller="Follow" asp-route-userId="@Model[1].Id">Follow</a>
                 </div>
             </div>
         </div>                

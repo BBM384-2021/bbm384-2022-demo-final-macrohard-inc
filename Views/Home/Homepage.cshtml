@@ -28,6 +28,10 @@
                         <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model.Item1.Id" style ="text-decoration:none">Followers</a>
                         @Model.Item1.FollowersCount
                     </p>
+                    @if (Model.Item1.AccountType is "Academician" or "Student Representative" && Model.Item1.Email == User.Identity.Name)
+                    {
+                        <a asp-controller="Home" asp-action="RequestUserData">Request User Data</a>
+                    }
                     <p style="text-align: left; font-weight: lighter;">
                         @Model.Item1.ProfileBio
                     </p>
