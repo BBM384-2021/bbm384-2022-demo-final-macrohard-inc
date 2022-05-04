@@ -45,7 +45,7 @@ public class AccountController : Controller
                 Url = "",
                 StudentNumber = "",
                 ProfileBio = "",
-                ProfilePhoto = "",
+                ProfilePhoto = "studentProfile.png",
                 Posts = new List<Post>()
             };
 

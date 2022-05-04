@@ -19,7 +19,7 @@
         <div class="modal-layout" >
             <div class=grid-container style="color: aliceblue;text-align: left;"> 
                 <div class = "littleProfile">
-                    <img src="~/img/studentProfile.png" style=" height: 80px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;" >
+                    <img src="~/images/@Model.Item1.ProfilePhoto" style=" height: 80px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;" >
                     <div style="position: relative; margin: 20px 20px 20px 0px; top : 20px;text-align:left">
                         <h4>@Model.Item1.FirstName @Model.Item1.LastName</h4>
                         <p style="font-weight: lighter; font-size: 13px;">@Model.Item1.Url</p>
@@ -44,14 +44,14 @@
         </div>
     </div>
 
-    @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+    @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
     {
         <div class="settingsModalContainer" id="settingsModalContainer" style="z-index:7;position: absolute;text-align: center;">
             <div class="settingsModal">
                 <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
                     <h1>Edit Profile</h1>
                 </div>
-                <img src="~/img/studentProfile.png" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;">
+                <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;">
                 <div class="forms" style="box-sizing: border-box;margin: 0;">
                     <div class="settingsModal-container">
                          <input type="hidden" name="Id" value=@Model.Item1.Id>
@@ -66,6 +66,9 @@
                     </div>
                     <div>
                         <input type="text" name="ProfileBio" placeholder="Bio*" value="@Model.Item1.ProfileBio">
+                    </div>
+                    <div>
+                        <input type="file" name="ProfilePhotoFile" >
                     </div>
                     
 
@@ -105,7 +108,7 @@
                         </button>
                         <button id="me" style="align-items: center" onclick="popup(this)" value="hide">
                             <div>
-                                <img src="~/img/studentProfile.png" style= "height:30px ;border-radius:10px;border: 1px solid white;" >
+                                <img src="~/img/@Model.Item1.ProfilePhoto" style= "height:30px ;border-radius:10px;border: 1px solid white;" >
                             </div>
                             
                             <p>
@@ -127,8 +130,7 @@
                             
                             <div  style="text-align:center ;background-color:white;border-radius: 20px;height:230px">
                                 <img src="~/img/studentback.png" style="width: 100%; border-radius: 20px 20px 0px 0px;height: 55%;">
-                                <img src="~/img/studentProfile.png" style="width:80px;border-radius:20px;border: 5px solid white;margin-top:-30px;" >
-                                <h4 style="text-align: center;">
+                                <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;">
                                     @Model.Item1.FirstName @Model.Item1.LastName
                                 </h4>
                                 <p style="text-align: center; font-weight: lighter;">

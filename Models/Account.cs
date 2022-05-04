@@ -9,6 +9,8 @@ public class Account : IdentityUser
     public string? Url { get; set; }
     public string? Phone { get; set; }
     public string? ProfilePhoto { get; set; }
+    [NotMapped]
+    public IFormFile? ProfilePhotoFile { get; set; }
     public int AccountId { get; set; }
     [Required]
     public bool IsAdmin { get; set; }

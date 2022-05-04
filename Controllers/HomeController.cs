@@ -11,15 +11,16 @@ namespace LinkedHUCENGv2.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly ApplicationDbContext _context;
+    private ApplicationDbContext _context;
+    private readonly IWebHostEnvironment _hostEnvironment;
 
     public HomeController(ILogger<HomeController> logger,
-                          ApplicationDbContext context)
+                          ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
     {
         _logger = logger;
         _context = context;
+        _hostEnvironment = hostEnvironment;
     }
-
     [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
@@ -76,7 +77,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url, ProfileBio")] Account account)
+    public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url, ProfileBio,ProfilePhoto,ProfilePhotoFile")] Account account)
     {
         var user = await _context.Accounts.FindAsync(id);
         if (user is null)
@@ -87,14 +88,28 @@ public class HomeController : Controller
         ModelState.Remove("AccountType");
         if (ModelState.IsValid)
         {
+            var filePath = Path.Combine(_hostEnvironment.WebRootPath, "img");
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+            var fullFileName = Path.Combine(filePath, account.ProfilePhotoFile.FileName);
+            //upload file
+            using (var fileStream = new FileStream(fullFileName, FileMode.Create))
+            {
+                await account.ProfilePhotoFile.CopyToAsync(fileStream);
+            }
+
+            user.ProfilePhoto = account.ProfilePhotoFile.FileName;
             user.FirstName = account.FirstName;
             user.LastName = account.LastName;
             user.Phone = account.Phone;
             user.Url = account.Url;
             user.ProfileBio = account.ProfileBio;
+
             _context.Update(user);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Homepage");
         }
         return RedirectToAction("Index", "Home");
     }
