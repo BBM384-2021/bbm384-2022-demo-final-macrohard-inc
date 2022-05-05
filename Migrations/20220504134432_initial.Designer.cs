@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LinkedHUCENGv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220502110253_initial")]
+    [Migration("20220504134432_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,9 +99,9 @@ namespace LinkedHUCENGv2.Migrations
                     b.Property<DateTime>("PostTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("PostType")
+                    b.Property<string>("PostType")
                         .IsRequired()
-                        .HasColumnType("integer");
+                        .HasColumnType("text");
 
                     b.Property<string>("PosterId")
                         .HasColumnType("text");

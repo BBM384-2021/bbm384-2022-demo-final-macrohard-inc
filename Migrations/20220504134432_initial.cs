@@ -225,7 +225,7 @@ namespace LinkedHUCENGv2.Migrations
                     PosterId = table.Column<string>(type: "text", nullable: true),
                     PostContent = table.Column<string>(type: "text", nullable: false),
                     PostTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    PostType = table.Column<int>(type: "integer", nullable: false)
+                    PostType = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

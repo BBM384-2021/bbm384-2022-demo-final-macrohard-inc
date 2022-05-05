@@ -104,7 +104,6 @@ public class FollowController : Controller
             .FirstOrDefaultAsync();
         var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-
         if (userToFollow is null)
             return NotFound();
         if (currUser is null)
@@ -125,7 +124,7 @@ public class FollowController : Controller
         };
         _context.Add(follow);
         await _context.SaveChangesAsync();
-        return Redirect("Index");
+        return RedirectToAction("ViewProfile", "Profile", new { id = userId });
     }
 
     [HttpPost]
@@ -145,7 +144,7 @@ public class FollowController : Controller
         if (follow.Result is null)
             return NotFound();
         _context.Remove(follow.Result);
-        return RedirectToAction("Index");
+        return RedirectToAction("ViewProfile", "Profile");
     }
 
     private bool FollowExists(int id)

@@ -16,7 +16,7 @@ public class ProfileController : Controller
         _logger = logger;
         _context = context;
     }
-
+    
     [HttpGet]
     public async Task<JsonResult> ListUsers()
     {
@@ -48,9 +48,8 @@ public class ProfileController : Controller
             FollowStatus = followControl.IsUserFollowed(viewerAcc.Id, account.Id) ? "Following" : "Follow",
             FollowersCount = followControl.GetFollowerCount(account.Id),
             FollowingCount = followControl.GetFollowingCount(account.Id),
-
+    
         };
-
         var currentAccounts = await _context.Accounts.Where(m => m.Email == User.Identity.Name).ToListAsync();
         var currentAccount = currentAccounts[0];
         var currUserProfileModel = new UserProfileModel

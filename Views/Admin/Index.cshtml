@@ -18,15 +18,15 @@
     <br/>
     @foreach (var item in Model.Notifications)
     {
-                    @item.NotificationContent
-        <br/><br/>
+        @item.NotificationContent
+        <br/><br/> 
+        <a asp-controller="Admin" asp-action="DeleteNotification" asp-route-id="@item.NotificationId">Delete</a>
     }
 </div>
 
 <div class="accounts" style = "padding:30px">
         <h1>Account List</h1>
-
-        <div style = "display:grid ; grid-template-columns : 6fr 4fr;height : 50px;margin:10px 0px 10px 0;column-gap:20px;">
+    <div style = "display:grid ; grid-template-columns : 6fr 4fr;height : 50px;margin:10px 0px 10px 0;column-gap:20px;">
             <div >
                 <form asp-action="Index" method="get">
                     <div class="form-actions no-color" style = "display:grid ; grid-template-columns : 8fr 1fr ; text-align:center">

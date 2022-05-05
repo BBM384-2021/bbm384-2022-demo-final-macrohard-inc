@@ -45,7 +45,8 @@ public class AccountController : Controller
                 Url = "",
                 StudentNumber = "",
                 ProfileBio = "",
-                ProfilePhoto = ""
+                ProfilePhoto = "studentProfile.png",
+                Posts = new List<Post>()
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -54,7 +55,7 @@ public class AccountController : Controller
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 CreateRegisterNotification(user);
-                return RedirectToAction("Feed", "Home");
+                return RedirectToAction("Feed", "Post");
             }
 
             foreach (var error in result.Errors)
@@ -67,7 +68,7 @@ public class AccountController : Controller
         }
         return View(model);
     }
-    
+
     [HttpGet]
     [AllowAnonymous]
     public IActionResult Login()
@@ -89,7 +90,7 @@ public class AccountController : Controller
                 {
                     return RedirectToAction("Index", "Admin");
                 }
-                return RedirectToAction("Feed", "Home");
+                return RedirectToAction("Feed", "Post");
             }
 
             ViewBag.Text = "Invalid login! Check your mail and password.";
@@ -98,8 +99,8 @@ public class AccountController : Controller
         }
         return View(user);
     }
-    
-    
+
+
     // POST: Account/Edit/5
     [HttpPost]
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url")] Account account)
@@ -132,7 +133,7 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
 
     }
-    
+
     public void CreateRegisterNotification(Account account)
     {
         var notification = new Notification

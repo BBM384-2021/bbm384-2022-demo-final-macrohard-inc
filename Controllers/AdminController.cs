@@ -19,19 +19,32 @@ public class AdminController : Controller
     // GET: Admin
     public async Task<IActionResult> Index(string searchString)
     {
-        var accounts = from a in _context.Accounts
-            select a;
+        var accounts = _context.Accounts.Where(a => !a.IsAdmin);
         if (!String.IsNullOrEmpty(searchString))
         {
             accounts = accounts.Where(a => a.FirstName.ToLower().Contains(searchString.ToLower())
-                                           || a.LastName.ToLower().Contains(searchString.ToLower()) 
+                                           || a.LastName.ToLower().Contains(searchString.ToLower())
                                            || a.Email.ToLower().Contains(searchString.ToLower()));
         }
+
         var viewModel = new AccountNotificationData();
-        var notificationList = await _context.Notifications.Where(u => u.NotificationType == "register").ToListAsync();
-        viewModel.Accounts = accounts.Any() ? accounts: new List<Account>();
+        var notificationList = await _context.Notifications
+            .Where(u => u.NotificationType == "register" || u.NotificationType == "request")
+            .OrderBy(u => u.NotificationTime).ToListAsync();
+        notificationList.Reverse();
+        viewModel.Accounts = accounts.Any() ? accounts : new List<Account>();
         viewModel.Notifications = notificationList.Any() ? notificationList : new List<Notification>();
         return View(viewModel);
+    }
+
+    public async Task<IActionResult> DeleteNotification(int? id)
+    {
+        if (id == null) return NotFound();
+        var notification = await _context.Notifications.FindAsync(id);
+        if (notification == null) return NotFound();
+        _context.Notifications.Remove(notification);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Index", "Admin");
     }
 
     // GET: Admin/Details/5
@@ -74,38 +87,35 @@ public class AdminController : Controller
     [ValidateAntiForgeryToken]
 
     public async Task<IActionResult> Edit(string id,
-         [Bind("Url,Phone,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
+        [Bind("Url,Phone,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
         Account account)
+    {
+
+        var user = await _context.Accounts.FindAsync(id);
+        if (id != user.Id)
         {
-
-            var user = await _context.Accounts.FindAsync(id);
-            if (id != user.Id)
-            {
-                return NotFound();
-            }
-
-            ModelState.Remove("AccountType");
-            if (ModelState.IsValid)
-            {
-                user.FirstName = account.FirstName;
-                user.LastName = account.LastName;
-                user.Phone = account.Phone;
-                user.Url = account.Url;
-                user.Email = account.Email;
-                _context.Update(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            return NotFound();
         }
 
+        ModelState.Remove("AccountType");
+        if (ModelState.IsValid)
+        {
+            user.FirstName = account.FirstName;
+            user.LastName = account.LastName;
+            user.Phone = account.Phone;
+            user.Url = account.Url;
+            user.Email = account.Email;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-       return  RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(Index));
     }
 
-    
-    
 
-// GET: Admin/Delete/5
-public async Task<IActionResult> Delete(string? id)
+    // GET: Admin/Delete/5
+    public async Task<IActionResult> Delete(string? id)
     {
         if (id == null)
         {
@@ -142,13 +152,13 @@ public async Task<IActionResult> Delete(string? id)
     public void ExportToExcel()
     {
         ViewBag.userList = _context.Accounts.Where(u => u.IsAdmin == false).Select(x => new AccountViewModel
-            {
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Url = x.Url,
-                Email = x.Email
+        {
+            FirstName = x.FirstName,
+            LastName = x.LastName,
+            Url = x.Url,
+            Email = x.Email
 
-            }
+        }
 
 
         ).ToList();
@@ -183,7 +193,7 @@ public async Task<IActionResult> Delete(string? id)
         Response.Headers["content-disposition"] = "attachment: filename=" + "ExcelReport.xlsx";
         Response.Body.WriteAsync(pck.GetAsByteArray());
 
-        
+
 
     }
 }
