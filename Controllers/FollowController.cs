@@ -86,6 +86,7 @@ public class FollowController : Controller
     [HttpGet]
     public async Task<IActionResult> GetFollowersList(string userId)
     {
+
         var followers = await _context.Follows.Where(a => a.Account2Id == userId).ToListAsync();
         var followerUsers = new List<Account>();
         foreach (var follow in followers)
@@ -97,21 +98,22 @@ public class FollowController : Controller
         return View("~/Views/Follow/ListAccounts.cshtml", followerUsers);
     }
 
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> FollowUser(string userId)
     {
+        Console.WriteLine("This is C#22222");
         var userToFollow = await _context.Accounts.Where(m => m.Id == userId)
             .FirstOrDefaultAsync();
         var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
         if (userToFollow is null)
-            return NotFound();
+            return Redirect("/Profile/ViewProfile?id=" + userId);
         if (currUser is null)
-            return NotFound();
+            return Redirect("/Profile/ViewProfile?id=" + userId);
 
         if (IsUserFollowed(currUser.Id, userId))
         {
-            return NotFound();
+            return Redirect("/Profile/ViewProfile?id=" + userId);
         }
 
         var follow = new Follow
@@ -124,7 +126,8 @@ public class FollowController : Controller
         };
         _context.Add(follow);
         await _context.SaveChangesAsync();
-        return RedirectToAction("ViewProfile", "Profile", new { id = userId });
+        //return RedirectToAction("ViewProfile", "Profile", new { id = userId });
+        return Redirect("/Profile/ViewProfile?id="+ userId);
     }
 
     [HttpPost]
