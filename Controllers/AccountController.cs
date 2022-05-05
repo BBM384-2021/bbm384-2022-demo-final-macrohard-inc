@@ -45,7 +45,7 @@ public class AccountController : Controller
                 Url = "",
                 StudentNumber = "",
                 ProfileBio = "",
-                ProfilePhoto = "",
+                ProfilePhoto = "studentProfile.png",
                 RegistrationDate = DateTime.Now,
                 Posts = new List<Post>()
             };

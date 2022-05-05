@@ -3,84 +3,87 @@
 <!DOCTYPE html>
 <html lan="en" style="height: auto;">
 
-    <head>
-        <link rel="stylesheet" href="~/css/profile.css?v=3.4.1"/>
-        <link href="~/js/userProfile.js"/>
-    </head>
+<head>
+    <link rel="stylesheet" href="~/css/profile.css?v=3.4.1"/>
+    <link href="~/js/userProfile.js"/>
+</head>
 
-    <div class = "modalContainer" id = "modalContainer" style="z-index: 4;background-color: rgba(0, 0, 0, 0.3);"onclick = "popup2()">
-        <div class="modalContainer-layout" style="position: sticky; top: 0; " ></div>
-    </div>
-    <div class = "modalContainer" id = "modalContainer2" style="z-index: 6;background-color: rgba(0, 0, 0, 0.3);">
-        <div class="modalContainer-layout" style="position: sticky; top: 0; " ></div>
-    </div>
+<div class = "modalContainer" id = "modalContainer" style="z-index: 4;background-color: rgba(0, 0, 0, 0.3);"onclick = "popup2()">
+    <div class="modalContainer-layout" style="position: sticky; top: 0; " ></div>
+</div>
+<div class = "modalContainer" id = "modalContainer2" style="z-index: 6;background-color: rgba(0, 0, 0, 0.3);">
+    <div class="modalContainer-layout" style="position: sticky; top: 0; " ></div>
+</div>
 
-    <div class="modal" id = "modal" style="z-index:5;margin: 0;">
-        <div class="modal-layout" >
-            <div class=grid-container style="color: aliceblue;text-align: left;"> 
-                <div class = "littleProfile">
-                    <img src="~/img/studentProfile.png" style=" height: 80px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;" >
-                    <div style="position: relative; margin: 20px 20px 20px 0px; top : 20px;text-align:left">
-                        <h4>@Model[0].FirstName @Model[0].LastName</h4>
-                        <p style="font-weight: lighter; font-size: 13px;">@Model[0].Url</p>
-                        <p style="font-weight: lighter; font-size: 13px;">@Model[0].Phone</p>
-                        <p style="font-weight: lighter; font-size: 13px;">@Model[0].ProfileBio</p>
-                    </div>
-                </div >
-
-                <div class = "line" style = "background-color: rgba(255, 255, 255, 0.3);" ></div>
-
-                <div class = "accounts" style="position: relative; left: 20px; top: 5px;margin: 7px 7px 7px 0px; display: inline-block;" >
-                    <h4>Account</h4>
-                    <p style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);margin-top: 3px;" onclick = "popup4()" >Settings</p>
+<div class="modal" id = "modal" style="z-index:5;margin: 0;">
+    <div class="modal-layout" >
+        <div class=grid-container style="color: aliceblue;text-align: left;"> 
+            <div class = "littleProfile">
+                <img src="~/img/@Model[0].ProfilePhoto" style=" height: 80px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;" >
+                <div style="position: relative; margin: 20px 20px 20px 0px; top : 20px;text-align:left">
+                    <h4>@Model[0].FirstName @Model[0].LastName</h4>
+                    <p style="font-weight: lighter; font-size: 13px;">@Model[0].Url</p>
+                    <p style="font-weight: lighter; font-size: 13px;">@Model[0].Phone</p>
+                    <p style="font-weight: lighter; font-size: 13px;">@Model[0].ProfileBio</p>
                 </div>
+            </div >
 
-                <div class = "line" style = "background-color: rgba(255, 255, 255, 0.3);" ></div>
+            <div class = "line" style = "background-color: rgba(255, 255, 255, 0.3);" ></div>
 
-                <div class = "logout" style=" position: relative;  left: 20px; top: 5px; margin: 7px 7px 7px 0px;" > 
-                    <a asp-controller="Account" asp-action="Logout" style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);padding: 0px 5px 5px 0px;">Log Out</a>
-                </div>
+            <div class = "accounts" style="position: relative; left: 20px; top: 5px;margin: 7px 7px 7px 0px; display: inline-block;" >
+                <h4>Account</h4>
+                <p style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);margin-top: 3px;" onclick = "popup4()" >Settings</p>
+            </div>
+
+            <div class = "line" style = "background-color: rgba(255, 255, 255, 0.3);" ></div>
+
+            <div class = "logout" style=" position: relative;  left: 20px; top: 5px; margin: 7px 7px 7px 0px;" > 
+                <a asp-controller="Account" asp-action="Logout" style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);padding: 0px 5px 5px 0px;">Log Out</a>
             </div>
         </div>
     </div>
+</div>
 
-    @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
-    {
-        <div class="settingsModalContainer" id="settingsModalContainer" style="z-index:7;position: absolute;text-align: center;">
-            <div class="settingsModal">
-                <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
-                    <h1>Edit Profile</h1>
-                </div>
-                <img src="~/img/studentProfile.png" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;">
-                <div class="forms" style="box-sizing: border-box;margin: 0;">
-                    <div class="settingsModal-container">
-                         <input type="hidden" name="Id" value=@Model[0].Id>
-                         <input type="text" placeholder="Firstname*" value="@Model[0].FirstName" name="FirstName">
-                        <input type="text" placeholder="Lastname*" value="@Model[0].LastName" name="LastName">
-                    </div>
-                    <div>
-                        <input type="number" placeholder="Phone Number*" value="@Model[0].Phone" name="Phone">
-                    </div>
-                    <div>
-                        <input type="url" name="Url" placeholder="Linkedin Url*" value="@Model[0].Url">
-                    </div>
-                    <div>
-                        <input type="text" name="ProfileBio" placeholder="Bio*" value="@Model[0].ProfileBio">
-                    </div>
-                    
-
+@using (Html.BeginForm("Edit", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    <div class="settingsModalContainer" id="settingsModalContainer" style="z-index:7;position: absolute;text-align: center;">
+        <div class="settingsModal">
+            <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
+                <h1>Edit Profile</h1>
+            </div>
+            <img src="~/img/@Model[0].ProfilePhoto" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;">
+            <div class="forms" style="box-sizing: border-box;margin: 0;">
+                <div class="settingsModal-container">
+                    <input type="hidden" name="Id" value=@Model[0].Id>
+                    <input type="text" placeholder="Firstname*" value="@Model[0].FirstName" name="FirstName">
+                    <input type="text" placeholder="Lastname*" value="@Model[0].LastName" name="LastName">
                 </div>
                 <div>
-                    <div class="settingsModal-container" style="justify-items: center; align-items: center;">
-                        <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" value="Submit" type="submit">
-
-                        <button style="width: 100px;height: 40px;background-color: #eee;border-radius: 30px;border: none;font-weight: bold;" onclick="popup3()">Cancel</button>
-                    </div>
-
+                    <input type="number" placeholder="Phone Number*" value="@Model[0].Phone" name="Phone">
                 </div>
+                <div>
+                    <input type="url" name="Url" placeholder="Linkedin Url*" value="@Model[0].Url">
+                </div>
+                <div>
+                    <input type="text" name="ProfileBio" placeholder="Bio*" value="@Model[0].ProfileBio">
+                </div>
+                <div>
+                    <input type="file" name="ProfilePhotoFile" >
+                </div>
+                    
+
+            </div>
+            <div>
+                <div class="settingsModal-container" style="justify-items: center; align-items: center;">
+                    <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" value="Submit" type="submit">
+
+                    <button style="width: 100px;height: 40px;background-color: #eee;border-radius: 30px;border: none;font-weight: bold;" onclick="popup3()">Cancel</button>
+                </div>
+
             </div>
         </div>
-    }
+    </div>
+}
 <body style="background-color: white ; position : relative ;height:auto;"> <!-- height� de�i�tirme-->
 
 <header style="z-index: 2; background-color: white;position: sticky; top: 0;">
@@ -167,7 +170,7 @@
             <img src="~/img/studentback.png" style="width: 100%; border-radius: 20px 20px 0px 0px;height: 75%;">
             <div class="profile-grid-container">
                 <div class = "studentProfile" >
-                    <img src="~/img/studentProfile.png" style="border-radius:50px;border: 10px solid white;" >
+                    <img src="~/img/@Model[1].ProfilePhoto" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;">
                 </div>
                 <div class="profileText" >
                     <h1 style="text-align: left;">
@@ -204,3 +207,47 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/userProfile.js" type="text/javascript"></script>
 </html>
+<script>
+function followUser(id, currId){
+    $.ajax({
+        type: "POST",
+        url: "/Follow/FollowUser",
+        dataType: 'json',
+        data: {
+            id : id,
+            currId: currId
+              },
+        success: function (response) {
+            if (response){
+                  const dummyurl = '@Url.Action("ViewProfile", "Profile",new {id=-1})';
+                  const path = dummyurl.replace("-1",id);
+                  window.location.href = path;
+                }
+            else {
+                alert("error");
+                }
+          
+        },
+        error: function () {
+            alert("An error occured");
+        }
+    })
+}
+
+function unfollowUser(id){
+    $.ajax({
+        type: "POST",
+        url: "/Follow/UnfollowUser",
+        dataType: 'json',
+        data: {userId : id},
+        success: function () {
+            const dummyurl = '@Url.Action("ViewProfile", "Profile",new {id=-1})';
+            const path = dummyurl.replace("-1",id);
+            window.location.href = path;
+        },
+        error: function () {
+            alert("An error occured");
+        }
+    })
+}
+</script>

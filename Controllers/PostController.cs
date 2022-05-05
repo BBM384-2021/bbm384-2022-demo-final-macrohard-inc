@@ -113,7 +113,6 @@ public class PostController : Controller
     private static List<PostViewModel> SortPosts(IEnumerable<PostViewModel> posts)
     {
         var sort = posts.OrderBy(p => p.PostTime).ToList();
-        sort.Reverse();
         return sort;
     }
     
@@ -138,12 +137,13 @@ public class PostController : Controller
         return userProfileModel;
     }
     
-    private List<PostViewModel> CreatePostViews(List<Post> posts, Account acc)
+    private static IEnumerable<PostViewModel> CreatePostViews(IEnumerable<Post> posts, Account acc)
     {
         return posts.Select(post => new PostViewModel
             {
+                PosterAccount = acc,
                 PostContent = post.PostContent,
-                PostTime = post.PostTime,
+                PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
                 PostId = post.PostId,
                 AccountType = acc.AccountType,
                 FirstName = acc.FirstName,

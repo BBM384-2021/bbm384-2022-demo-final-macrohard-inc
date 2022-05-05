@@ -26,6 +26,8 @@ public class Account : IdentityUser
     [NotMapped] 
     public List<Follow> Followers { get; set; } = new List<Follow>();
     public List<Notification> Notifications { get; set; } = new List<Notification>();
+    [NotMapped]
+    public IFormFile? ProfilePhotoFile { get; set; }
     [Required]
     public DateTime RegistrationDate { get; set; }
     public string? ProfileBio { get; set; }

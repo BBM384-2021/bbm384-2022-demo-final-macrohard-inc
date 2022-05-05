@@ -1,4 +1,5 @@
 #nullable disable
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
@@ -98,22 +99,16 @@ public class FollowController : Controller
     }
     
     [HttpPost]
-    public async Task<IActionResult> FollowUser(string userId)
+    public async Task<JsonResult> FollowUser(string id, string currId)
     {
-        var userToFollow = await _context.Accounts.Where(m => m.Id == userId)
+        var userToFollow = await _context.Accounts.Where(m => m.Id == id)
             .FirstOrDefaultAsync();
-        var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+        var currUser = await _context.Accounts.Where(m => m.Id == currId)
             .FirstOrDefaultAsync();
         if (userToFollow is null)
-            return NotFound();
+            return Json(false);
         if (currUser is null)
-            return NotFound();
-
-        if (IsUserFollowed(currUser.Id, userId))
-        {
-            return NotFound();
-        }
-        
+            return Json(false);
         var follow = new Follow
         {
             Account1 = currUser,
@@ -124,11 +119,11 @@ public class FollowController : Controller
         };
         _context.Add(follow);
         await _context.SaveChangesAsync();
-        return RedirectToAction("ViewProfile", "Profile", new {id = userId});
+        return Json(true);
     }
 
     [HttpPost]
-    public async Task<IActionResult> UnfollowUser(string userId)
+    public async Task<JsonResult> UnfollowUser(string userId)
     {
         var userToUnfollow =  await _context.Accounts.Where(m => m.Id == userId)
             .FirstOrDefaultAsync();
@@ -136,15 +131,14 @@ public class FollowController : Controller
             .FirstOrDefaultAsync();
         
         if (userToUnfollow is null)
-            return NotFound();
+            return Json(false);
         if (currUser is null)
-            return NotFound();
-
+            return Json(false);
         var follow = _context.Follows.Where(f => f.Account1.Id == currUser.Id && f.Account2.Id == userId).FirstOrDefaultAsync();
         if (follow.Result is null)
-            return NotFound();
+            return Json(false);
         _context.Remove(follow.Result);
-        return RedirectToAction("ViewProfile", "Profile");
+        return  Json(true);
     }
 
     private bool FollowExists(int id)
