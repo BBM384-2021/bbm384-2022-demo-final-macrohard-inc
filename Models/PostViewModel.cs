@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 
 namespace LinkedHUCENGv2.Models;
@@ -15,4 +16,9 @@ public class PostViewModel
     public Account? PosterAccount { get; set; }
     
     public string? Email { get; set; }
+    [NotMapped]
+
+    public IFormFile[]? ImageFiles { get; set; }
+    public List<Image> Images { get; set; } = new List<Image>();
+
 }

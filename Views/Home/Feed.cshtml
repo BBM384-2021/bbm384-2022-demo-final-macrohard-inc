@@ -44,7 +44,13 @@
                             <p style = "font-weight:bold;color:#240046;font-size:13px;background-color:#8000ff17;width:fit-content;padding:0 20px 0 20px;border-radius:10px">@item.PostType</p>
                         </div>
                         <p style = "font-weight:300;color:black;margin-top:10px;padding-bottom:20px;border-bottom: 0.5px solid #8080802b;">@item.PostContent</p>
-                    </div>
+                            <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
+                            @foreach(var image in item.Images)
+                            {
+                                <img src="~/img/@image.Name" style="max-height:200px; ">
+                            }
+                            </div>
+                        </div>
                     <div style = "display:inline-grid;grid-template-columns:auto auto">
                         @if (User.Identity.Name == @item.Email)
                         {
