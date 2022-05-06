@@ -101,9 +101,9 @@
     background-color: #F4F1F7;
     position: sticky;
     top: 0;
-
     height: 100vh;
 }
+
 .leftSideContainer {
     background-color: transparent;
     position: absolute;
@@ -164,7 +164,7 @@
 .profileBody {
     box-shadow: 0px 0px 30px rgba(128, 0, 255, 0.1);
     height: 600px;
-    margin: 50px 80px 0px 80px;
+    margin: 50px 80px 50px 80px;
     border-radius: 20px;
 }
 
@@ -205,6 +205,7 @@
 .littleProfile {
     display: grid;
     grid-template-columns: 1fr 4fr;
+    column-gap:10px;
 }
 
 .line {
@@ -221,7 +222,7 @@
     grid-template-columns: 1fr 5fr 1fr;
     z-index: 1;
     gap: 15px;
-    margin: -40px 50px 0px 50px;
+    margin: 0px 50px 0px 50px;
 }
 
 .profile-grid-container div:nth-child(2) {

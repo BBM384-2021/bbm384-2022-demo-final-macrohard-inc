@@ -13,7 +13,6 @@ public class Post
     public DateTime PostTime { get; set; }
     [Required]
     public string? PostType { get; set; }
-    
-    
-
+    public List<Image>? Images { get; set; }
+    public List<Application>? Applications { get; set; }
 }

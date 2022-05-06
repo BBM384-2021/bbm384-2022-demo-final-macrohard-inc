@@ -188,7 +188,14 @@
                            
                 </div>
                 <div style="text-align: right;">
-                    <a asp-action="FollowUser" asp-controller="Follow" asp-route-userId="@Model.Item1[1].Id">Follow</a>
+                    @if (Model.Item1[1].FollowStatus == "Follow")
+                    {
+                        <a asp-action="FollowUser" asp-controller="Follow" asp-route-userId="@Model.Item1[1].Id">Follow</a>
+                    }
+                    @if (Model.Item1[1].FollowStatus == "Following")
+                    {
+                        <a asp-action="UnfollowUser" asp-controller="Follow" asp-route-userId="@Model.Item1[1].Id">Unfollow</a>
+                    }
                 </div>
             </div>
         </div>                

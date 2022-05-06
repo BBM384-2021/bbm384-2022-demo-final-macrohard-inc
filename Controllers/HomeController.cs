@@ -79,6 +79,52 @@ public class HomeController : Controller
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(userProfileModel, postModels);
         return View(tuple);
     }
+    
+    public async Task<IActionResult> Settings()
+    {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var followControl = new FollowController(_context);
+        var userProfileModel = new UserProfileModel
+        {
+            Id = currAcc.Id,
+            FirstName = currAcc.FirstName,
+            LastName = currAcc.LastName,
+            ProfileBio = currAcc.ProfileBio,
+            Phone = currAcc.Phone,
+            Url = currAcc.Url,
+            ProfilePhoto = currAcc.ProfilePhoto,
+            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
+            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
+            StudentNumber = currAcc.StudentNumber
+        };
+        var posts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var postModels = posts.Select(post => new PostViewModel
+            {
+                PosterAccount = currAcc,
+                PostContent = post.PostContent,
+                PostTime = DateTime.Now.Subtract(post.PostTime).Minutes,
+                PostId = post.PostId,
+                AccountType = currAcc.AccountType,
+                FirstName = currAcc.FirstName,
+                LastName = currAcc.LastName,
+                PosterId = currAcc.Id,
+                PostType = post.PostType
+            })
+            .ToList();
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#8000FF";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "#240046";
+        ViewBag.left = "block";
+        ViewBag.leftInside = "none";
+        var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(userProfileModel, postModels);
+        return View("~/Views/Home/Settings.cshtml", tuple);
+    }
 
     [HttpPost]
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url, ProfileBio, ProfilePhoto,ProfilePhotoFile")] Account account)

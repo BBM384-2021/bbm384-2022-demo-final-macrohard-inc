@@ -98,17 +98,23 @@ public class FollowController : Controller
         return View("~/Views/Follow/ListAccounts.cshtml", followerUsers);
     }
     
-    [HttpPost]
-    public async Task<JsonResult> FollowUser(string id, string currId)
+    [HttpGet]
+    public async Task<IActionResult> FollowUser(string userId)
     {
-        var userToFollow = await _context.Accounts.Where(m => m.Id == id)
+        var userToFollow = await _context.Accounts.Where(m => m.Id == userId)
             .FirstOrDefaultAsync();
-        var currUser = await _context.Accounts.Where(m => m.Id == currId)
+        var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
         if (userToFollow is null)
-            return Json(false);
+            return Redirect("/Profile/ViewProfile?id=" + userId);
         if (currUser is null)
-            return Json(false);
+            return Redirect("/Profile/ViewProfile?id=" + userId);
+
+        if (IsUserFollowed(currUser.Id, userId))
+        {
+            return Redirect("/Profile/ViewProfile?id=" + userId);
+        }
+
         var follow = new Follow
         {
             Account1 = currUser,
@@ -119,26 +125,24 @@ public class FollowController : Controller
         };
         _context.Add(follow);
         await _context.SaveChangesAsync();
-        return Json(true);
+        //return RedirectToAction("ViewProfile", "Profile", new { id = userId });
+        return Redirect("/Profile/ViewProfile?id="+ userId);
     }
 
-    [HttpPost]
-    public async Task<JsonResult> UnfollowUser(string userId)
+    [HttpGet]
+    public async Task<IActionResult> UnfollowUser(string userId)
     {
         var userToUnfollow =  await _context.Accounts.Where(m => m.Id == userId)
             .FirstOrDefaultAsync();
         var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        
         if (userToUnfollow is null)
-            return Json(false);
+            return Redirect("/Profile/ViewProfile?id=" + userId);
         if (currUser is null)
-            return Json(false);
-        var follow = _context.Follows.Where(f => f.Account1.Id == currUser.Id && f.Account2.Id == userId).FirstOrDefaultAsync();
-        if (follow.Result is null)
-            return Json(false);
-        _context.Remove(follow.Result);
-        return  Json(true);
+            return Redirect("/Profile/ViewProfile?id=" + userId);
+        var follow =  await _context.Follows.Where(f => f.Account1.Id == currUser.Id && f.Account2.Id == userId).FirstOrDefaultAsync();
+        _context.Remove(follow);
+        return Redirect("/Profile/ViewProfile?id=" + userId);
     }
 
     private bool FollowExists(int id)

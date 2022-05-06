@@ -46,47 +46,6 @@
             </div>
         </div>
     </div>
-
-    @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
-    {
-        <div class="settingsModalContainer" id="settingsModalContainer" style="z-index:7;position: absolute;text-align: center;">
-            <div class="settingsModal">
-                <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
-                    <h1>Edit Profile</h1>
-                </div>
-                <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 120px; border-radius:20px;position: relative; margin: 15px 15px 15px 15px;">
-                <div class="forms" style="box-sizing: border-box;margin: 0;">
-                    <div class="settingsModal-container">
-                         <input type="hidden" name="Id" value=@Model.Item1.Id>
-                         <input type="text" placeholder="Firstname*" value="@Model.Item1.FirstName" name="FirstName">
-                        <input type="text" placeholder="Lastname*" value="@Model.Item1.LastName" name="LastName">
-                    </div>
-                    <div>
-                        <input type="number" placeholder="Phone Number*" value="@Model.Item1.Phone" name="Phone">
-                    </div>
-                    <div>
-                        <input type="url" name="Url" placeholder="Linkedin Url*" value="@Model.Item1.Url">
-                    </div>
-                    <div>
-                        <input type="text" name="ProfileBio" placeholder="Bio*" value="@Model.Item1.ProfileBio">
-                    </div>
-                    <div>
-                        <input type="file" name="ProfilePhotoFile" >
-                    </div>
-
-
-                </div>
-                <div>
-                    <div class="settingsModal-container" style="justify-items: center; align-items: center;">
-                        <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" value="Submit" type="submit">
-
-                        <button style="width: 100px;height: 40px;background-color: #eee;border-radius: 30px;border: none;font-weight: bold;" onclick="popup3()">Cancel</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    }
     <body style="background-color: white ; position : relative ;height:auto;">
 
         <header style="z-index: 2; background-color: white;position: sticky; top: 0;">
@@ -129,7 +88,7 @@
             <div class="leftSideContainer" style = "display:@ViewBag.left " >
                 <div class="leftSide">
                     <div class="leftSideInclude" style = "display:flex;justify-content:center;">
-                        <div style = "position: absolute;top:60px;width:80%;margin-top:30px">
+                        <div style = "position: absolute;top:60px;width:80%;margin-top:30px;display:@ViewBag.leftInside">
 
                             <div  style="text-align:center ;background-color:white;border-radius: 20px;height:230px">
                                 <img src="~/img/studentback.png" style="width: 100%; border-radius: 20px 20px 0px 0px;height: 55%;">
@@ -180,7 +139,7 @@
                             <path class = "profileicon" d="M26 27C29.8285 27.2727 37.1573 30.0545 35.8447 39H26" stroke-width="2.7" stroke="@ViewBag.color2"/>
                         </svg>
                         </a>
-                        <a asp-controller="Post" asp-action="Feed" >
+                        <a asp-controller="Home" asp-action="Settings" >
                         <svg width="40" height="40" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id = "settingsiconbackGround" fill = "@ViewBag.colorBG3" d="M0 10C0 4.47715 4.47715 0 10 0H42C47.5228 0 52 4.47715 52 10V42C52 47.5228 47.5228 52 42 52H10C4.47715 52 0 47.5228 0 42V10Z" />
                             <path class = "settingsicon" stroke="@ViewBag.color3" d="M37.5 21.0445C37.5 20.5903 37.2942 20.1605 36.9402 19.8758L26.9402 11.8312C26.3912 11.3896 25.6088 11.3896 25.0598 11.8312L15.0598 19.8758C14.7058 20.1605 14.5 20.5903 14.5 21.0445V33.25C14.5 33.7485 14.7476 34.2144 15.1608 34.4933L25.1608 41.2433C25.6679 41.5856 26.3321 41.5856 26.8392 41.2433L36.8392 34.4933C37.2524 34.2144 37.5 33.7485 37.5 33.25V21.0445Z" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
