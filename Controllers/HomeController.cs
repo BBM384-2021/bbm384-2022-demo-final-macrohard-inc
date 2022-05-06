@@ -74,6 +74,7 @@ public class HomeController : Controller
         ViewBag.colorBG3 = "none";
         ViewBag.left = "none";
         ViewBag.leftInside = "none";
+        ViewBag.accountForViewBag = userProfileModel;
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(userProfileModel, postModels);
         return View(tuple);
     }
@@ -97,20 +98,6 @@ public class HomeController : Controller
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
             StudentNumber = currAcc.StudentNumber
         };
-        var posts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
-        var postModels = posts.Select(post => new PostViewModel
-        {
-            PosterAccount = currAcc,
-            PostContent = post.PostContent,
-            PostTime = DateTime.Now.Subtract(post.PostTime).Minutes,
-            PostId = post.PostId,
-            AccountType = currAcc.AccountType,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            PosterId = currAcc.Id,
-            PostType = post.PostType
-        })
-            .ToList();
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
         ViewBag.color3 = "#8000FF";
@@ -118,9 +105,9 @@ public class HomeController : Controller
         ViewBag.colorBG2 = "none";
         ViewBag.colorBG3 = "#240046";
         ViewBag.left = "block";
-        ViewBag.leftInside = "none";
-        var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(userProfileModel, postModels);
-        return View("~/Views/Home/Settings.cshtml", tuple);
+        ViewBag.leftInside = "block";
+        ViewBag.accountForViewBag = userProfileModel;
+        return View("~/Views/Home/Settings.cshtml");
     }
         [HttpPost]
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url, ProfileBio,ProfilePhoto,ProfilePhotoFile")] Account account)

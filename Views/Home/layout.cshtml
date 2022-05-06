@@ -1,5 +1,9 @@
-﻿@model Tuple<LinkedHUCENGv2.Models.UserProfileModel, List<LinkedHUCENGv2.Models.PostViewModel>>
+﻿
 
+@{
+    var mainAccount = ViewBag.accountForViewBag;
+    
+}
 <!DOCTYPE html>
 <html lan="en" style="height: auto;">
 
@@ -8,10 +12,10 @@
         <link href="~/js/userProfile.js"/>
     </head>
 
-    <div class = "modalContainer" id = "modalContainer" style="z-index: 4;background-color: rgba(0, 0, 0, 0.3);"onclick = "popup2()">
+    <div class = "modalContainer" id = "modalContainer" style="z-index: 4;background-color: rgba(0, 0, 0, 0.3);"onclick = "popup2('modal','modalContainer')">
         <div class="modalContainer-layout" style="position: sticky; top: 0; " ></div>
     </div>
-    <div class = "modalContainer" id = "modalContainer2" style="z-index: 6;background-color: rgba(0, 0, 0, 0.3);">
+    <div class = "modalContainer" id = "modalContainer2" style="z-index: 4;background-color: rgba(0, 0, 0, 0.3);"onclick = "popup2('modal2','modalContainer2')">
         <div class="modalContainer-layout" style="position: sticky; top: 0; " ></div>
     </div>
 
@@ -20,14 +24,14 @@
             <div class=grid-container style="color: aliceblue;text-align: left;">
                 <div class = "littleProfile" style = "margin:20px;">
                     <div style = "width:60px;height:60px;">
-                        <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
+                        <img src="~/img/@mainAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
                     </div>
                     
                     <div style="position: relative; top : 20px;text-align:left">
-                        <h4>@Model.Item1.FirstName @Model.Item1.LastName</h4>
-                        <p style="font-weight: lighter; font-size: 13px;">@Model.Item1.Url</p>
-                        <p style="font-weight: lighter; font-size: 13px;">@Model.Item1.Phone</p>
-                        <p style="font-weight: lighter; font-size: 13px;">@Model.Item1.ProfileBio</p>
+                        <h4>@mainAccount.FirstName @mainAccount.LastName</h4>
+                        <p style="font-weight: lighter; font-size: 13px;">@mainAccount.Url</p>
+                        <p style="font-weight: lighter; font-size: 13px;">@mainAccount.Phone</p>
+                        <p style="font-weight: lighter; font-size: 13px;">@mainAccount.ProfileBio</p>
                     </div>
                 </div >
 
@@ -42,6 +46,18 @@
 
                 <div class = "logout" style=" position: relative;  left: 20px; top: 5px; margin: 7px 7px 7px 0px;" >
                     <a asp-controller="Account" asp-action="Logout" style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);padding: 0px 5px 5px 0px;">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id = "modal2" style="z-index:5;margin: 0">
+        <div class="modal-layout" style = "right:130px;">
+            <div class=grid-container style="color: aliceblue;text-align: left;">
+                <div style = "height:fit-content;width:100px;padding:20px;">
+                    <a>
+                        Notificaitons
+                    </a>
+                    <div style = "height:100%"></div>
                 </div>
             </div>
         </div>
@@ -61,16 +77,16 @@
             <div class="rightSideContainer" >
                 <div class="rightSide">
                     <div class="rightSideInclude">
-                        <button id="notification">
+                        <button id="notification" onclick="popup(this,'modal2','modalContainer2')" value="hide">
                             <svg width="25" height="25" viewBox="0 0 60 60" fill="none" >
                                 <path d="M13 42.2954C13 1.90154 46 1.90155 46 42.2954C32.9483 49.0048 18.5618 45.091 13 42.2954Z" stroke = "#878787" stroke-width="5"/>
                                 <path d="M21 46C21.5 54.9233 35.5 55.7345 37 46" stroke = "#878787" stroke-width="5"/>
                                 <path d="M24 13.9996C28.323 3.40984 30.7293 3.25723 35 14" stroke = "#878787" stroke-width="5"/>
                             </svg>
                         </button>
-                        <button id="me" style="align-items: center" onclick="popup(this)" value="hide">
+                        <button id="me" style="align-items: center" onclick="popup(this,'modal','modalContainer')" value="hide">
                             <div style = "width:30px;height:30px;margin-left:7px;">
-                                <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
+                                <img src="~/img/@mainAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
                             </div>
 
                             <p>
@@ -92,24 +108,24 @@
 
                             <div  style="text-align:center ;background-color:white;border-radius: 20px;height:230px">
                                 <img src="~/img/studentback.png" style="width: 100%; border-radius: 20px 20px 0px 0px;height: 55%;">
-                                <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 60px;width:60px; border-radius:10px;position: relative; margin: -30px 15px 15px 15px;">
+                                <img src="~/img/@mainAccount.ProfilePhoto" style=" height: 60px;width:60px; border-radius:10px;position: relative; margin: -30px 15px 15px 15px;">
                                 <h4 style="text-align: center;">
-                                    @Model.Item1.FirstName @Model.Item1.LastName
+                                    @mainAccount.FirstName @mainAccount.LastName
                                 </h4>
                                 <p style="text-align: center; font-weight: lighter;">
-                                    @Model.Item1.ProfileBio
+                                    @mainAccount.ProfileBio
                                 </p>
                             </div>
                             <div style = "display: flex;justify-content: left;align-items: center;background-color:white;height:50px;border-radius: 20px;margin-top:10px;padding:20px">
                                 <p style="text-align: left;font-weight: bolder;">
-                                    <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model.Item1.Id" style ="text-decoration:none">Followings</a>
-                                    @Model.Item1.FollowingCount
+                                    <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@mainAccount.Id" style ="text-decoration:none">Followings</a>
+                                    @mainAccount.FollowingCount
                                 </p>
                             </div>
                             <div style = "display: flex;justify-content: left;align-items: center;background-color:white;height:50px;border-radius: 20px;margin-top:10px;padding:20px">
                                 <p style="text-align: left;font-weight: bolder; ">
-                                    <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model.Item1.Id" style ="text-decoration:none">Followers</a>
-                                    @Model.Item1.FollowersCount
+                                    <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@mainAccount.Id" style ="text-decoration:none">Followers</a>
+                                    @mainAccount.FollowersCount
                                 </p>
                             </div>
 

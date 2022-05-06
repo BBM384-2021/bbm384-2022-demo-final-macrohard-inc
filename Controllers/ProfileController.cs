@@ -66,7 +66,15 @@ public class ProfileController : Controller
             FollowersCount = followControl.GetFollowerCount(currentAccount.Id),
             FollowingCount = followControl.GetFollowingCount(currentAccount.Id),
         };
-
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "none";
+        ViewBag.leftInside = "none";
+        ViewBag.accountForViewBag = currUserProfileModel;
         var list = new List<UserProfileModel>
         {
             currUserProfileModel,
