@@ -1,0 +1,59 @@
+﻿@model Tuple<LinkedHUCENGv2.Models.UserProfileModel, List<LinkedHUCENGv2.Models.PostViewModel>>
+@{
+    Layout = "~/Views/Home/layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lan="en" style="height: auto;">
+
+    <head>
+        <link rel="stylesheet" href="~/css/profile.css?v=3.4.1"/>
+        <link href="~/js/userProfile.js"/>
+    </head>
+    <div style = "display:flex; justify-content:center; width:100%;">
+    <div style = "width:50%;">
+
+        
+    @using (Html.BeginForm("Edit", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    {
+            <div class="settingsModal" style = "margin:50px;padding:30px;border:1px solid #F4F1F7;border-radius:10px;">
+                <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
+                    <h1>Edit Profile</h1>
+                </div>
+
+
+                <div class="forms" style="box-sizing: border-box;margin: 0;">
+                    <div style=" height: 120px; width:120px; border-radius:20px;margin: 20px auto 20px auto;">
+                        <input type="file" name="ProfilePhotoFile" style = "opacity:0;height: 120px;width:120px;position:absolute">
+                        <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 100%;width:100%; border-radius:20px;">
+                    </div>
+                    <div class="settingsModal-container">
+                         <input type="hidden" name="Id" value=@Model.Item1.Id>
+                         <input type="text" placeholder="Firstname*" value="@Model.Item1.FirstName" name="FirstName">
+                        <input type="text" placeholder="Lastname*" value="@Model.Item1.LastName" name="LastName">
+                    </div>
+                    <div>
+                        <input type="number" placeholder="Phone Number*" value="@Model.Item1.Phone" name="Phone">
+                    </div>
+                    <div>
+                        <input type="url" name="Url" placeholder="Linkedin Url*" value="@Model.Item1.Url">
+                    </div>
+                    <div>
+                        <input type="text" name="ProfileBio" placeholder="Bio*" value="@Model.Item1.ProfileBio">
+                    </div>
+                    
+                </div>
+                <div>
+                    <div class="settingsModal-container" style="justify-items: center; align-items: center;">
+                        <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" value="Submit" type="submit">
+
+                        <button asp-controller="Home" asp-action="HomePage" style="width: 100px;height: 40px;background-color: #eee;border-radius: 30px;border: none;font-weight: bold;" onclick="popup3()">Cancel</button>
+                    </div>
+
+                </div>
+            </div>
+    }
+    </div>
+    </div>
+
+</html>

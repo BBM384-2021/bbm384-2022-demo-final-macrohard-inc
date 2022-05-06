@@ -1,5 +1,10 @@
 @model IEnumerable<LinkedHUCENGv2.Models.Account>
-
+@{
+    Layout = "~/Views/Home/layout.cshtml";
+}
+@{
+    await Html.RenderPartialAsync("~/Views/Post/CreatePost.cshtml", new Post());
+}
 <table class="table">
     <thead>
     <tr>

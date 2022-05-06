@@ -66,7 +66,7 @@ function popup2() {
     modal.classList.remove("hide");
 };
 
-function popup3() {
+/*function popup3() {
     var modalCont2 = document.getElementById("modalContainer2");
     var modal = document.getElementById("settingsModalContainer");
     modalCont2.classList.remove("hide");
@@ -78,4 +78,4 @@ function popup4() {
     var modal = document.getElementById("settingsModalContainer");
     modalCont2.classList.add("hide");
     modal.classList.add("hide");
-}
+}*/

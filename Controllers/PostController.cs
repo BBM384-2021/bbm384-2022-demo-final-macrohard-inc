@@ -101,6 +101,7 @@ public class PostController : Controller
         ViewBag.colorBG2 = "none";
         ViewBag.colorBG3 = "none";
         ViewBag.left = "block";
+        ViewBag.leftInside = "block";
         return View("~/Views/Home/Feed.cshtml", tuple);
     }
 
