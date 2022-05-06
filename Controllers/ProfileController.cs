@@ -66,13 +66,28 @@ public class ProfileController : Controller
             FollowersCount = followControl.GetFollowerCount(currentAccount.Id),
             FollowingCount = followControl.GetFollowingCount(currentAccount.Id),
         };
+        var posts = await _context.Post.Where(p => p.Poster.Id == account.Id).ToListAsync(); 
+        var postModels = posts.Select(post => new PostViewModel
+            {
+                PosterAccount = account,
+                PostContent = post.PostContent,
+                PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
+                PostId = post.PostId,
+                AccountType = account.AccountType,
+                FirstName = account.FirstName,
+                LastName = account.LastName,
+                PosterId = account.Id,
+                PostType = post.PostType
+            })
+            .ToList();
 
         var list = new List<UserProfileModel>
         {
             currUserProfileModel,
             viewedUser
         };
-        return View(list);
+        var tuple = new Tuple<List<UserProfileModel>, List<PostViewModel>>(list, postModels);
+        return View(tuple);
     }
 
 }
