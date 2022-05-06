@@ -54,7 +54,7 @@
         <div class="modal-layout" style = "right:130px;">
             <div class=grid-container style="color: aliceblue;text-align: left;">
                 <div style = "height:fit-content;width:100px;padding:20px;">
-                    <a>
+                    <a asp-controller="Home" asp-action="Notifications" style = "color:white;text-decoration:none;font-size:20px;font-weight:bold;">
                         Notificaitons
                     </a>
                     <div style = "height:100%"></div>
@@ -120,7 +120,7 @@
                                 <p style="text-align: left;font-weight: bolder;">
                                     <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@mainAccount.Id" style ="text-decoration:none">Followings</a>
                                     @mainAccount.FollowingCount
-                                </p>
+                                 </p>
                             </div>
                             <div style = "display: flex;justify-content: left;align-items: center;background-color:white;height:50px;border-radius: 20px;margin-top:10px;padding:20px">
                                 <p style="text-align: left;font-weight: bolder; ">
