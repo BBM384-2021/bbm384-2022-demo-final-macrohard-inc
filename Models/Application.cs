@@ -12,14 +12,12 @@ public class Application
     public DateTime? ApplicationDate { get; set; }
     [Required]
     public Account? Applicant { get; set; }
-    [Required]
-    public int PostId { get; set; }
     public Post? Post { get; set; }
     [Required]
     public List<Resume>? Resumes { get; set; }
-    public List<Certificate>? Certificates { get; set; } = new List<Certificate>();
+    public List<Certificate>? Certificates { get; set; }
     [NotMapped]
     public IFormFile[]? CertificateFiles { get; set; }
     [NotMapped]
-    public IFormFile[]? ResumeFile { get; set; }
+    public IFormFile[]? ResumeFiles { get; set; }
 }

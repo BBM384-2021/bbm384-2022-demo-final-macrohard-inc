@@ -21,4 +21,9 @@ public class PostViewModel
     public IFormFile[]? ImageFiles { get; set; }
     public List<Image> Images { get; set; } = new List<Image>();
 
+    public List<PDF> PDFs { get; set; } = new List<PDF>();
+    [NotMapped]
+    public IFormFile[]? PDFFiles { get; set; }
+
+
 }

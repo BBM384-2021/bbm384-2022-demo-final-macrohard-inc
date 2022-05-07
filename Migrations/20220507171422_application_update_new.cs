@@ -223,7 +223,7 @@ namespace LinkedHUCENGv2.Migrations
                     PostId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PosterId = table.Column<string>(type: "text", nullable: true),
-                    PostContent = table.Column<string>(type: "text", nullable: false),
+                    PostContent = table.Column<string>(type: "text", nullable: true),
                     PostTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     PostType = table.Column<string>(type: "text", nullable: false)
                 },
@@ -246,7 +246,7 @@ namespace LinkedHUCENGv2.Migrations
                     ApplicationText = table.Column<string>(type: "text", nullable: true),
                     ApplicationDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     ApplicantId = table.Column<string>(type: "text", nullable: false),
-                    PostId = table.Column<int>(type: "integer", nullable: false)
+                    PostId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -261,8 +261,7 @@ namespace LinkedHUCENGv2.Migrations
                         name: "FK_Applications_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
-                        principalColumn: "PostId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PostId");
                 });
 
             migrationBuilder.CreateTable(
@@ -286,63 +285,60 @@ namespace LinkedHUCENGv2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PDF",
+                name: "Pdfs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    PostId = table.Column<int>(type: "integer", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    PostId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PDF", x => x.Id);
+                    table.PrimaryKey("PK_Pdfs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PDF_Post_PostId",
+                        name: "FK_Pdfs_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
-                        principalColumn: "PostId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PostId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Certificates",
                 columns: table => new
                 {
-                    CertificateId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    ApplicationId = table.Column<int>(type: "integer", nullable: false)
+                    ApplicationId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Certificates", x => x.CertificateId);
+                    table.PrimaryKey("PK_Certificates", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Certificates_Applications_ApplicationId",
                         column: x => x.ApplicationId,
                         principalTable: "Applications",
-                        principalColumn: "ApplicationId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ApplicationId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Resumes",
                 columns: table => new
                 {
-                    ResumeId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    ApplicationId = table.Column<int>(type: "integer", nullable: false)
+                    ApplicationId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Resumes", x => x.ResumeId);
+                    table.PrimaryKey("PK_Resumes", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Resumes_Applications_ApplicationId",
                         column: x => x.ApplicationId,
                         principalTable: "Applications",
-                        principalColumn: "ApplicationId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ApplicationId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -418,8 +414,8 @@ namespace LinkedHUCENGv2.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PDF_PostId",
-                table: "PDF",
+                name: "IX_Pdfs_PostId",
+                table: "Pdfs",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
@@ -463,7 +459,7 @@ namespace LinkedHUCENGv2.Migrations
                 name: "Notifications");
 
             migrationBuilder.DropTable(
-                name: "PDF");
+                name: "Pdfs");
 
             migrationBuilder.DropTable(
                 name: "Resumes");

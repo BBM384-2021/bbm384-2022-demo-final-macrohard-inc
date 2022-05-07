@@ -33,6 +33,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Post> Post { get; set; }
     public DbSet<Application> Applications { get; set; }
     public DbSet<Image> Images { get; set; }
+    public DbSet<PDF>  Pdfs { get; set; }
     public DbSet<Resume> Resumes { get; set; }
     public DbSet<Certificate> Certificates { get; set; }
 }

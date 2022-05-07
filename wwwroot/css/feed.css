@@ -29,7 +29,7 @@ label[name = "checkBoxLabel"] {
 }
 label[id = "postLabel"] {
     color: #8000FF;
-    
+
 }
 
 .postTypeTextContainer {
@@ -64,7 +64,7 @@ textarea {
     background-color: transparent;
     outline: none;
     resize: none;
-    
+
 }
 
 input[type = "submit"] {
@@ -90,7 +90,7 @@ input[type = "submit"] {
 .postColumnContainer{
     width:100%;
     display:inline-grid;
-    grid-template-columns: 3em auto 10px;
+    grid-template-columns: 3em auto 3em;
     column-gap:10px;
 }
 

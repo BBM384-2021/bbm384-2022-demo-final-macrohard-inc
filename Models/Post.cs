@@ -8,7 +8,6 @@ public class Post
     [Key]
     public int PostId { get; set; }
     public Account? Poster { get; set; }
-    [Required]
     public string? PostContent { get; set; }
     [NotMapped]
     public IFormFile[]? ImageFiles { get; set; }
@@ -20,6 +19,8 @@ public class Post
     public List<PDF> PDFs { get; set; } = new List<PDF>();
     [NotMapped]
     public IFormFile[]? PDFFiles { get; set; }
+    
+    public List<Application> Applications { get; set; }
 
 
 }

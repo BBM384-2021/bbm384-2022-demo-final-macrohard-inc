@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LinkedHUCENGv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220507150318_application_update_new")]
+    [Migration("20220507171422_application_update_new")]
     partial class application_update_new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,7 +43,7 @@ namespace LinkedHUCENGv2.Migrations
                     b.Property<string>("ApplicationText")
                         .HasColumnType("text");
 
-                    b.Property<int>("PostId")
+                    b.Property<int?>("PostId")
                         .HasColumnType("integer");
 
                     b.HasKey("ApplicationId");
@@ -57,20 +57,20 @@ namespace LinkedHUCENGv2.Migrations
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Certificate", b =>
                 {
-                    b.Property<int>("CertificateId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CertificateId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ApplicationId")
+                    b.Property<int?>("ApplicationId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("CertificateId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ApplicationId");
 
@@ -167,16 +167,17 @@ namespace LinkedHUCENGv2.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PostId")
+                    b.Property<int?>("PostId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("PDF");
+                    b.ToTable("Pdfs");
                 });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
@@ -188,7 +189,6 @@ namespace LinkedHUCENGv2.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PostId"));
 
                     b.Property<string>("PostContent")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("PostTime")
@@ -210,20 +210,20 @@ namespace LinkedHUCENGv2.Migrations
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Resume", b =>
                 {
-                    b.Property<int>("ResumeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ResumeId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ApplicationId")
+                    b.Property<int?>("ApplicationId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("ResumeId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ApplicationId");
 
@@ -490,10 +490,8 @@ namespace LinkedHUCENGv2.Migrations
                         .IsRequired();
 
                     b.HasOne("LinkedHUCENGv2.Models.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Applications")
+                        .HasForeignKey("PostId");
 
                     b.Navigation("Applicant");
 
@@ -504,9 +502,7 @@ namespace LinkedHUCENGv2.Migrations
                 {
                     b.HasOne("LinkedHUCENGv2.Models.Application", "Application")
                         .WithMany("Certificates")
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApplicationId");
 
                     b.Navigation("Application");
                 });
@@ -550,13 +546,11 @@ namespace LinkedHUCENGv2.Migrations
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.PDF", b =>
                 {
-                    b.HasOne("LinkedHUCENGv2.Models.Post", "post")
+                    b.HasOne("LinkedHUCENGv2.Models.Post", "Post")
                         .WithMany("PDFs")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PostId");
 
-                    b.Navigation("post");
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
@@ -572,9 +566,7 @@ namespace LinkedHUCENGv2.Migrations
                 {
                     b.HasOne("LinkedHUCENGv2.Models.Application", "Application")
                         .WithMany("Resumes")
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApplicationId");
 
                     b.Navigation("Application");
                 });
@@ -639,6 +631,8 @@ namespace LinkedHUCENGv2.Migrations
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
                 {
+                    b.Navigation("Applications");
+
                     b.Navigation("Images");
 
                     b.Navigation("PDFs");

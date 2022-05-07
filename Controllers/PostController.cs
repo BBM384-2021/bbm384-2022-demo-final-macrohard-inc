@@ -20,21 +20,18 @@ public class PostController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CreatePost([Bind("PostId,PostContent,PostTime,PostType,ImageFiles")] Post post, string postContent, string postType)
+    public async Task<IActionResult> CreatePost([Bind("PostId,PostContent,PostTime,PostType,ImageFiles,PDFFiles")] Post post, string postContent, string postType)
     {
-
         if (!ModelState.IsValid) return await Feed();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
         var filePath = Path.Combine(_hostEnvironment.WebRootPath, "img");
-        
         if (!Directory.Exists(filePath))
         {
             Directory.CreateDirectory(filePath);
         }
         if (post.ImageFiles != null)
         {
-            
             foreach (var item in post.ImageFiles)
             {
                 var fullFileName = Path.Combine(filePath, item.FileName);
@@ -51,10 +48,11 @@ public class PostController : Controller
         {
             Directory.CreateDirectory(filePath2);
         }
-        if (post.PDFFiles != null && postType != "Post")
+        if (post.PDFFiles != null )
         {
             foreach (var item in post.PDFFiles)
             {
+                Console.WriteLine("yesPDf");
                 var fullFileName = Path.Combine(filePath2, item.FileName);
                 await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
                 {
@@ -63,11 +61,13 @@ public class PostController : Controller
                 post.PDFs.Add(new PDF { Name = item.FileName });
             }
         }
+
+
+
         post.Poster = currAcc;
         post.PostContent = postContent;
         post.PostType = postType;
         post.PostTime = DateTime.Now;
-        Console.WriteLine(post.Images.Count);
         _context.Add(post);
         await _context.SaveChangesAsync();
         return await Feed();
@@ -113,7 +113,7 @@ public class PostController : Controller
         var allPosts = new List<PostViewModel>();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var currPosts = await _context.Post.Include(p=>p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         allPosts.AddRange(CreatePostViews(currPosts, currAcc));
         // get posts from the followings
         var followings = _context.Follows.Where(f => f.Account1.Id == currAcc.Id);
@@ -129,11 +129,12 @@ public class PostController : Controller
         var users = await _context.Accounts.Where(p => p.Email != User.Identity.Name).ToListAsync();
         foreach (var user in users)
         {
-            var announcements = await _context.Post.Where(p => p.PostType != "Post" && p.Poster.Id == user.Id).ToListAsync();
+            var announcements = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostType == "Announcement" && p.Poster.Id == user.Id).ToListAsync();
             allPosts.AddRange(CreatePostViews(announcements, user));
         }
         var sortedPosts = SortPosts(allPosts);
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(await Profile(), sortedPosts);
+
         ViewBag.color1 = "#8000FF";
         ViewBag.color2 = "#CBCBCB";
         ViewBag.color3 = "#CBCBCB";
@@ -144,12 +145,6 @@ public class PostController : Controller
         ViewBag.leftInside = "block";
         ViewBag.accountForViewBag = await Profile();
         return View("~/Views/Home/Feed.cshtml", tuple);
-    }
-
-    [HttpGet]
-    private bool PostExists(int id)
-    {
-        return _context.Post.Any(e => e.PostId == id);
     }
 
     private static List<PostViewModel> SortPosts(IEnumerable<PostViewModel> posts)
@@ -182,19 +177,20 @@ public class PostController : Controller
     private List<PostViewModel> CreatePostViews(List<Post> posts, Account acc)
     {
         return posts.Select(post => new PostViewModel
-        {
-            PosterAccount = acc,
-            PostContent = post.PostContent,
-            PostTime = DateTime.Now.Subtract(post.PostTime).Minutes,
-            PostId = post.PostId,
-            AccountType = acc.AccountType,
-            FirstName = acc.FirstName,
-            LastName = acc.LastName,
-            PosterId = acc.Id,
-            PostType = post.PostType,
-            Email = acc.Email,
-            Images = post.Images
-        })
+            {
+                PosterAccount = acc,
+                PostContent = post.PostContent,
+                PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
+                PostId = post.PostId,
+                AccountType = acc.AccountType,
+                FirstName = acc.FirstName,
+                LastName = acc.LastName,
+                PosterId = acc.Id,
+                PostType = post.PostType,
+                Email = acc.Email,
+                Images = post.Images,
+                PDFs = post.PDFs
+            })
             .ToList();
     }
 }

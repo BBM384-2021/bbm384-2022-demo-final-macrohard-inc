@@ -54,21 +54,23 @@ public class HomeController : Controller
             AccountType = currAcc.AccountType,
             Email = currAcc.Email
         };
-        var posts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync(); 
+        var posts = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         var postModels = posts.Select(post => new PostViewModel
-            {
-                PosterAccount = currAcc,
-                PostContent = post.PostContent,
-                PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
-                PostId = post.PostId,
-                AccountType = currAcc.AccountType,
-                FirstName = currAcc.FirstName,
-                LastName = currAcc.LastName,
-                PosterId = currAcc.Id,
-                PostType = post.PostType
-            })
+        {
+            PosterAccount = currAcc,
+            PostContent = post.PostContent,
+            PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
+            PostId = post.PostId,
+            AccountType = currAcc.AccountType,
+            FirstName = currAcc.FirstName,
+            LastName = currAcc.LastName,
+            PosterId = currAcc.Id,
+            PostType = post.PostType,
+            Email = currAcc.Email,
+            Images = post.Images,
+            PDFs = post.PDFs
+        })
             .ToList();
-        var sort = postModels.OrderBy(p => p.PostTime).ToList();
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#8000FF";
         ViewBag.color3 = "#CBCBCB";
@@ -76,7 +78,9 @@ public class HomeController : Controller
         ViewBag.colorBG2 = "#240046";
         ViewBag.colorBG3 = "none";
         ViewBag.left = "none";
+        ViewBag.leftInside = "none";
         ViewBag.accountForViewBag = userProfileModel;
+        var sort = postModels.OrderBy(p => p.PostTime).ToList();
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(userProfileModel, sort);
         return View(tuple);
     }
@@ -142,26 +146,9 @@ public class HomeController : Controller
         ViewBag.accountForViewBag = userProfileModel;
         return View("~/Views/Home/Notifications.cshtml");
     }
-    
-    public async Task<IActionResult> RequestUserData()
-    {
-        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
-            .FirstOrDefaultAsync();
-        if (currAcc is null)
-            return RedirectToAction("Login", "Account");
-        var notification = new Notification
-        {
-            NotificationType = "request",
-            IsRead = false,
-            NotificationTime = DateTime.Now,
-            NotificationContent = currAcc.FirstName + " " + currAcc.LastName + " has requested user information."
-        };
-        var admin = _context.Accounts.Where(u => u.IsAdmin).ToList().FirstOrDefault();
-        if (admin is null) return NotFound();
-        admin.Notifications.Add(notification);
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Homepage", "Home");
-    }
+
+
+
 
 
     [HttpPost]
@@ -204,6 +191,28 @@ public class HomeController : Controller
         }
         return RedirectToAction("Index", "Home");
     }
+
+    public async Task<IActionResult> RequestUserData()
+    {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var notification = new Notification
+        {
+            NotificationType = "request",
+            IsRead = false,
+            NotificationTime = DateTime.Now,
+            NotificationContent = currAcc.FirstName + " " + currAcc.LastName + " has requested user information."
+        };
+        var admin = _context.Accounts.Where(u => u.IsAdmin).ToList().FirstOrDefault();
+        if (admin is null) return NotFound();
+        admin.Notifications.Add(notification);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Homepage", "Home");
+    }
+
+
 
     [AllowAnonymous]
     public IActionResult Privacy()

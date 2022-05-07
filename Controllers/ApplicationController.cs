@@ -56,7 +56,7 @@ public class ApplicationController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("ApplicationId,ApplicationText,ApplicationDate,PostId, ResumeFile, CertificateFiles")] Application application)
+    public async Task<IActionResult> Create([Bind("ApplicationId,ApplicationText,ApplicationDate,PostId, ResumeFiles, CertificateFiles")] Application application)
     {
         var postId = Convert.ToInt32(TempData["postId"]);
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
@@ -66,22 +66,21 @@ public class ApplicationController : Controller
         var filePath = Path.Combine(_hostEnvironment.WebRootPath, "pdf");
         if (!Directory.Exists(filePath))
             Directory.CreateDirectory(filePath);
-        if (application.ResumeFile is not null)
+        if (application.ResumeFiles is not null)
         {
-            foreach (var item in application.ResumeFile)
+            foreach (var item in application.ResumeFiles)
             {
-                application.Resumes = new List<Resume>();
+                Console.Write("here");
                 var fullFileName = Path.Combine(filePath, item.FileName);
                 await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
                 {
                     await item.CopyToAsync(fileStream);
                 }
-                application.Resumes.Add(new Resume { Name = item.FileName });
+                application.Resumes.Add(new Resume { Name = item.FileName, Application = application});
             }
             
         }
         application.Post = await _context.Post.Where(p => p.PostId == postId).FirstOrDefaultAsync();
-        application.PostId = postId;
         application.ApplicationDate = DateTime.Now;
         application.Applicant = currAcc;
         _context.Add(application);
