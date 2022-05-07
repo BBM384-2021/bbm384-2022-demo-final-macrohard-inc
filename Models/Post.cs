@@ -26,4 +26,6 @@ public class Post
     public IFormFile[]? PDFFiles { get; set; }
 
 
+    public List<Application> Applications { get; set; } = new List<Application>();
+
 }

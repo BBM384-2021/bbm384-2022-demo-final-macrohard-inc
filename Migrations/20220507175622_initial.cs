@@ -246,7 +246,7 @@ namespace LinkedHUCENGv2.Migrations
                     ApplicationText = table.Column<string>(type: "text", nullable: true),
                     ApplicationDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     ApplicantId = table.Column<string>(type: "text", nullable: false),
-                    PostId = table.Column<int>(type: "integer", nullable: false)
+                    PostId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -261,8 +261,7 @@ namespace LinkedHUCENGv2.Migrations
                         name: "FK_Applications_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
-                        principalColumn: "PostId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PostId");
                 });
 
             migrationBuilder.CreateTable(
@@ -286,7 +285,7 @@ namespace LinkedHUCENGv2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PDF",
+                name: "Pdfs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -296,13 +295,51 @@ namespace LinkedHUCENGv2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PDF", x => x.Id);
+                    table.PrimaryKey("PK_Pdfs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PDF_Post_PostId",
+                        name: "FK_Pdfs_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
                         principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Certificates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ApplicationId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Certificates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Certificates_Applications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
+                        principalColumn: "ApplicationId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Resumes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ApplicationId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Resumes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Resumes_Applications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
+                        principalColumn: "ApplicationId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -353,6 +390,11 @@ namespace LinkedHUCENGv2.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Certificates_ApplicationId",
+                table: "Certificates",
+                column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Follows_Account1Id",
                 table: "Follows",
                 column: "Account1Id");
@@ -373,21 +415,23 @@ namespace LinkedHUCENGv2.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PDF_PostId",
-                table: "PDF",
+                name: "IX_Pdfs_PostId",
+                table: "Pdfs",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Post_PosterId",
                 table: "Post",
                 column: "PosterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Resumes_ApplicationId",
+                table: "Resumes",
+                column: "ApplicationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Applications");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -404,6 +448,9 @@ namespace LinkedHUCENGv2.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Certificates");
+
+            migrationBuilder.DropTable(
                 name: "Follows");
 
             migrationBuilder.DropTable(
@@ -413,10 +460,16 @@ namespace LinkedHUCENGv2.Migrations
                 name: "Notifications");
 
             migrationBuilder.DropTable(
-                name: "PDF");
+                name: "Pdfs");
+
+            migrationBuilder.DropTable(
+                name: "Resumes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Applications");
 
             migrationBuilder.DropTable(
                 name: "Post");
