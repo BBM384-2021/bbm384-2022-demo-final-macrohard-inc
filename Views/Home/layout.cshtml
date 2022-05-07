@@ -116,13 +116,13 @@
                             </div>
                             <div style = "display: flex;justify-content: left;align-items: center;background-color:white;height:50px;border-radius: 20px;margin-top:10px;padding:20px">
                                 <p style="text-align: left;font-weight: bolder;">
-                                    <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@mainAccount.Id" style ="text-decoration:none">Followings</a>
+                                    <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@mainAccount.Id" style ="text-decoration:none;color:#240046">Followings</a>
                                     @mainAccount.FollowingCount
                                  </p>
                             </div>
                             <div style = "display: flex;justify-content: left;align-items: center;background-color:white;height:50px;border-radius: 20px;margin-top:10px;padding:20px">
                                 <p style="text-align: left;font-weight: bolder; ">
-                                    <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@mainAccount.Id" style ="text-decoration:none">Followers</a>
+                                    <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@mainAccount.Id" style ="text-decoration:none;color:#240046">Followers</a>
                                     @mainAccount.FollowersCount
                                 </p>
                             </div>

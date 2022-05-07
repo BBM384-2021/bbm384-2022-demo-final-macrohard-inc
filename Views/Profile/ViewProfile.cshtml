@@ -25,16 +25,20 @@
                          @Model[1].FirstName  @Model[1].LastName
                     </h1>
                     <p style="text-align: left;font-weight: bolder;">
-                        <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model[1].Id" style ="text-decoration:none">Followings</a>
+                        <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@Model[1].Id" style ="text-decoration:none;color:#240046">Followings</a>
                          @Model[1].FollowingCount
-                        <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model[1].Id" style ="text-decoration:none">Followers</a>
+                        <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@Model[1].Id" style ="text-decoration:none;color:#240046">Followers</a>
                          @Model[1].FollowersCount
                     </p>
                     <p style="text-align: left; font-weight: lighter;">
                          @Model[1].ProfileBio
                     </p>
-                    <a asp-action="FollowUser" asp-controller="Follow" asp-route-userId="@Model[1].Id">Follow</a>
                 </div>
+                <div style = "position:relative;top:60%">
+                    <a asp-action="FollowUser" asp-controller="Follow" asp-route-userId="@Model[1].Id" style = "text-decoration:none;font-weight:bold;
+                        border-radius:20px;background-color:@ViewBag.followBColor;padding:10px;color:@ViewBag.followColor">@ViewBag.FollowText</a>
+                </div>
+                
             </div>
         </div>
     </div>

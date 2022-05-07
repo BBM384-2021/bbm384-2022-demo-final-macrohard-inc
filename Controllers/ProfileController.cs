@@ -66,6 +66,7 @@ public class ProfileController : Controller
             FollowersCount = followControl.GetFollowerCount(currentAccount.Id),
             FollowingCount = followControl.GetFollowingCount(currentAccount.Id),
         };
+        
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
         ViewBag.color3 = "#CBCBCB";
@@ -75,6 +76,15 @@ public class ProfileController : Controller
         ViewBag.left = "none";
         ViewBag.leftInside = "none";
         ViewBag.accountForViewBag = currUserProfileModel;
+        ViewBag.followColor = "white";
+        ViewBag.followBColor = "#240046";
+        ViewBag.FollowText = "Follow";
+        if (followControl.IsUserFollowed(viewerAcc.Id, id))
+        {
+            ViewBag.followColor = "gray";
+            ViewBag.followBColor = "#F4F1F7";
+            ViewBag.FollowText = "Unfollow";
+        }
         var list = new List<UserProfileModel>
         {
             currUserProfileModel,
