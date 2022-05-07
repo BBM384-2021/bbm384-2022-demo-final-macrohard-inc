@@ -18,10 +18,10 @@
             <div class="posts " style="background-color:white;margin-bottom:25px;height:fit-content; border-radius:20px;box-shadow: 0px 0px 50px rgba(128, 0, 255, 0.1);">
                 <div class = "postColumnContainer">
                     <div style = "width:3em;height:3em;">
-                        <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
+                        <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative">
                     </div>
                     <div>
-                        <p style = "font-weight:bold;color:#240046">@item.FirstName @item.LastName</p>
+                        <a href="/Profile/ViewProfile?id=@item.PosterId" style = "font-weight:bold;color:#240046; text-decoration:none">@item.FirstName @item.LastName</a>
                         <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.AccountType</p>
                         <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
                                                                         @if(item.PostTime >= 24)

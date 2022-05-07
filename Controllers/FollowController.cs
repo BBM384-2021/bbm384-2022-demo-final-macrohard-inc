@@ -176,6 +176,9 @@ public class FollowController : Controller
 
         if (IsUserFollowed(currUser.Id, userId))
         {
+            var unfollowFollow = await _context.Follows.FirstOrDefaultAsync(f => f.Account1.Id == currUser.Id && f.Account2.Id == userId);
+            _context.Follows.Remove(unfollowFollow);
+            await _context.SaveChangesAsync();
             return Redirect("/Profile/ViewProfile?id=" + userId);
         }
 
@@ -193,6 +196,8 @@ public class FollowController : Controller
         return Redirect("/Profile/ViewProfile?id="+ userId);
     }
 
+
+    //bu silinecek
     [HttpPost]
     public async Task<IActionResult> UnfollowUser(string userId)
     {
