@@ -114,7 +114,7 @@ public class PostController : Controller
         var allPosts = new List<PostViewModel>();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        var currPosts = await _context.Post.Include(p=>p.Images).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var currPosts = await _context.Post.Include(p=>p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         allPosts.AddRange( CreatePostViews(currPosts, currAcc));
         // get posts from the followings
         var followings = _context.Follows.Where(f => f.Account1.Id == currAcc.Id);
@@ -130,7 +130,7 @@ public class PostController : Controller
         var users = await _context.Accounts.Where(p => p.Email != User.Identity.Name).ToListAsync();
         foreach (var user in users)
         {
-            var announcements = await _context.Post.Include(p => p.Images).Where(p => p.PostType == "Announcement" && p.Poster.Id == user.Id).ToListAsync();
+            var announcements = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostType == "Announcement" && p.Poster.Id == user.Id).ToListAsync();
             allPosts.AddRange(CreatePostViews(announcements, user));
         }
         var sortedPosts = SortPosts(allPosts);
@@ -191,7 +191,9 @@ public class PostController : Controller
                 LastName = acc.LastName,
                 PosterId = acc.Id,
                 PostType = post.PostType,
-                Email = acc.Email
+                Email = acc.Email,
+                Images = post.Images,
+                PDFs= post.PDFs
             })
             .ToList();
     }

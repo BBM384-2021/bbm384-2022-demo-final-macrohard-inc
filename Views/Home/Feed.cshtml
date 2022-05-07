@@ -49,6 +49,10 @@
                             {
                                 <img src="~/img/@image.Name" style="max-height:200px; ">
                             }
+                            @foreach(var pdf in item.PDFs)
+                            {
+                               <a href=@Url.Content("~/pdf/"+ @pdf.Name)>Link </a>
+                            }
                             </div>
                         </div>
                     <div style = "display:inline-grid;grid-template-columns:auto auto">
