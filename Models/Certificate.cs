@@ -5,9 +5,8 @@ namespace LinkedHUCENGv2.Models;
 public class Certificate
 {
     [Key]
-    public int CertificateId { get; set; }
+    public int Id { get; set; }
     [Required]
     public string? Name { get; set; }
-    [Required]
     public Application? Application { get; set; }
 }
