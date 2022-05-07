@@ -142,9 +142,26 @@ public class HomeController : Controller
         ViewBag.accountForViewBag = userProfileModel;
         return View("~/Views/Home/Notifications.cshtml");
     }
-
-
-
+    
+    public async Task<IActionResult> RequestUserData()
+    {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var notification = new Notification
+        {
+            NotificationType = "request",
+            IsRead = false,
+            NotificationTime = DateTime.Now,
+            NotificationContent = currAcc.FirstName + " " + currAcc.LastName + " has requested user information."
+        };
+        var admin = _context.Accounts.Where(u => u.IsAdmin).ToList().FirstOrDefault();
+        if (admin is null) return NotFound();
+        admin.Notifications.Add(notification);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Homepage", "Home");
+    }
 
 
     [HttpPost]

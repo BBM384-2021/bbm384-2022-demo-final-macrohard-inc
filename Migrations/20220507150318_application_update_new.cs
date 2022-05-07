@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LinkedHUCENGv2.Migrations
 {
-    public partial class initial : Migration
+    public partial class application_update_new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -305,6 +305,46 @@ namespace LinkedHUCENGv2.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Certificates",
+                columns: table => new
+                {
+                    CertificateId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ApplicationId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Certificates", x => x.CertificateId);
+                    table.ForeignKey(
+                        name: "FK_Certificates_Applications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
+                        principalColumn: "ApplicationId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Resumes",
+                columns: table => new
+                {
+                    ResumeId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ApplicationId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Resumes", x => x.ResumeId);
+                    table.ForeignKey(
+                        name: "FK_Resumes_Applications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
+                        principalColumn: "ApplicationId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_ApplicantId",
                 table: "Applications",
@@ -353,6 +393,11 @@ namespace LinkedHUCENGv2.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Certificates_ApplicationId",
+                table: "Certificates",
+                column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Follows_Account1Id",
                 table: "Follows",
                 column: "Account1Id");
@@ -381,13 +426,15 @@ namespace LinkedHUCENGv2.Migrations
                 name: "IX_Post_PosterId",
                 table: "Post",
                 column: "PosterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Resumes_ApplicationId",
+                table: "Resumes",
+                column: "ApplicationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Applications");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -404,6 +451,9 @@ namespace LinkedHUCENGv2.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Certificates");
+
+            migrationBuilder.DropTable(
                 name: "Follows");
 
             migrationBuilder.DropTable(
@@ -416,7 +466,13 @@ namespace LinkedHUCENGv2.Migrations
                 name: "PDF");
 
             migrationBuilder.DropTable(
+                name: "Resumes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Applications");
 
             migrationBuilder.DropTable(
                 name: "Post");

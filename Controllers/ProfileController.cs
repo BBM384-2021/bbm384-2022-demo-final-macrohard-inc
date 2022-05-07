@@ -98,4 +98,5 @@ public class ProfileController : Controller
         var tuple = new Tuple<List<UserProfileModel>, List<PostViewModel>>(list, postModels);
         return View(tuple);
     }
+
 }
