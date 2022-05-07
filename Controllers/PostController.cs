@@ -11,23 +11,66 @@ namespace LinkedHUCENGv2.Controllers;
 public class PostController : Controller
 {
     private readonly ApplicationDbContext _context;
-
-    public PostController(ApplicationDbContext context)
+    private readonly IWebHostEnvironment _hostEnvironment;
+    public PostController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
     {
         _context = context;
+        _hostEnvironment = hostEnvironment;
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CreatePost([Bind("PostId,PostContent,PostTime,PostType")] Post post, string postContent, string postType)
+    public async Task<IActionResult> CreatePost([Bind("PostId,PostContent,PostTime,PostType,ImageFiles")] Post post, string postContent, string postType)
     {
+
         if (!ModelState.IsValid) return await Feed();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
+        var filePath = Path.Combine(_hostEnvironment.WebRootPath, "img");
+        
+        if (!Directory.Exists(filePath))
+        {
+            Directory.CreateDirectory(filePath);
+        }
+        if (post.ImageFiles != null)
+        {
+            
+            foreach (var item in post.ImageFiles)
+            {
+                var fullFileName = Path.Combine(filePath, item.FileName);
+                await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
+                {
+                    await item.CopyToAsync(fileStream);
+                }
+                post.Images.Add(new Image { Name = item.FileName });
+            }
+        }
+
+        var filePath2 = Path.Combine(_hostEnvironment.WebRootPath, "pdf");
+        if (!Directory.Exists(filePath2))
+        {
+            Directory.CreateDirectory(filePath2);
+        }
+        if (post.PDFFiles != null && postType != "Post")
+        {
+            foreach (var item in post.PDFFiles)
+            {
+                var fullFileName = Path.Combine(filePath2, item.FileName);
+                await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
+                {
+                    await item.CopyToAsync(fileStream);
+                }
+                post.PDFs.Add(new PDF { Name = item.FileName });
+            }
+        }
+
+
+
         post.Poster = currAcc;
         post.PostContent = postContent;
         post.PostType = postType;
         post.PostTime = DateTime.Now;
+        Console.WriteLine(post.Images.Count);
         _context.Add(post);
         await _context.SaveChangesAsync();
         return await Feed();
@@ -94,6 +137,7 @@ public class PostController : Controller
         }
         var sortedPosts = SortPosts(allPosts);
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(await Profile(), sortedPosts);
+
         ViewBag.color1 = "#8000FF";
         ViewBag.color2 = "#CBCBCB";
         ViewBag.color3 = "#CBCBCB";
@@ -153,7 +197,8 @@ public class PostController : Controller
             LastName = acc.LastName,
             PosterId = acc.Id,
             PostType = post.PostType,
-            Email = acc.Email
+            Email = acc.Email,
+            Images = post.Images
         })
             .ToList();
     }

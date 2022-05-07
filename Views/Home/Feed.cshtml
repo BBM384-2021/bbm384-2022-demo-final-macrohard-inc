@@ -24,20 +24,35 @@
                         <p style = "font-weight:bold;color:#240046">@item.FirstName @item.LastName</p>
                         <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.AccountType</p>
                         <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
-                                @if(item.PostTime >= 60)
+                                @if(item.PostTime >= 24)
                                 {
-                                    var i = item.PostTime / 60;
-                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i hours ago</p>
+                                    var i =(int) item.PostTime / 24;
+                                    var j = (int) item.PostTime % 24;
+                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i day @j hours ago</p>
                                 }
-                                else
+                                @if(item.PostTime <= 24 && item.PostTime >= 1)
                                 {
-                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.PostTime minutes ago</p>
+                                    var s = (int)item.PostTime;
+                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@s hours ago</p>
                                 }
+                                @if (item.PostTime < 1)
+                                {
+                                    var x = Convert.ToInt32(item.PostTime * 60);
+                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@x minutes ago</p>
+                                }
+
                                 
                             <p style = "font-weight:bold;color:#240046;font-size:13px;background-color:#8000ff17;width:fit-content;padding:0 20px 0 20px;border-radius:10px">@item.PostType</p>
+                            <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
+                            <p style = "font-weight:300;color:black;margin-top:10px;padding-bottom:20px;">@item.PostContent</p>
+                            @foreach(var image in item.Images)
+                            {
+                                <p>@image.Name</p>
+                                <img src="~/img/@image.Name" style="max-height:200px; ">
+                            }
+                            </div>
                         </div>
-                        <p style = "font-weight:300;color:black;margin-top:10px;padding-bottom:20px;">
-                            @item.PostContent</p>
+                        
                         @if(@item.PostType == "JobOpportunity" || @item.PostType == "Scholarship" || @item.PostType == "Internship"){
                             <div style="display:flex;justify-content:center;">
                               <a asp-action="Apply" asp-controller="Post" style = "margin-bottom:15px;padding:10px 20px 10px 20px;font-weight:bold;font-size:13;border-radius:20px;background-color:#240046;color:white;text-decoration:none" >Apply</a>      
