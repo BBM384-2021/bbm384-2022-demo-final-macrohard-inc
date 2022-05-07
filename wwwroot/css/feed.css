@@ -3,7 +3,7 @@
 }
 .postTypeColumn {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 input[type = "radio"]{
     display:none;
@@ -26,6 +26,7 @@ label[name = "checkBoxLabel"] {
     transform: translate(-50%, -50%);
     color: darkslategray;
     font-weight: bold;
+    font-size:14px;
 }
 label[id = "postLabel"] {
     color: #8000FF;

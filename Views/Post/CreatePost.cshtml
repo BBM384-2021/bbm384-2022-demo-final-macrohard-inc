@@ -8,23 +8,27 @@
 <div class="createPost" style="background-color:white;margin-bottom:50px;height:fit-content; border-radius:20px;box-shadow: 0px 0px 35px rgba(128, 0, 255, 0.1);">
     <div class="postTypeContainer" style="padding:10px;text-align:center">
         <div class="postTypeColumn">
-                <div name="typeContainer" id="PostContainer">
+                <div name="typeContainer" id="PostContainer" >
                     <input type="radio" id="Post" name="PostType" value="Post" class="checkbox" onclick="typeSelector(this)" checked/>
                     <label for="Post" name="checkBoxLabel" id="postLabel">Post</label>
                 </div>
-                <div name="typeContainer">
+                <div name="typeContainer"  style = "opacity:@ViewBag.announcementBlock">
+                    <input type="radio" id="Announcement" value="Announcement" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="Announcement" name="checkBoxLabel">Announcement</label>
+                </div>
+                <div name="typeContainer" style = "opacity:@ViewBag.otherBlocks">
                     <input type="radio" id="JobOpportunity" value="JobOpportunity" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
                     <label for="JobOpportunity" name="checkBoxLabel">Job Opportunity</label>
                 </div>
-                <div name="typeContainer">
+                <div name="typeContainer" style = "opacity:@ViewBag.otherBlocks">
                     <input type="radio" id="Internship" value="Internship" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
                     <label for="Internship" name="checkBoxLabel">Internship</label>
                 </div>
-                <div name="typeContainer">
+                <div name="typeContainer" style = "opacity:@ViewBag.otherBlocks">
                     <input type="radio" id="Scholarship" value="Scholarship" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
                     <label for="Scholarship" name="checkBoxLabel">Scholarship</label>
                 </div>
-                <div name="typeContainer">
+                <div name="typeContainer" style = "opacity:@ViewBag.otherBlocks">
                     <input type="radio" id="LectureMaterials" value="LectureMaterials" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
                     <label for="LectureMaterials" name="checkBoxLabel">Lecture Materials</label>
                 </div>
@@ -104,6 +108,7 @@
 
 <script type="text/javascript">
         function typeSelector(checkbox){
+            
             var checked = document.getElementsByClassName("checkbox");
             var typeContainer = document.getElementsByName("typeContainer");
             var checkBoxLabel = document.getElementsByName("checkBoxLabel");

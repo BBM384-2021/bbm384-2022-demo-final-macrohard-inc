@@ -144,6 +144,20 @@ public class PostController : Controller
         ViewBag.left = "block";
         ViewBag.leftInside = "block";
         ViewBag.accountForViewBag = await Profile();
+        ViewBag.announcementBlock = "100";
+        ViewBag.otherBlocks = "100";
+        Console.WriteLine(currAcc.AccountType);
+        if (currAcc.AccountType == "Student")
+        {
+            Console.WriteLine("student");
+            ViewBag.announcementBlock = "0";
+            ViewBag.otherBlocks = "0";
+        }
+        if (currAcc.AccountType == "StudentRep") 
+        {
+            Console.WriteLine("studentRep");
+            ViewBag.otherBlocks = "0";
+        }
         return View("~/Views/Home/Feed.cshtml", tuple);
     }
 
