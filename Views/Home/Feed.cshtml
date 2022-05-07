@@ -45,20 +45,68 @@
                             <p style = "font-weight:bold;color:#240046;font-size:13px;background-color:#8000ff17;width:fit-content;padding:0 20px 0 20px;border-radius:10px">@item.PostType</p>
                             <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
                             <p style = "font-weight:300;color:black;margin-top:10px;padding-bottom:20px;">@item.PostContent</p>
-                            @foreach(var image in item.Images)
-                            {
-                                <p>@image.Name</p>
-                                <img src="~/img/@image.Name" style="max-height:200px; ">
-                            }
+
                             </div>
+
                         </div>
+                            @if(item.Images.Count == 1)
+                            {
+                                @foreach(var image in item.Images)
+                                {
+                                    <div style="background-image: url('/img/@image.Name');background-repeat: no-repeat;width:100%;height:height:fit-content;background-size: 100% auto;background-position: center center;" >
+                                        <img src="~/img/@image.Name" style="height:auto;width:100%;opacity:0; ">
+                                    </div>
+                                    
+                                }
+                            }
+                            @if(item.Images.Count == 2 || item.Images.Count == 4)
+                            {
+                                
+                                <div style = "display:inline-grid;grid-template-columns:1fr 1fr;width:100%;height:fit-content;">
+                                @foreach(var image in item.Images)
+                                {
+                                    <div style="background-image: url('/img/@image.Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                        <img src="~/img/@image.Name" style="height:auto;width:100%;opacity:0; ">
+                                    </div>
+                                    
+                                }
+                                </div>
+                            }
+
+
+                            @if(item.Images.Count == 3)
+                            {
+                                
+                                <div style = "display:inline-grid;grid-template-columns:1.5fr 1fr;width:100%;height:fit-content;">
+                               
+                                    <div style="background-image: url('/img/@item.Images[0].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                        <img src="~/img/@item.Images[0].Name" style="height:500px;width:100%;opacity:0; ">
+                                    </div>
+                                    <div style = "width:100%;height:500px;">
+                                        <div style="background-image: url('/img/@item.Images[1].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                            <img src="~/img/@item.Images[1].Name" style="height:250px;width:100%;opacity:0; ">
+                                        </div>
+                                        <div style="background-image: url('/img/@item.Images[2].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                            <img src="~/img/@item.Images[2].Name" style="height:250px;width:100%;opacity:0; ">
+                                        </div>
+                                    </div>
+
+                                    
+                                
+                                </div>
+                            }
+
+                            @foreach(var pdf in item.PDFs)
+                            {
+                               <a href=@Url.Content("~/pdf/"+ @pdf.Name)>Link </a>
+                            }
                         
                         @if(@item.PostType == "JobOpportunity" || @item.PostType == "Scholarship" || @item.PostType == "Internship"){
                             <div style="display:flex;justify-content:center;">
                               <a asp-action="Apply" asp-controller="Post" style = "margin-bottom:15px;padding:10px 20px 10px 20px;font-weight:bold;font-size:13;border-radius:20px;background-color:#240046;color:white;text-decoration:none" >Apply</a>      
                             </div>
                         }
-                        <p style = "border-bottom: 0.5px solid #8080802b;"></p>
+                        <p style = "border-bottom: 0.5px solid #8080802b;margin-top:10px;"></p>
                         <div style = "display:inline-grid;grid-template-columns:auto auto;height:20px;column-gap:20px;margin-top:10px;">
                             <div style = "display:flex;justify-content:center" >
                             <button style = "display:inline-grid;grid-template-columns:auto auto;background-color:transparent;border:none" >
@@ -127,10 +175,30 @@
                     <div style = "display:inline-grid;grid-template-columns:auto auto">
                         @if (User.Identity.Name == @item.Email)
                         {
-
-                            <a>D</a>
+                            <a>
+                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  width="13px" height="13px"
+	                                 viewBox="0 0 217.855 217.855" style="enable-background:new 0 0 217.855 217.855;" xml:space="preserve">
+                                <path d="M215.658,53.55L164.305,2.196C162.899,0.79,160.991,0,159.002,0c-1.989,0-3.897,0.79-5.303,2.196L3.809,152.086
+	                                c-1.35,1.352-2.135,3.166-2.193,5.075l-1.611,52.966c-0.063,2.067,0.731,4.069,2.193,5.532c1.409,1.408,3.317,2.196,5.303,2.196
+	                                c0.076,0,0.152-0.001,0.229-0.004l52.964-1.613c1.909-0.058,3.724-0.842,5.075-2.192l149.89-149.889
+	                                C218.587,61.228,218.587,56.479,215.658,53.55z M57.264,201.336l-42.024,1.28l1.279-42.026l91.124-91.125l40.75,40.743
+	                                L57.264,201.336z M159,99.602l-40.751-40.742l40.752-40.753l40.746,40.747L159,99.602z"/>
+                                </svg>
+                            </a>
                             <a asp-action="DeleteOnFeed" asp-controller="Post" asp-route-id="@item.PostId" asp-route-userId="@item.PosterId" 
-                            style = "font-weight:bold;text-decoration:none ; color:black" >X</a>
+                            style = "font-weight:bold;text-decoration:none ; color:black" >
+                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	                                 width="13px" height="13px" viewBox="0 0 469.404 469.404" style="enable-background:new 0 0 469.404 469.404;"
+	                                 xml:space="preserve">
+                                    <g>
+	                                    <path d="M310.4,235.083L459.88,85.527c12.545-12.546,12.545-32.972,0-45.671L429.433,9.409c-12.547-12.546-32.971-12.546-45.67,0
+		                                    L234.282,158.967L85.642,10.327c-12.546-12.546-32.972-12.546-45.67,0L9.524,40.774c-12.546,12.546-12.546,32.972,0,45.671
+		                                    l148.64,148.639L9.678,383.495c-12.546,12.546-12.546,32.971,0,45.67l30.447,30.447c12.546,12.546,32.972,12.546,45.67,0
+		                                    l148.487-148.41l148.792,148.793c12.547,12.546,32.973,12.546,45.67,0l30.447-30.447c12.547-12.546,12.547-32.972,0-45.671
+		                                    L310.4,235.083z"/>
+                                    </g>
+                                </svg>
+                            </a>
                         }
                     </div>
 

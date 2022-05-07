@@ -33,7 +33,10 @@
                     <p style="text-align: left; font-weight: lighter;">
                         @Model.Item1.ProfileBio
                     </p>
-
+                    @if (Model.Item1.AccountType is "Academician" or "Student Representative" && Model.Item1.Email == User.Identity.Name)
+                    {
+                        <a asp-controller="Home" asp-action="RequestUserData">Request User Data</a>
+                    }
                 </div>
             </div>
         </div>

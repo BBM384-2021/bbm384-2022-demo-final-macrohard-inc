@@ -50,7 +50,9 @@ public class HomeController : Controller
             ProfilePhoto = currAcc.ProfilePhoto,
             FollowersCount = followControl.GetFollowerCount(currAcc.Id),
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber
+            StudentNumber = currAcc.StudentNumber,
+            AccountType = currAcc.AccountType,
+            Email = currAcc.Email
         };
         var posts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         var postModels = posts.Select(post => new PostViewModel
@@ -185,6 +187,28 @@ public class HomeController : Controller
         }
         return RedirectToAction("Index", "Home");
     }
+
+    public async Task<IActionResult> RequestUserData()
+    {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var notification = new Notification
+        {
+            NotificationType = "request",
+            IsRead = false,
+            NotificationTime = DateTime.Now,
+            NotificationContent = currAcc.FirstName + " " + currAcc.LastName + " has requested user information."
+        };
+        var admin = _context.Accounts.Where(u => u.IsAdmin).ToList().FirstOrDefault();
+        if (admin is null) return NotFound();
+        admin.Notifications.Add(notification);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Homepage", "Home");
+    }
+
+
 
     [AllowAnonymous]
     public IActionResult Privacy()
