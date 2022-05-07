@@ -66,6 +66,15 @@ public class ProfileController : Controller
             FollowersCount = followControl.GetFollowerCount(currentAccount.Id),
             FollowingCount = followControl.GetFollowingCount(currentAccount.Id),
         };
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "none";
+        ViewBag.leftInside = "none";
+        ViewBag.accountForViewBag = currUserProfileModel;
         var posts = await _context.Post.Where(p => p.Poster.Id == account.Id).ToListAsync(); 
         var postModels = posts.Select(post => new PostViewModel
             {
@@ -89,5 +98,4 @@ public class ProfileController : Controller
         var tuple = new Tuple<List<UserProfileModel>, List<PostViewModel>>(list, postModels);
         return View(tuple);
     }
-
 }

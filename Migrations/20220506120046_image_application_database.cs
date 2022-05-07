@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LinkedHUCENGv2.Migrations
 {
-    public partial class image_application_database : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -238,7 +238,7 @@ namespace LinkedHUCENGv2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Application",
+                name: "Applications",
                 columns: table => new
                 {
                     ApplicationId = table.Column<int>(type: "integer", nullable: false)
@@ -250,15 +250,15 @@ namespace LinkedHUCENGv2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Application", x => x.ApplicationId);
+                    table.PrimaryKey("PK_Applications", x => x.ApplicationId);
                     table.ForeignKey(
-                        name: "FK_Application_AspNetUsers_ApplicantId",
+                        name: "FK_Applications_AspNetUsers_ApplicantId",
                         column: x => x.ApplicantId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Application_Post_PostId",
+                        name: "FK_Applications_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
                         principalColumn: "PostId",
@@ -266,19 +266,39 @@ namespace LinkedHUCENGv2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Image",
+                name: "Images",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     PostId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Image", x => x.Id);
+                    table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Image_Post_PostId",
+                        name: "FK_Images_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PDF",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    PostId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PDF", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PDF_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
                         principalColumn: "PostId",
@@ -286,13 +306,13 @@ namespace LinkedHUCENGv2.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Application_ApplicantId",
-                table: "Application",
+                name: "IX_Applications_ApplicantId",
+                table: "Applications",
                 column: "ApplicantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Application_PostId",
-                table: "Application",
+                name: "IX_Applications_PostId",
+                table: "Applications",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
@@ -343,14 +363,19 @@ namespace LinkedHUCENGv2.Migrations
                 column: "Account2Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Image_PostId",
-                table: "Image",
+                name: "IX_Images_PostId",
+                table: "Images",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_AccountId",
                 table: "Notifications",
                 column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PDF_PostId",
+                table: "PDF",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Post_PosterId",
@@ -361,7 +386,7 @@ namespace LinkedHUCENGv2.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Application");
+                name: "Applications");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -382,10 +407,13 @@ namespace LinkedHUCENGv2.Migrations
                 name: "Follows");
 
             migrationBuilder.DropTable(
-                name: "Image");
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "PDF");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

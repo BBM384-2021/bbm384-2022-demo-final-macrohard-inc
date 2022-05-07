@@ -49,14 +49,14 @@
     right: 15px;
 }
 
-.searchButton p {
-    font-size: small;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    left: 20px;
-}
+    .searchButton p {
+        font-size: small;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        left: 20px;
+    }
 
 .search {
     position: absolute;
@@ -129,36 +129,36 @@
     gap: 15px;
 }
 
-.rightSideInclude button {
-    margin: 0;
-    padding: 0;
-    height: 40px;
-}
+    .rightSideInclude button {
+        margin: 0;
+        padding: 0;
+        height: 40px;
+    }
 
-.rightSideInclude button[id = "me"] {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    font-size: 15px;
-    font-weight: bold;
-    background-color: transparent;
-    text-align: right;
-    border-radius: 10px;
-    border: none;
-    width: 100px;
-    background-color: rgba(0,0,0,0.07);
-}
+        .rightSideInclude button[id = "me"] {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            font-size: 15px;
+            font-weight: bold;
+            background-color: transparent;
+            text-align: right;
+            border-radius: 10px;
+            border: none;
+            width: 100px;
+            background-color: rgba(0,0,0,0.07);
+        }
 
-.rightSideInclude button[id = "notification"] {
-    width: 40px;
-    border-radius: 50px;
-    border: none;
-    background-color: rgba(0,0,0,0.07);
-    right: 0;
-}
+        .rightSideInclude button[id = "notification"] {
+            width: 40px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0,0,0,0.07);
+            right: 0;
+        }
 
-.rightSideInclude p {
-    text-align: right;
-}
+    .rightSideInclude p {
+        text-align: right;
+    }
 
 
 .profileBody {
@@ -225,20 +225,20 @@
     margin: 0px 50px 0px 50px;
 }
 
-.profile-grid-container div:nth-child(2) {
-    position: relative;
-    top: 60%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
+    .profile-grid-container div:nth-child(2) {
+        position: relative;
+        top: 60%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
 
-.profile-grid-container div:nth-child(3) {
-    position: relative;
-    top: 65%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    margin-right: 10px;
-}
+    .profile-grid-container div:nth-child(3) {
+        position: relative;
+        top: 65%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        margin-right: 10px;
+    }
 
 .settingsModalContainer {
     position: absolute;
@@ -292,25 +292,25 @@ tbody[id="body"] {
     width: 17em;
 }
 
-tbody[id="body"] tr {
-    display: grid;
-    grid-template-columns: 2fr 5fr 1fr;
-    padding: 10px;
-}
+    tbody[id="body"] tr {
+        display: grid;
+        grid-template-columns: 2fr 5fr 1fr;
+        padding: 10px;
+    }
 
-tbody[id="body"] a {
-    text-align: center;
-    color: #240046;
-    display: block;
-    margin: auto;
-    text-decoration: none;
-    background-color: #EBE8F1;
-    font-weight: bold;
-    border: none;
-    border-radius: 20px;
-    height: 1em;
-    width: 5em;
-}
+    tbody[id="body"] a {
+        text-align: center;
+        color: #240046;
+        display: block;
+        margin: auto;
+        text-decoration: none;
+        background-color: #EBE8F1;
+        font-weight: bold;
+        border: none;
+        border-radius: 20px;
+        height: 1em;
+        width: 5em;
+    }
 
 .searchButton input[type = "text"]:focus {
     border: none;

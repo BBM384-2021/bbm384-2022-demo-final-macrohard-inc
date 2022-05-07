@@ -11,14 +11,14 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
         : base(options)
     {
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-       modelBuilder.Entity<Follow>()
-            .HasOne<Account>(f => f.Account1)
-            .WithMany(a => a.Following)
-            .HasForeignKey(f => f.Account1Id);
-            
+        modelBuilder.Entity<Follow>()
+             .HasOne<Account>(f => f.Account1)
+             .WithMany(a => a.Following)
+             .HasForeignKey(f => f.Account1Id);
+
         modelBuilder.Entity<Follow>()
             .HasOne<Account>(f => f.Account2)
             .WithMany(a => a.Followers)

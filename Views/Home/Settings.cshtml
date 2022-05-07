@@ -1,6 +1,6 @@
-@model Tuple<LinkedHUCENGv2.Models.UserProfileModel, List<LinkedHUCENGv2.Models.PostViewModel>>
-@{
+﻿@{
     Layout = "~/Views/Home/layout.cshtml";
+    var mainAccount = ViewBag.accountForViewBag;
 }
 
 <!DOCTYPE html>
@@ -25,21 +25,21 @@
                 <div class="forms" style="box-sizing: border-box;margin: 0;">
                     <div style=" height: 120px; width:120px; border-radius:20px;margin: 20px auto 20px auto;">
                         <input type="file" name="ProfilePhotoFile" style = "opacity:0;height: 120px;width:120px;position:absolute">
-                        <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 100%;width:100%; border-radius:20px;">
+                        <img src="~/img/@mainAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:20px;">
                     </div>
                     <div class="settingsModal-container">
-                         <input type="hidden" name="Id" value=@Model.Item1.Id>
-                         <input type="text" placeholder="Firstname*" value="@Model.Item1.FirstName" name="FirstName">
-                        <input type="text" placeholder="Lastname*" value="@Model.Item1.LastName" name="LastName">
+                         <input type="hidden" name="Id" value=@mainAccount.Id>
+                         <input type="text" placeholder="Firstname*" value="@mainAccount.FirstName" name="FirstName">
+                        <input type="text" placeholder="Lastname*" value="@mainAccount.LastName" name="LastName">
                     </div>
                     <div>
-                        <input type="number" placeholder="Phone Number*" value="@Model.Item1.Phone" name="Phone">
+                        <input type="number" placeholder="Phone Number*" value="@mainAccount.Phone" name="Phone">
                     </div>
                     <div>
-                        <input type="url" name="Url" placeholder="Linkedin Url*" value="@Model.Item1.Url">
+                        <input type="url" name="Url" placeholder="Linkedin Url*" value="@mainAccount.Url">
                     </div>
                     <div>
-                        <input type="text" name="ProfileBio" placeholder="Bio*" value="@Model.Item1.ProfileBio">
+                        <input type="text" name="ProfileBio" placeholder="Bio*" value="@mainAccount.ProfileBio">
                     </div>
                     
                 </div>

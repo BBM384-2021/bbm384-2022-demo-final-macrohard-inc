@@ -15,5 +15,5 @@ public class UserProfileModel
     public string? FollowStatus { get; set; }
     public string? Email { get; set; }
     public string? AccountType { get; set; }
-    
+
 }

@@ -9,6 +9,8 @@ public class Account : IdentityUser
     public string? Url { get; set; }
     public string? Phone { get; set; }
     public string? ProfilePhoto { get; set; }
+    [NotMapped]
+    public IFormFile? ProfilePhotoFile { get; set; }
     public int AccountId { get; set; }
     [Required]
     public bool IsAdmin { get; set; }
@@ -21,13 +23,11 @@ public class Account : IdentityUser
     [Required(ErrorMessage = "You should choose the type!")]
     public string? AccountType { get; set; }
 
-    [NotMapped] 
+    [NotMapped]
     public List<Follow> Following { get; set; } = new List<Follow>();
-    [NotMapped] 
+    [NotMapped]
     public List<Follow> Followers { get; set; } = new List<Follow>();
     public List<Notification> Notifications { get; set; } = new List<Notification>();
-    [NotMapped]
-    public IFormFile? ProfilePhotoFile { get; set; }
     [Required]
     public DateTime RegistrationDate { get; set; }
     public string? ProfileBio { get; set; }
