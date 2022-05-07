@@ -111,18 +111,19 @@ public class PostController : Controller
     public async Task<IActionResult> Feed()
     {
         var allPosts = new List<PostViewModel>();
-        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
-            .FirstOrDefaultAsync();
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name).FirstOrDefaultAsync();
+
         var currPosts = await _context.Post.Include(p=>p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         allPosts.AddRange(CreatePostViews(currPosts, currAcc));
         // get posts from the followings
-        var followings = _context.Follows.Where(f => f.Account1.Id == currAcc.Id);
+        var followings = await _context.Follows.Where(f => f.Account1.Id == currAcc.Id).ToListAsync();
         foreach (var follow in followings)
         {
             var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
             if (user != null)
             {
-                allPosts.AddRange(CreatePostViews(user.Posts, user));
+                var otherUserPosts = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == user.Email).ToListAsync();
+                allPosts.AddRange(CreatePostViews(otherUserPosts, user));
             }
         }
         // get announcements
@@ -170,7 +171,7 @@ public class PostController : Controller
     private static List<PostViewModel> SortPosts(IEnumerable<PostViewModel> posts)
     {
         var sort = posts.OrderBy(p => p.PostTime).ToList();
-        sort.Reverse();
+        
         return sort;
     }
 
@@ -201,7 +202,7 @@ public class PostController : Controller
         {
             PosterAccount = acc,
             PostContent = post.PostContent,
-            PostTime = DateTime.Now.Subtract(post.PostTime).Minutes,
+            PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
             PostId = post.PostId,
             AccountType = acc.AccountType,
             FirstName = acc.FirstName,
