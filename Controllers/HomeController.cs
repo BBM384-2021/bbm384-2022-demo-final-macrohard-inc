@@ -54,18 +54,21 @@ public class HomeController : Controller
             AccountType = currAcc.AccountType,
             Email = currAcc.Email
         };
-        var posts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var posts = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         var postModels = posts.Select(post => new PostViewModel
         {
             PosterAccount = currAcc,
             PostContent = post.PostContent,
-            PostTime = DateTime.Now.Subtract(post.PostTime).Minutes,
+            PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
             PostId = post.PostId,
             AccountType = currAcc.AccountType,
             FirstName = currAcc.FirstName,
             LastName = currAcc.LastName,
             PosterId = currAcc.Id,
-            PostType = post.PostType
+            PostType = post.PostType,
+            Email = currAcc.Email,
+            Images = post.Images,
+            PDFs = post.PDFs
         })
             .ToList();
         ViewBag.color1 = "#CBCBCB";
@@ -98,7 +101,9 @@ public class HomeController : Controller
             ProfilePhoto = currAcc.ProfilePhoto,
             FollowersCount = followControl.GetFollowerCount(currAcc.Id),
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber
+            StudentNumber = currAcc.StudentNumber,
+            AccountType = currAcc.AccountType,
+            Email = currAcc.Email
         };
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
@@ -129,7 +134,9 @@ public class HomeController : Controller
             ProfilePhoto = currAcc.ProfilePhoto,
             FollowersCount = followControl.GetFollowerCount(currAcc.Id),
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber
+            StudentNumber = currAcc.StudentNumber,
+            AccountType = currAcc.AccountType,
+            Email = currAcc.Email
         };
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";

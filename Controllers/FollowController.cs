@@ -98,7 +98,9 @@ public class FollowController : Controller
             ProfilePhoto = currAcc.ProfilePhoto,
             FollowersCount = followControl.GetFollowerCount(currAcc.Id),
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber
+            StudentNumber = currAcc.StudentNumber,
+            AccountType = currAcc.AccountType,
+            Email = currAcc.Email
         };
         ViewBag.UserName = userLookedUp.FirstName + " " + userLookedUp.LastName;
         ViewBag.header = "Followings";
@@ -134,7 +136,9 @@ public class FollowController : Controller
             ProfilePhoto = currAcc.ProfilePhoto,
             FollowersCount = followControl.GetFollowerCount(currAcc.Id),
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber
+            StudentNumber = currAcc.StudentNumber,
+            AccountType = currAcc.AccountType,
+            Email = currAcc.Email
         };
 
         var followers = await _context.Follows.Where(a => a.Account2Id == userId).ToListAsync();

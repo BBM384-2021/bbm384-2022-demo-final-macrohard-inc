@@ -1,5 +1,6 @@
 ﻿@{
-    var mainAccount = ViewBag.accountForViewBag;
+    var mainAccount = (UserProfileModel)ViewBag.accountForViewBag;
+    
     
 }
 <!DOCTYPE html>
@@ -17,9 +18,9 @@
         <div class="modalContainer-layout" style="position: sticky; top: 0; " ></div>
     </div>
 
-    <div class="modal" id = "modal" style="z-index:5;margin: 0;">
-        <div class="modal-layout" >
-            <div class=grid-container style="color: aliceblue;text-align: left;">
+    <div class="modal" id = "modal" style="z-index:5;margin: 0">
+        <div class="modal-layout" style = "height:fit-content;padding-bottom:10px;">
+            <div class=grid-container style="color: aliceblue;text-align: left;height:fit-content">
                 <div class = "littleProfile" style = "margin:20px;">
                     <div style = "width:60px;height:60px;">
                         <img src="~/img/@mainAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
@@ -37,12 +38,20 @@
 
                 <div class = "accounts" style="position: relative; left: 20px; top: 5px;margin: 7px 7px 7px 0px; display: inline-block;" >
                     <h4>Account</h4>
-                    <p style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);margin-top: 3px;" onclick = "popup4()" >Settings</p>
-                </div>
+                    @if (@mainAccount.AccountType is "Academician" or "Student Representative" && mainAccount.Email == User.Identity.Name)
+                    {
+                        <a asp-controller="Home" asp-action="RequestUserData" style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);margin-top: 3px">Request User Data</a>
+                    }
+                    <div>
+                        <a asp-controller="Home" asp-action="Settings" style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);margin-top: 3px">Settings</a>
+                    </div>
+                    
 
+                </div>
                 <div class = "line" style = "background-color: rgba(255, 255, 255, 0.3);" ></div>
 
                 <div class = "logout" style=" position: relative;  left: 20px; top: 5px; margin: 7px 7px 7px 0px;" >
+                    
                     <a asp-controller="Account" asp-action="Logout" style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);padding: 0px 5px 5px 0px;">Log Out</a>
                 </div>
             </div>

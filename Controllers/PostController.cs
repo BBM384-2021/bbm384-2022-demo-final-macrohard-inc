@@ -191,7 +191,9 @@ public class PostController : Controller
             ProfilePhoto = currAcc.ProfilePhoto,
             FollowersCount = followControl.GetFollowerCount(currAcc.Id),
             FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber
+            StudentNumber = currAcc.StudentNumber,
+            AccountType = currAcc.AccountType,
+            Email = currAcc.Email
         };
         return userProfileModel;
     }
