@@ -19,5 +19,5 @@ public class Application
     [NotMapped]
     public IFormFile[]? CertificateFiles { get; set; }
     [NotMapped]
-    public IFormFile[]? ResumeFiles { get; set; }
+    public IFormFile[] ResumeFiles { get; set; }
 }

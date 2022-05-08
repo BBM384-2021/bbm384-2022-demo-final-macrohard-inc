@@ -24,7 +24,7 @@ public class ApplicationController : Controller
 
     public IActionResult Create(int postId)
     {
-        
+
         var currAcc = _context.Accounts
             .FirstOrDefault(m => m.Email == User.Identity.Name);
         if (currAcc is null)
@@ -58,9 +58,10 @@ public class ApplicationController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("ApplicationId,ApplicationText,ApplicationDate,Post, ResumeFiles, CertificateFiles")] Application application, int postId)
-    {   
-
+    public async Task<IActionResult> Create([Bind("ApplicationId,ApplicationText,ApplicationDate,Post, ResumeFiles, CertificateFiles")] Application application,int postId)
+    {
+        Console.WriteLine("77246823" + postId);
+        
         
         
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
@@ -72,10 +73,10 @@ public class ApplicationController : Controller
             Directory.CreateDirectory(filePath);
         if (application.ResumeFiles != null)
         {
-            
+
             foreach (var item in application.ResumeFiles)
             {
-                
+
                 var fullFileName = Path.Combine(filePath, item.FileName);
                 await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
                 {
@@ -113,6 +114,7 @@ public class ApplicationController : Controller
         ViewBag.left = "block";
         ViewBag.leftInside = "block";
         ViewBag.accountForViewBag = userProfileModel;
+        ViewBag.postId = postId;
         return View(application);
     }
 }
