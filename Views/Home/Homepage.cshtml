@@ -1,6 +1,5 @@
 @model Tuple<LinkedHUCENGv2.Models.UserProfileModel, List<LinkedHUCENGv2.Models.PostViewModel>>
 @{
-    
     Layout = "~/Views/Home/layout.cshtml";
 }
 <!DOCTYPE html>
@@ -33,7 +32,9 @@
                     <p style="text-align: left; font-weight: lighter;">
                         @Model.Item1.ProfileBio
                     </p>
+
                 </div>
+
             </div>
         </div>
     </div>
@@ -52,6 +53,7 @@
                 justify-content:center;width:80%;">
                 <div class = "postColumnContainer" >
                     <div style = "width:3em;height:3em;">
+
                         <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative">
                     </div>
                     <div>
@@ -168,6 +170,7 @@
                                 <div style = "width:3em;height:3em;">
                                     <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
                                 </div>
+
                                 
                                 <div style = "margin-top:0.5em">
                                     <textarea name="commentContent" placeholder="Comment Here" id="myCommentArea" style = "border:1px solid #2400463d;border-radius:10px"></textarea>
@@ -202,6 +205,7 @@
 
                                     </div>
                                 </div>
+
 
                             </div>
                         </div>
@@ -238,7 +242,6 @@
 
                 </div>
                 </div>
-
 
             </div> 
         }

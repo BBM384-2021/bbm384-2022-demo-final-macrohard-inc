@@ -30,6 +30,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<Follow> Follows { get; set; }
+
     public DbSet<Post> Post { get; set; }
     public DbSet<Application> Applications { get; set; }
     public DbSet<Image> Images { get; set; }

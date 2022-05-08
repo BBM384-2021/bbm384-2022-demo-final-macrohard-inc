@@ -1,3 +1,4 @@
+
 ﻿@{
     var mainAccount = (UserProfileModel)ViewBag.accountForViewBag;
     
@@ -10,6 +11,7 @@
         <link rel="stylesheet" href="~/css/profile.css?v=3.4.1"/>
         <link href="~/js/userProfile.js"/>
     </head>
+
 
     <div class = "modalContainer" id = "modalContainer" style="z-index: 4;background-color: rgba(0, 0, 0, 0.3);"onclick = "popup2('modal','modalContainer')">
         <div class="modalContainer-layout" style="position: sticky; top: 0; " ></div>
@@ -38,6 +40,7 @@
 
                 <div class = "accounts" style="position: relative; left: 20px; top: 5px;margin: 7px 7px 7px 0px; display: inline-block;" >
                     <h4>Account</h4>
+
                     @if (@mainAccount.AccountType is "Academician" or "Student Representative" && mainAccount.Email == User.Identity.Name)
                     {
                         <a asp-controller="Home" asp-action="RequestUserData" style="font-size: 13px;font-weight: lighter;color: rgba(255, 255, 255, 0.5);margin-top: 3px">Request User Data</a>
@@ -60,6 +63,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal" id = "modal2" style="z-index:5;margin: 0">
         <div class="modal-layout" style = "right:130px;">
             <div class=grid-container style="color: aliceblue;text-align: left;">
@@ -72,6 +76,7 @@
             </div>
         </div>
     </div>
+
     <body style="background-color: white ; position : relative ;height:auto;">
 
         <header style="z-index: 2; background-color: white;position: sticky; top: 0;">
@@ -87,13 +92,16 @@
             <div class="rightSideContainer" >
                 <div class="rightSide">
                     <div class="rightSideInclude">
+
                         <button id="notification" onclick="popup(this,'modal2','modalContainer2')" value="hide">
+
                             <svg width="25" height="25" viewBox="0 0 60 60" fill="none" >
                                 <path d="M13 42.2954C13 1.90154 46 1.90155 46 42.2954C32.9483 49.0048 18.5618 45.091 13 42.2954Z" stroke = "#878787" stroke-width="5"/>
                                 <path d="M21 46C21.5 54.9233 35.5 55.7345 37 46" stroke = "#878787" stroke-width="5"/>
                                 <path d="M24 13.9996C28.323 3.40984 30.7293 3.25723 35 14" stroke = "#878787" stroke-width="5"/>
                             </svg>
                         </button>
+
                         <button id="me" style="align-items: center" onclick="popup(this,'modal','modalContainer')" value="hide">
                             <div style = "width:30px;height:30px;margin-left:7px;">
                                 <img src="~/img/@mainAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
@@ -114,6 +122,7 @@
             <div class="leftSideContainer" style = "display:@ViewBag.left " >
                 <div class="leftSide">
                     <div class="leftSideInclude" style = "display:flex;justify-content:center;">
+
                         <div style = "position: absolute;top:60px;width:80%;margin-top:30px;display:@ViewBag.leftInside">
 
                             <div  style="text-align:center ;background-color:white;border-radius: 20px;height:230px">
@@ -128,6 +137,7 @@
                             </div>
                             <div style = "display: flex;justify-content: left;align-items: center;background-color:white;height:50px;border-radius: 20px;margin-top:10px;padding:20px">
                                 <p style="text-align: left;font-weight: bolder;">
+
                                     <a asp-controller="Follow" asp-action="GetFollowingList" asp-route-userId="@mainAccount.Id" style ="text-decoration:none;color:#240046">Followings</a>
                                     @mainAccount.FollowingCount
                                  </p>
@@ -136,6 +146,7 @@
                                 <p style="text-align: left;font-weight: bolder; ">
                                     <a asp-controller="Follow" asp-action="GetFollowersList" asp-route-userId="@mainAccount.Id" style ="text-decoration:none;color:#240046">Followers</a>
                                     @mainAccount.FollowersCount
+
                                 </p>
                             </div>
 
@@ -165,7 +176,9 @@
                             <path class = "profileicon" d="M26 27C29.8285 27.2727 37.1573 30.0545 35.8447 39H26" stroke-width="2.7" stroke="@ViewBag.color2"/>
                         </svg>
                         </a>
+
                         <a asp-controller="Home" asp-action="Settings" >
+
                         <svg width="40" height="40" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id = "settingsiconbackGround" fill = "@ViewBag.colorBG3" d="M0 10C0 4.47715 4.47715 0 10 0H42C47.5228 0 52 4.47715 52 10V42C52 47.5228 47.5228 52 42 52H10C4.47715 52 0 47.5228 0 42V10Z" />
                             <path class = "settingsicon" stroke="@ViewBag.color3" d="M37.5 21.0445C37.5 20.5903 37.2942 20.1605 36.9402 19.8758L26.9402 11.8312C26.3912 11.3896 25.6088 11.3896 25.0598 11.8312L15.0598 19.8758C14.7058 20.1605 14.5 20.5903 14.5 21.0445V33.25C14.5 33.7485 14.7476 34.2144 15.1608 34.4933L25.1608 41.2433C25.6679 41.5856 26.3321 41.5856 26.8392 41.2433L36.8392 34.4933C37.2524 34.2144 37.5 33.7485 37.5 33.25V21.0445Z" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>

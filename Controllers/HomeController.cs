@@ -11,7 +11,9 @@ namespace LinkedHUCENGv2.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+
     private ApplicationDbContext _context;
+
     private readonly IWebHostEnvironment _hostEnvironment;
 
     public HomeController(ILogger<HomeController> logger,
@@ -53,6 +55,7 @@ public class HomeController : Controller
             StudentNumber = currAcc.StudentNumber,
             AccountType = currAcc.AccountType,
             Email = currAcc.Email
+
         };
         var posts = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         var postModels = posts.Select(post => new PostViewModel
@@ -155,7 +158,9 @@ public class HomeController : Controller
 
 
     [HttpPost]
+
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url, ProfileBio,ProfilePhoto,ProfilePhotoFile")] Account account)
+
     {
         var user = await _context.Accounts.FindAsync(id);
         if (user is null)
@@ -171,6 +176,7 @@ public class HomeController : Controller
             {
                 Directory.CreateDirectory(filePath);
             }
+
 
             if (account.ProfilePhotoFile != null)
             {
@@ -193,6 +199,25 @@ public class HomeController : Controller
             return RedirectToAction("Homepage");
         }
         return RedirectToAction("Index", "Home");
+    }
+    public async Task<IActionResult> RequestUserData()
+    {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var notification = new Notification
+        {
+            NotificationType = "request",
+            IsRead = false,
+            NotificationTime = DateTime.Now,
+            NotificationContent = currAcc.FirstName + " " + currAcc.LastName + " has requested user information."
+        };
+        var admin = _context.Accounts.Where(u => u.IsAdmin).ToList().FirstOrDefault();
+        if (admin is null) return NotFound();
+        admin.Notifications.Add(notification);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Homepage", "Home");
     }
 
     public async Task<IActionResult> RequestUserData()

@@ -18,6 +18,7 @@ public class Post
     [Required]
     public string? PostType { get; set; }
 
+
     public List<Image> Images { get; set; } = new List<Image>();
 
 
@@ -27,5 +28,6 @@ public class Post
 
 
     public List<Application> Applications { get; set; } = new List<Application>();
+
 
 }

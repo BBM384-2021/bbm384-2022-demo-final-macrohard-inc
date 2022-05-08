@@ -20,7 +20,9 @@ public class PostController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+
     public async Task<IActionResult> CreatePost([Bind("PostId,PostContent,PostTime,PostType,ImageFiles,PDFFiles")] Post post, string postContent, string postType)
+
     {
         if (!ModelState.IsValid) return await Feed();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
@@ -43,8 +45,10 @@ public class PostController : Controller
             }
         }
 
+
         var filePath2 = Path.Combine(_hostEnvironment.WebRootPath, "pdf");
         if (!Directory.Exists(filePath2))
+
         {
             Directory.CreateDirectory(filePath2);
         }
@@ -61,6 +65,7 @@ public class PostController : Controller
                 post.PDFs.Add(new PDF { Name = item.FileName });
             }
         }
+
 
 
 
@@ -99,6 +104,7 @@ public class PostController : Controller
         var post = await _context.Post
             .FirstOrDefaultAsync(m => m.PostId == id && m.Poster.Id == userId);
         if (post == null)
+
         {
             return NotFound();
         }
