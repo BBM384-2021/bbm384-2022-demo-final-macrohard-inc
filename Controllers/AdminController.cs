@@ -114,8 +114,8 @@ public class AdminController : Controller
     }
 
 
-// GET: Admin/Delete/5
-public async Task<IActionResult> Delete(string? id)
+    // GET: Admin/Delete/5
+    public async Task<IActionResult> Delete(string? id)
     {
         if (id == null)
         {
@@ -152,13 +152,13 @@ public async Task<IActionResult> Delete(string? id)
     public void ExportToExcel()
     {
         ViewBag.userList = _context.Accounts.Where(u => u.IsAdmin == false).Select(x => new AccountViewModel
-            {
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Url = x.Url,
-                Email = x.Email
+        {
+            FirstName = x.FirstName,
+            LastName = x.LastName,
+            Url = x.Url,
+            Email = x.Email
 
-            }
+        }
 
 
         ).ToList();
@@ -193,7 +193,7 @@ public async Task<IActionResult> Delete(string? id)
         Response.Headers["content-disposition"] = "attachment: filename=" + "ExcelReport.xlsx";
         Response.Body.WriteAsync(pck.GetAsByteArray());
 
-        
+
 
     }
 }

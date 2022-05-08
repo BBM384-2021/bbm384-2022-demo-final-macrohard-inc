@@ -63,7 +63,7 @@ public class FollowController : Controller
         var followingUsers = _context.Follows.Where(a => a.Account1Id == userId).ToList();
         return followingUsers.Count;
     }
-    
+
 
     public int GetFollowerCount(string userId)
     {
@@ -76,39 +76,120 @@ public class FollowController : Controller
     {
         var followings = await _context.Follows.Where(a => a.Account1Id == userId).ToListAsync();
         var followingUsers = new List<Account>();
-        foreach(var follow in followings)
+        var userLookedUp = await _context.Accounts.Where(a => a.Id == userId).FirstOrDefaultAsync();
+        foreach (var follow in followings)
         {
+            
             var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
             followingUsers.Add(user);
         }
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var followControl = new FollowController(_context);
+        var userProfileModel = new UserProfileModel
+        {
+            Id = currAcc.Id,
+            FirstName = currAcc.FirstName,
+            LastName = currAcc.LastName,
+            ProfileBio = currAcc.ProfileBio,
+            Phone = currAcc.Phone,
+            Url = currAcc.Url,
+            ProfilePhoto = currAcc.ProfilePhoto,
+            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
+            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
+            StudentNumber = currAcc.StudentNumber,
+            AccountType = currAcc.AccountType,
+            Email = currAcc.Email
+        };
+        ViewBag.UserName = userLookedUp.FirstName + " " + userLookedUp.LastName;
+        ViewBag.header = "Followings";
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "block";
+        ViewBag.leftInside = "block";
+        ViewBag.accountForViewBag = userProfileModel;
         return View("~/Views/Follow/ListAccounts.cshtml", followingUsers);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetFollowersList(string userId)
     {
+        var userLookedUp = await _context.Accounts.Where(a => a.Id == userId).FirstOrDefaultAsync();
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var followControl = new FollowController(_context);
+        var userProfileModel = new UserProfileModel
+        {
+            Id = currAcc.Id,
+            FirstName = currAcc.FirstName,
+            LastName = currAcc.LastName,
+            ProfileBio = currAcc.ProfileBio,
+            Phone = currAcc.Phone,
+            Url = currAcc.Url,
+            ProfilePhoto = currAcc.ProfilePhoto,
+            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
+            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
+            StudentNumber = currAcc.StudentNumber,
+            AccountType = currAcc.AccountType,
+            Email = currAcc.Email
+        };
+
         var followers = await _context.Follows.Where(a => a.Account2Id == userId).ToListAsync();
         var followerUsers = new List<Account>();
-        foreach(var follow in followers)
+
+        foreach (var follow in followers)
         {
+           
             var user = await _context.Accounts.Where(a => a.Id == follow.Account1Id).FirstOrDefaultAsync();
             followerUsers.Add(user);
         }
-        
+
+        ViewBag.UserName = userLookedUp.FirstName + " " + userLookedUp.LastName;
+        ViewBag.header = "Followers";
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "block";
+        ViewBag.leftInside = "block";
+        ViewBag.accountForViewBag = userProfileModel;
         return View("~/Views/Follow/ListAccounts.cshtml", followerUsers);
     }
-    
-    [HttpPost]
-    public async Task<JsonResult> FollowUser(string id, string currId)
+
+
+    [HttpGet]
+    public async Task<IActionResult> FollowUser(string userId)
     {
-        var userToFollow = await _context.Accounts.Where(m => m.Id == id)
+        
+        var userToFollow = await _context.Accounts.Where(m => m.Id == userId)
+
             .FirstOrDefaultAsync();
         var currUser = await _context.Accounts.Where(m => m.Id == currId)
             .FirstOrDefaultAsync();
         if (userToFollow is null)
-            return Json(false);
+
+            return Redirect("/Profile/ViewProfile?id=" + userId);
         if (currUser is null)
-            return Json(false);
+            return Redirect("/Profile/ViewProfile?id=" + userId);
+
+        if (IsUserFollowed(currUser.Id, userId))
+        {
+            var unfollowFollow = await _context.Follows.FirstOrDefaultAsync(f => f.Account1.Id == currUser.Id && f.Account2.Id == userId);
+            _context.Follows.Remove(unfollowFollow);
+            await _context.SaveChangesAsync();
+            return Redirect("/Profile/ViewProfile?id=" + userId);
+        }
+
         var follow = new Follow
         {
             Account1 = currUser,
@@ -119,17 +200,22 @@ public class FollowController : Controller
         };
         _context.Add(follow);
         await _context.SaveChangesAsync();
-        return Json(true);
+
+        
+        return Redirect("/Profile/ViewProfile?id="+ userId);
+
     }
 
+
+    //bu silinecek
     [HttpPost]
     public async Task<JsonResult> UnfollowUser(string userId)
     {
-        var userToUnfollow =  await _context.Accounts.Where(m => m.Id == userId)
+        var userToUnfollow = await _context.Accounts.Where(m => m.Id == userId)
             .FirstOrDefaultAsync();
         var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        
+
         if (userToUnfollow is null)
             return Json(false);
         if (currUser is null)
@@ -138,7 +224,8 @@ public class FollowController : Controller
         if (follow.Result is null)
             return Json(false);
         _context.Remove(follow.Result);
-        return  Json(true);
+        return RedirectToAction("ViewProfile", "Profile");
+
     }
 
     private bool FollowExists(int id)

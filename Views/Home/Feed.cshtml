@@ -18,39 +18,188 @@
             <div class="posts " style="background-color:white;margin-bottom:25px;height:fit-content; border-radius:20px;box-shadow: 0px 0px 50px rgba(128, 0, 255, 0.1);">
                 <div class = "postColumnContainer">
                     <div style = "width:3em;height:3em;">
-                        <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
+
+                        <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative">
                     </div>
                     <div>
-                        <p style = "font-weight:bold;color:#240046">@item.FirstName @item.LastName</p>
+                        <a href="/Profile/ViewProfile?id=@item.PosterId" style = "font-weight:bold;color:#240046; text-decoration:none">@item.FirstName @item.LastName</a>
                         <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.AccountType</p>
                         <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
-                                @if(item.PostTime >= 24)
-                                {
-                                    var i =(int) item.PostTime / 24;
-                                    var j = (int) item.PostTime % 24;
-                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i day @j hours ago</p>
-                                }
-                                @if(item.PostTime <= 24 && item.PostTime >= 1)
-                                {
-                                    var s = (int)item.PostTime;
-                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@s hours ago</p>
-                                }
-                                @if (item.PostTime < 1)
-                                {
-                                    var x = Convert.ToInt32(item.PostTime * 60);
-                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@x minutes ago</p>
-                                }
+                                                                        @if(item.PostTime >= 24)
+                                                                        {
+                                                                            var i =(int) item.PostTime / 24;
+                                                                            var j = (int) item.PostTime % 24;
+                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i day @j hours ago</p>
+                                                                        }
+                                                                        @if(item.PostTime <= 24 && item.PostTime >= 1)
+                                                                        {
+                                                                            var s = (int)item.PostTime;
+                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@s hours ago</p>
+                                                                        }
+                                                                        @if (item.PostTime < 1)
+                                                                        {
+                                                                            var x = Convert.ToInt32(item.PostTime * 60);
+                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@x minutes ago</p>
+                                                                        }
                                 
                             <p style = "font-weight:bold;color:#240046;font-size:13px;background-color:#8000ff17;width:fit-content;padding:0 20px 0 20px;border-radius:10px">@item.PostType</p>
+                            <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
+                            <p style = "font-weight:300;color:black;margin-top:10px;padding-bottom:20px;">@item.PostContent @item.PostId</p>
+
+                            </div>
+
                         </div>
-                        <p style = "font-weight:300;color:black;margin-top:10px;padding-bottom:20px;border-bottom: 0.5px solid #8080802b;">@item.PostContent</p>
+                            @if(item.Images.Count == 1)
+                            {
+                                @foreach(var image in item.Images)
+                                {
+                                    <div style="background-image: url('/img/@image.Name');background-repeat: no-repeat;width:100%;height:height:fit-content;background-size: 100% auto;background-position: center center;" >
+                                        <img src="~/img/@image.Name" style="height:auto;width:100%;opacity:0; ">
+                                    </div>
+                                    
+                                }
+                            }
+                            @if(item.Images.Count == 2 || item.Images.Count == 4)
+                            {
+                                
+                                <div style = "display:inline-grid;grid-template-columns:1fr 1fr;width:100%;height:fit-content;">
+                                @foreach(var image in item.Images)
+                                {
+                                    <div style="background-image: url('/img/@image.Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                        <img src="~/img/@image.Name" style="height:auto;width:100%;opacity:0; ">
+                                    </div>
+                                    
+                                }
+                                </div>
+                            }
+
+
+                            @if(item.Images.Count == 3)
+                            {
+                                
+                                <div style = "display:inline-grid;grid-template-columns:1.5fr 1fr;width:100%;height:fit-content;">
+                               
+                                    <div style="background-image: url('/img/@item.Images[0].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                        <img src="~/img/@item.Images[0].Name" style="height:500px;width:100%;opacity:0; ">
+                                    </div>
+                                    <div style = "width:100%;height:500px;">
+                                        <div style="background-image: url('/img/@item.Images[1].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                            <img src="~/img/@item.Images[1].Name" style="height:250px;width:100%;opacity:0; ">
+                                        </div>
+                                        <div style="background-image: url('/img/@item.Images[2].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                            <img src="~/img/@item.Images[2].Name" style="height:250px;width:100%;opacity:0; ">
+                                        </div>
+                                    </div>
+
+                                    
+                                
+                                </div>
+                            }
+
+                            @foreach(var pdf in item.PDFs)
+                            {
+                               <a href=@Url.Content("~/pdf/"+ @pdf.Name)>Link </a>
+                            }
+                        
+                        @if(@item.PostType == "JobOpportunity" || @item.PostType == "Scholarship" || @item.PostType == "Internship"){
+                            <div style="display:flex;justify-content:center;">
+                              <a asp-action="Create" asp-controller="Application" asp-route-postId = "@item.PostId" style = "margin-bottom:15px;padding:10px 20px 10px 20px;font-weight:bold;font-size:13;border-radius:20px;background-color:#240046;color:white;text-decoration:none" >Apply</a>      
+                            </div>
+                        }
+                        <p style = "border-bottom: 0.5px solid #8080802b;margin-top:10px;"></p>
+                        <div style = "display:inline-grid;grid-template-columns:auto auto;height:20px;column-gap:20px;margin-top:10px;">
+                            <div style = "display:flex;justify-content:center" >
+                            <button style = "display:inline-grid;grid-template-columns:auto auto;background-color:transparent;border:none" >
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 816 816" onclick = "likeToggle('@item.PostId')">
+		                            <path id = "@("likeSVG" + item.PostId)" fill="none" fill-rule="evenodd" stroke="#CBCBCB" stroke-width="40" d="M 408,223.824 C 476.78,101.333 612.625,102.281 680.12,164.239 C 747.613,226.196 746.755,349.161 677.973,471.652 C 629.783,563.545 506.877,654.916 404.565,715.687 C 303.111,653.493 181.493,560.415 134.591,467.859 C 67.5267,344.42 68.3853,221.453 136.737,160.445 C 205.089,99.4373 340.935,100.385 408,223.824 Z "/>
+                                </svg>
+                                
+                                <p class = "commentLikeButton" id = "@("likeButton" + item.PostId)" style = "font-weight:bold;padding:2px 0 0 5px;">0 Like</p>
+                            </button>
+                            </div>
+                            <div  onclick = "commentToggle('@item.PostId')">
+                            <button  style = "display:inline-grid;grid-template-columns:auto auto;background-color:transparent;border:none">
+                                <svg  width="20" height="20" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path id = "@("commentSVG" + item.PostId)" d="M8.74293 25.4155C9.26336 25.7597 9.51637 26.3901 9.37829 26.9986L8.6219 30.3319C8.61713 30.3529 8.61191 30.3738 8.60624 30.3946C8.37535 31.2412 8.39844 31.6554 8.4267 31.8219C8.53703 31.8244 8.74423 31.8044 9.0957 31.6939C10.6907 31.1926 13.2477 29.3561 15.5436 26.5501C15.9151 26.096 16.5171 25.9002 17.0846 26.0489C18.3683 26.3851 20.2317 26.3329 22.2018 25.9886C24.135 25.6507 25.9746 25.0668 27.1658 24.4936C29.581 23.2205 33.5 19.7707 33.5 14.5833C33.5 12.2576 32.8191 10.1133 31.4259 8.1154C30.0234 6.10427 28.108 4.49556 25.6353 3.29821C23.1702 2.10452 20.4659 1.49992 17.5 1.49992C14.5341 1.49992 11.8298 2.10452 9.36466 3.29821C6.89195 4.49556 4.97657 6.10427 3.57414 8.1154C2.1809 10.1133 1.5 12.2576 1.5 14.5833C1.5 16.5888 2.01474 18.4597 3.05827 20.222C3.52726 21.014 4.41347 21.9725 5.51016 22.9418C6.58524 23.8919 7.77089 24.7726 8.74293 25.4155ZM8.32108 31.807C8.3209 31.8072 8.32407 31.8088 8.33117 31.8108C8.32483 31.8077 8.32127 31.8067 8.32108 31.807Z" 
+                                    stroke="#CBCBCB" stroke-width="2" stroke-linejoin="round" fill = "none"/>
+                                </svg>
+                                <p class = "commentLikeButton" id = "@("commentButton" + item.PostId)" style = "font-weight:bold;padding:2px 0 0 5px;">0 Comment</p>
+                            </button>
+                            </div>
+                        </div>
+                        <div class = "commentContainer" id = "@("commentContainer" + item.PostId)" style = "width:100%;height:fit-content;margin-top:3px;border-top: 0.5px solid #8080802b;">
+                            <div style = "height:fit-content;width:100%">
+                                <div class = "postColumnContainer" style = "padding-top:10px;padding-bottom:10px;grid-template-columns: 3em 80% 10%;" >
+                                
+                                <div style = "width:3em;height:3em;">
+                                    <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
+                                </div>
+                                
+                                <div style = "margin-top:0.5em">
+                                    <textarea name="commentContent" placeholder="Comment Here" id="myCommentArea" style = "border:1px solid #2400463d;border-radius:10px"></textarea>
+                                </div>
+                                <input type="submit" value="Comment" class="btn btn-primary" style = "margin-top:0.5em;background-color:#240046" />
+                                </div>
+                                <div class = "commentOnPost" style="padding-top:10px;border-top: 0.5px solid #8080802b;">
+                                    <div class = "postColumnContainer" style = "grid-template-columns: 3em 80% 10px;">
+                                    <div style = "width:3em;height:3em;">
+                                        <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
+                                    </div>
+                                    <div>
+                                        <p style = "font-weight:bold;color:#240046">@item.FirstName @item.LastName</p>
+                                        <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.AccountType</p>
+                                        <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
+                                                @if(item.PostTime >= 60)
+                                                {
+                                                    var i = item.PostTime / 60;
+                                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i hours ago</p>
+                                                }
+                                                else
+                                                {
+                                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.PostTime minutes ago</p>
+                                                }
+                                
+                                            <p style = "font-weight:bold;color:#240046;font-size:13px;background-color:#8000ff17;width:fit-content;padding:0 20px 0 20px;border-radius:10px">@item.PostType</p>
+                                        </div>
+                                        <div style = "height:fit-content;width:fit-content;background-color:#E8E6EE;border-radius:10px;margin-top:10px;">
+                                            <p style = "padding:5px 10px 5px 10px;" >Hello</p>
+                                        </div>
+                                    </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                     <div style = "display:inline-grid;grid-template-columns:auto auto">
                         @if (User.Identity.Name == @item.Email)
                         {
-                            <a>D</a>
+
+                            <a>
+                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  width="13px" height="13px"
+	                                 viewBox="0 0 217.855 217.855" style="enable-background:new 0 0 217.855 217.855;" xml:space="preserve">
+                                <path d="M215.658,53.55L164.305,2.196C162.899,0.79,160.991,0,159.002,0c-1.989,0-3.897,0.79-5.303,2.196L3.809,152.086
+	                                c-1.35,1.352-2.135,3.166-2.193,5.075l-1.611,52.966c-0.063,2.067,0.731,4.069,2.193,5.532c1.409,1.408,3.317,2.196,5.303,2.196
+	                                c0.076,0,0.152-0.001,0.229-0.004l52.964-1.613c1.909-0.058,3.724-0.842,5.075-2.192l149.89-149.889
+	                                C218.587,61.228,218.587,56.479,215.658,53.55z M57.264,201.336l-42.024,1.28l1.279-42.026l91.124-91.125l40.75,40.743
+	                                L57.264,201.336z M159,99.602l-40.751-40.742l40.752-40.753l40.746,40.747L159,99.602z"/>
+                                </svg>
+                            </a>
                             <a asp-action="DeleteOnFeed" asp-controller="Post" asp-route-id="@item.PostId" asp-route-userId="@item.PosterId" 
-                            style = "font-weight:bold;text-decoration:none ; color:black" >X</a>
+                            style = "font-weight:bold;text-decoration:none ; color:black" >
+                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	                                 width="13px" height="13px" viewBox="0 0 469.404 469.404" style="enable-background:new 0 0 469.404 469.404;"
+	                                 xml:space="preserve">
+                                    <g>
+	                                    <path d="M310.4,235.083L459.88,85.527c12.545-12.546,12.545-32.972,0-45.671L429.433,9.409c-12.547-12.546-32.971-12.546-45.67,0
+		                                    L234.282,158.967L85.642,10.327c-12.546-12.546-32.972-12.546-45.67,0L9.524,40.774c-12.546,12.546-12.546,32.972,0,45.671
+		                                    l148.64,148.639L9.678,383.495c-12.546,12.546-12.546,32.971,0,45.67l30.447,30.447c12.546,12.546,32.972,12.546,45.67,0
+		                                    l148.487-148.41l148.792,148.793c12.547,12.546,32.973,12.546,45.67,0l30.447-30.447c12.547-12.546,12.547-32.972,0-45.671
+		                                    L310.4,235.083z"/>
+                                    </g>
+                                </svg>
+                            </a>
                         }
                     </div>
 
@@ -63,4 +212,45 @@
     </div>
 </div>
 </body>
+<script type = "text/javascript">
+    function commentToggle(i){
+        var commentSvg = document.getElementById("commentSVG"+i);
+        var commentButton = document.getElementById("commentButton"+i);
+        var container = document.getElementById("commentContainer" + i);
+        container.classList.toggle("hideComment");
+        commentButton.classList.toggle("colorCommentLike");
+        if(commentSvg.getAttribute("stroke") == "#CBCBCB"){
+            commentSvg.setAttribute("stroke","#8000FF");
+            commentSvg.setAttribute("fill","#8000FF");
+            
+        }
+        else{
+            commentSvg.setAttribute("stroke","#CBCBCB");
+            commentSvg.setAttribute("fill","none");
+        }
+    };
+    function likeToggle(i){
+        var likeSvg = document.getElementById("likeSVG"+i);
+        var likeButton = document.getElementById("likeButton"+i);
+        likeButton.classList.toggle("colorCommentLike");
+        if(likeSvg.getAttribute("stroke") == "#CBCBCB"){
+            likeSvg.setAttribute("stroke","#8000FF");
+            likeSvg.setAttribute("fill","#8000FF");
+            
+        }
+        else{
+            likeSvg.setAttribute("stroke","#CBCBCB");
+            likeSvg.setAttribute("fill","none");
+        }
+    }
+    const myCommentText = document.getElementById("myCommentArea" );
+        
+    myCommentText.addEventListener("input",function(){
+            console.log(this.scrollHeight);
+            this.style.height = "33px";
+            this.style.height = `${this.scrollHeight}px`       
+    });
+
+    
+</script>
 </html>

@@ -52,21 +52,21 @@ function filter() {
     }
 }
 
-function popup(tagName) {
-    var modalCont = document.getElementById("modalContainer");
-    var modal = document.getElementById("modal");
+function popup(tagName,id,container) {
+    var modalCont = document.getElementById(container);
+    var modal = document.getElementById(id);
     modalCont.classList.toggle(tagName.value)
     modal.classList.toggle(tagName.value)
 };
 
-function popup2() {
-    var modalCont = document.getElementById("modalContainer");
-    var modal = document.getElementById("modal");
+function popup2(id,container) {
+    var modalCont = document.getElementById(container);
+    var modal = document.getElementById(id);
     modalCont.classList.remove("hide");
     modal.classList.remove("hide");
 };
 
-function popup3() {
+/*function popup3(id) {
     var modalCont2 = document.getElementById("modalContainer2");
     var modal = document.getElementById("settingsModalContainer");
     modalCont2.classList.remove("hide");
@@ -78,4 +78,4 @@ function popup4() {
     var modal = document.getElementById("settingsModalContainer");
     modalCont2.classList.add("hide");
     modal.classList.add("hide");
-}
+}*/

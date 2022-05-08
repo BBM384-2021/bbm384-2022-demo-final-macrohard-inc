@@ -1,9 +1,13 @@
-* {
+
+﻿* {
+
     font-family: 'Poppins',sans-serif;
 }
 .postTypeColumn {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
 }
 input[type = "radio"]{
     display:none;
@@ -26,13 +30,13 @@ label[name = "checkBoxLabel"] {
     transform: translate(-50%, -50%);
     color: darkslategray;
     font-weight: bold;
+
+    font-size:14px;
 }
 label[id = "postLabel"] {
     color: #8000FF;
-
+    
 }
-
-
 
 
 .postTypeTextContainer {
@@ -44,10 +48,14 @@ label[id = "postLabel"] {
     background-color: #240046;
 }
 .postTypeText {
-    display: grid;
-    grid-template-columns: 1fr 40fr 1fr 2fr;
-    column-gap:10px;
-    padding: 10px;
+
+    display: inline-grid;
+    grid-template-columns: 1fr 40fr 1fr 4fr;
+    column-gap: 10px;
+    justify-items: left;
+    align-items: center;
+    padding:10px;
+
     min-height: 50px;
     height: fit-content;
     text-align: left;
@@ -56,26 +64,60 @@ label[id = "postLabel"] {
     width: 100%;
 }
 textarea {
-    overflow-y: none;
-    height:30px;
-    font-size: 13px;
+
+    overflow-y:hidden;
+    height:31px;
+    width:100%;
+    padding:7px;
+    font-size: 16px;
+
     border: none;
     background-color: transparent;
     outline: none;
     resize: none;
+
+    
 }
-/*::-moz-placeholder { 
-    line-height: 30px;
+
+input[type = "submit"] {
+    border-radius: 10px;
+    background-color: #8000FF;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    height: 30px;
+    border:none;
 }
-::-webkit-input-placeholder { 
-    line-height: 30px;
+.postTypeText > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-:-ms-input-placeholder { 
-    line-height: 30px;
+
+
+.posts{
+    padding:20px;
+    padding-bottom:15px;
 }
-textarea:focus {
-    border-width: 1px 1px 1px 1px;
-    border-color:crimson;
-    border-block:solid;
-    outline: none;
-*/
+.postColumnContainer{
+    width:100%;
+    display:inline-grid;
+    grid-template-columns: 3em auto 3em;
+    column-gap:10px;
+}
+
+.commentContainer{
+    display:none;
+}
+.hideComment {
+    display: flex;
+    justify-content: center;
+}
+
+.commentLikeButton {
+    color: #CBCBCB;
+}
+
+.colorCommentLike {
+    color: #8000FF;
+}

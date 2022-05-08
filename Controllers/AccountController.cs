@@ -69,7 +69,7 @@ public class AccountController : Controller
         }
         return View(model);
     }
-    
+
     [HttpGet]
     [AllowAnonymous]
     public IActionResult Login()
@@ -100,8 +100,8 @@ public class AccountController : Controller
         }
         return View(user);
     }
-    
-    
+
+
     // POST: Account/Edit/5
     [HttpPost]
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url")] Account account)
@@ -134,7 +134,7 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
 
     }
-    
+
     public void CreateRegisterNotification(Account account)
     {
         var notification = new Notification

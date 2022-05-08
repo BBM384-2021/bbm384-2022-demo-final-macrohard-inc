@@ -104,6 +104,8 @@
 
     height: 100vh;
 }
+
+
 .leftSideContainer {
     background-color: transparent;
     position: absolute;
@@ -129,42 +131,43 @@
     gap: 15px;
 }
 
-.rightSideInclude button {
-    margin: 0;
-    padding: 0;
-    height: 40px;
-}
 
-.rightSideInclude button[id = "me"] {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    font-size: 15px;
-    font-weight: bold;
-    background-color: transparent;
-    text-align: right;
-    border-radius: 10px;
-    border: none;
-    width: 100px;
-    background-color: rgba(0,0,0,0.07);
-}
+    .rightSideInclude button {
+        margin: 0;
+        padding: 0;
+        height: 40px;
+    }
 
-.rightSideInclude button[id = "notification"] {
-    width: 40px;
-    border-radius: 50px;
-    border: none;
-    background-color: rgba(0,0,0,0.07);
-    right: 0;
-}
+        .rightSideInclude button[id = "me"] {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            font-size: 15px;
+            font-weight: bold;
+            background-color: transparent;
+            text-align: right;
+            border-radius: 10px;
+            border: none;
+            width: 100px;
+            background-color: rgba(0,0,0,0.07);
+        }
 
-.rightSideInclude p {
-    text-align: right;
-}
+        .rightSideInclude button[id = "notification"] {
+            width: 40px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(0,0,0,0.07);
+            right: 0;
+        }
+
+    .rightSideInclude p {
+        text-align: right;
+    }
 
 
 .profileBody {
     box-shadow: 0px 0px 30px rgba(128, 0, 255, 0.1);
     height: 600px;
-    margin: 50px 80px 0px 80px;
+    margin: 50px 80px 50px 80px;
     border-radius: 20px;
 }
 
@@ -205,6 +208,7 @@
 .littleProfile {
     display: grid;
     grid-template-columns: 1fr 4fr;
+    column-gap:10px;
 }
 
 .line {
@@ -221,7 +225,7 @@
     grid-template-columns: 1fr 5fr 1fr;
     z-index: 1;
     gap: 15px;
-    margin: -40px 50px 0px 50px;
+    margin: 0px 50px 0px 50px;
 }
 
 .profile-grid-container div:nth-child(2) {

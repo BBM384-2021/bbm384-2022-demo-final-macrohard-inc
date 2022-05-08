@@ -66,13 +66,43 @@ public class ProfileController : Controller
             FollowersCount = followControl.GetFollowerCount(currentAccount.Id),
             FollowingCount = followControl.GetFollowingCount(currentAccount.Id),
         };
-
-        var list = new List<UserProfileModel>
+        
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "none";
+        ViewBag.leftInside = "none";
+        ViewBag.accountForViewBag = currUserProfileModel;
+        ViewBag.followColor = "white";
+        ViewBag.followBColor = "#240046";
+        ViewBag.FollowText = "Follow";
+        if (followControl.IsUserFollowed(viewerAcc.Id, id))
         {
-            currUserProfileModel,
-            viewedUser
-        };
-        return View(list);
+            ViewBag.followColor = "gray";
+            ViewBag.followBColor = "#F4F1F7";
+            ViewBag.FollowText = "Unfollow";
+        }
+        var posts = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Id == account.Id).ToListAsync();
+        var postModels = posts.Select(post => new PostViewModel
+        {
+            PosterAccount = account,
+            PostContent = post.PostContent,
+            PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
+            PostId = post.PostId,
+            AccountType = account.AccountType,
+            FirstName = account.FirstName,
+            LastName = account.LastName,
+            PosterId = account.Id,
+            PostType = post.PostType,
+            Email = account.Email,
+            Images = post.Images,
+            PDFs = post.PDFs
+        }).ToList();
+        var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(viewedUser, postModels);
+        return View(tuple);
     }
 
 }
