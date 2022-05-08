@@ -1,0 +1,24 @@
+@model Post
+@{
+    var mainAccount = ViewBag.accountForViewBag;
+    Layout = "~/Views/Home/layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/css/feed.css?v=3.4.1"/>
+</head>
+
+<form asp-action="EditPost">
+    <div style = "display:flex; justify-content:center; width:100%;">
+        <div style = "width:50%;">
+            <div class="settingsModal" style = "margin:50px;padding:30px;border:1px solid #F4F1F7;border-radius:10px;">
+                <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);margin-bottom:15px;padding-bottom:10px;">
+                    <h1>Edit Post</h1>
+                </div>
+                <p>@mainAccount.FirstName @mainAccount.LastName</p>
+                <input asp-for="PostContent" placeholder="@Model.PostContent"/>
+                <input asp-for="PostType" placeholder="@Model.PostType"/>
+            </div>
+        </div>
+        <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" value="Submit" type="submit">
+    </div>
+</form>
