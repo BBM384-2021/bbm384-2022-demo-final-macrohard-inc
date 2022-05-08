@@ -174,7 +174,7 @@ public class FollowController : Controller
         var userToFollow = await _context.Accounts.Where(m => m.Id == userId)
 
             .FirstOrDefaultAsync();
-        var currUser = await _context.Accounts.Where(m => m.Id == currId)
+        var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
         if (userToFollow is null)
 
@@ -205,11 +205,9 @@ public class FollowController : Controller
         return Redirect("/Profile/ViewProfile?id="+ userId);
 
     }
-
-
-    //bu silinecek
+    
     [HttpPost]
-    public async Task<JsonResult> UnfollowUser(string userId)
+    public async Task<IActionResult> UnfollowUser(string userId)
     {
         var userToUnfollow = await _context.Accounts.Where(m => m.Id == userId)
             .FirstOrDefaultAsync();
