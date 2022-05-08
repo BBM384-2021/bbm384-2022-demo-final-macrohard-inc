@@ -1,4 +1,5 @@
 #nullable disable
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
@@ -165,15 +166,18 @@ public class FollowController : Controller
         return View("~/Views/Follow/ListAccounts.cshtml", followerUsers);
     }
 
+
     [HttpGet]
     public async Task<IActionResult> FollowUser(string userId)
     {
         
         var userToFollow = await _context.Accounts.Where(m => m.Id == userId)
+
             .FirstOrDefaultAsync();
-        var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+        var currUser = await _context.Accounts.Where(m => m.Id == currId)
             .FirstOrDefaultAsync();
         if (userToFollow is null)
+
             return Redirect("/Profile/ViewProfile?id=" + userId);
         if (currUser is null)
             return Redirect("/Profile/ViewProfile?id=" + userId);
@@ -196,14 +200,16 @@ public class FollowController : Controller
         };
         _context.Add(follow);
         await _context.SaveChangesAsync();
+
         
         return Redirect("/Profile/ViewProfile?id="+ userId);
+
     }
 
 
     //bu silinecek
     [HttpPost]
-    public async Task<IActionResult> UnfollowUser(string userId)
+    public async Task<JsonResult> UnfollowUser(string userId)
     {
         var userToUnfollow = await _context.Accounts.Where(m => m.Id == userId)
             .FirstOrDefaultAsync();
@@ -211,15 +217,15 @@ public class FollowController : Controller
             .FirstOrDefaultAsync();
 
         if (userToUnfollow is null)
-            return NotFound();
+            return Json(false);
         if (currUser is null)
-            return NotFound();
-
+            return Json(false);
         var follow = _context.Follows.Where(f => f.Account1.Id == currUser.Id && f.Account2.Id == userId).FirstOrDefaultAsync();
         if (follow.Result is null)
-            return NotFound();
+            return Json(false);
         _context.Remove(follow.Result);
         return RedirectToAction("ViewProfile", "Profile");
+
     }
 
     private bool FollowExists(int id)

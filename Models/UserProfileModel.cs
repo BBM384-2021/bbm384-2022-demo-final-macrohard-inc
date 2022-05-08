@@ -16,4 +16,5 @@ public class UserProfileModel
     public string? Email { get; set; }
     public string? AccountType { get; set; }
 
+
 }

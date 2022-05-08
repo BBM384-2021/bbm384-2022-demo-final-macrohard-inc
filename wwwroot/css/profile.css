@@ -49,14 +49,14 @@
     right: 15px;
 }
 
-    .searchButton p {
-        font-size: small;
-        position: absolute;
-        top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        left: 20px;
-    }
+.searchButton p {
+    font-size: small;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    left: 20px;
+}
 
 .search {
     position: absolute;
@@ -101,8 +101,10 @@
     background-color: #F4F1F7;
     position: sticky;
     top: 0;
+
     height: 100vh;
 }
+
 
 .leftSideContainer {
     background-color: transparent;
@@ -128,6 +130,7 @@
     right: 20px;
     gap: 15px;
 }
+
 
     .rightSideInclude button {
         margin: 0;
@@ -225,20 +228,20 @@
     margin: 0px 50px 0px 50px;
 }
 
-    .profile-grid-container div:nth-child(2) {
-        position: relative;
-        top: 60%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
+.profile-grid-container div:nth-child(2) {
+    position: relative;
+    top: 60%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
 
-    .profile-grid-container div:nth-child(3) {
-        position: relative;
-        top: 65%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        margin-right: 10px;
-    }
+.profile-grid-container div:nth-child(3) {
+    position: relative;
+    top: 65%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    margin-right: 10px;
+}
 
 .settingsModalContainer {
     position: absolute;
@@ -292,25 +295,25 @@ tbody[id="body"] {
     width: 17em;
 }
 
-    tbody[id="body"] tr {
-        display: grid;
-        grid-template-columns: 2fr 5fr 1fr;
-        padding: 10px;
-    }
+tbody[id="body"] tr {
+    display: grid;
+    grid-template-columns: 2fr 5fr 1fr;
+    padding: 10px;
+}
 
-    tbody[id="body"] a {
-        text-align: center;
-        color: #240046;
-        display: block;
-        margin: auto;
-        text-decoration: none;
-        background-color: #EBE8F1;
-        font-weight: bold;
-        border: none;
-        border-radius: 20px;
-        height: 1em;
-        width: 5em;
-    }
+tbody[id="body"] a {
+    text-align: center;
+    color: #240046;
+    display: block;
+    margin: auto;
+    text-decoration: none;
+    background-color: #EBE8F1;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    height: 1em;
+    width: 5em;
+}
 
 .searchButton input[type = "text"]:focus {
     border: none;

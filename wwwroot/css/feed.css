@@ -1,9 +1,13 @@
+
 ﻿* {
+
     font-family: 'Poppins',sans-serif;
 }
 .postTypeColumn {
     display: grid;
+
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
 }
 input[type = "radio"]{
     display:none;
@@ -26,12 +30,14 @@ label[name = "checkBoxLabel"] {
     transform: translate(-50%, -50%);
     color: darkslategray;
     font-weight: bold;
+
     font-size:14px;
 }
 label[id = "postLabel"] {
     color: #8000FF;
     
 }
+
 
 .postTypeTextContainer {
     min-height:50px;
@@ -42,12 +48,14 @@ label[id = "postLabel"] {
     background-color: #240046;
 }
 .postTypeText {
+
     display: inline-grid;
     grid-template-columns: 1fr 40fr 1fr 4fr;
     column-gap: 10px;
     justify-items: left;
     align-items: center;
     padding:10px;
+
     min-height: 50px;
     height: fit-content;
     text-align: left;
@@ -56,15 +64,18 @@ label[id = "postLabel"] {
     width: 100%;
 }
 textarea {
+
     overflow-y:hidden;
     height:31px;
     width:100%;
     padding:7px;
     font-size: 16px;
+
     border: none;
     background-color: transparent;
     outline: none;
     resize: none;
+
     
 }
 
