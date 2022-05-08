@@ -73,6 +73,11 @@ public class ApplicationController : Controller
             Directory.CreateDirectory(filePath);
         if (application.ResumeFiles != null)
         {
+            if (application.ResumeFiles.Length == 0)
+            {
+                ViewBag.ResumeError = "Please Upload Your Resume.";
+                return View(application);
+            }
 
             foreach (var item in application.ResumeFiles)
             {
@@ -83,6 +88,21 @@ public class ApplicationController : Controller
                     await item.CopyToAsync(fileStream);
                 }
                 application.Resumes.Add(new Resume { Name = item.FileName, Application = application });
+            }
+
+        }
+        if (application.CertificateFiles != null)
+        {
+
+            foreach (var item in application.CertificateFiles)
+            {
+
+                var fullFileName = Path.Combine(filePath, item.FileName);
+                await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
+                {
+                    await item.CopyToAsync(fileStream);
+                }
+                application.Certificates.Add(new Certificate { Name = item.FileName, Application = application });
             }
 
         }

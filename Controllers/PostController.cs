@@ -44,6 +44,8 @@ public class PostController : Controller
                 post.Images.Add(new Image { Name = item.FileName });
             }
         }
+        
+        
 
 
         var filePath2 = Path.Combine(_hostEnvironment.WebRootPath, "pdf");
@@ -172,6 +174,85 @@ public class PostController : Controller
     private bool PostExists(int id)
     {
         return _context.Post.Any(e => e.PostId == id);
+    }
+    
+    public async Task<IActionResult> EditPost(int? id)
+    {
+        var currAcc = _context.Accounts
+            .FirstOrDefault(m => m.Email == User.Identity.Name);
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var followControl = new FollowController(_context);
+        var userProfileModel = new UserProfileModel
+        {
+            Id = currAcc.Id,
+            FirstName = currAcc.FirstName,
+            LastName = currAcc.LastName,
+            ProfileBio = currAcc.ProfileBio,
+            Phone = currAcc.Phone,
+            Url = currAcc.Url,
+            ProfilePhoto = currAcc.ProfilePhoto,
+            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
+            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
+            StudentNumber = currAcc.StudentNumber
+        };
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "block";
+        ViewBag.leftInside = "block";
+        ViewBag.accountForViewBag = userProfileModel;
+        if (id is null)
+            return NotFound();
+        var post = await _context.Post.FindAsync(id);
+        if (post is null)
+            return NotFound();
+        return View(post);
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditPost(int id, [Bind("PostId,PostContent,PostTime,PostType")] Post post)
+    {
+        var currAcc = _context.Accounts
+            .FirstOrDefault(m => m.Email == User.Identity.Name);
+        if (currAcc is null)
+            return RedirectToAction("Login", "Account");
+        var followControl = new FollowController(_context);
+        var userProfileModel = new UserProfileModel
+        {
+            Id = currAcc.Id,
+            FirstName = currAcc.FirstName,
+            LastName = currAcc.LastName,
+            ProfileBio = currAcc.ProfileBio,
+            Phone = currAcc.Phone,
+            Url = currAcc.Url,
+            ProfilePhoto = currAcc.ProfilePhoto,
+            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
+            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
+            StudentNumber = currAcc.StudentNumber
+        };
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "block";
+        ViewBag.leftInside = "block";
+        ViewBag.accountForViewBag = userProfileModel;
+        if (!ModelState.IsValid) return View(post);
+        var postAcc = await _context.Post.FindAsync(id);
+        if (postAcc is null)
+            return NotFound();
+        postAcc.PostContent = post.PostContent;
+        postAcc.PostType = post.PostType;
+        _context.Update(postAcc);
+        await _context.SaveChangesAsync();
+        return View(postAcc);
     }
 
     private static List<PostViewModel> SortPosts(IEnumerable<PostViewModel> posts)
