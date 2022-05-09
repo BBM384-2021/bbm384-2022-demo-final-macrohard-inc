@@ -33,4 +33,6 @@ public class Account : IdentityUser
     public string? ProfileBio { get; set; }
     public string? StudentNumber { get; set; }
     public List<Post> Posts { get; set; } = new List<Post>();
+    public List<Like> Likes { get; set; } = new List<Like>();
+    public List<Comment> Comments { get; set; } = new List<Comment>();
 }

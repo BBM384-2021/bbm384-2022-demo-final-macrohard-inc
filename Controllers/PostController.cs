@@ -119,7 +119,8 @@ public class PostController : Controller
         var allPosts = new List<PostViewModel>();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name).FirstOrDefaultAsync();
 
-        var currPosts = await _context.Post.Include(p=>p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var currPosts = await _context.Post.Include(p=>p.Comments).Include(p=>p.Likes).Include(p=>p.Images).Include(p=>p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        
         allPosts.AddRange(CreatePostViews(currPosts, currAcc));
         // get posts from the followings
         var followings = await _context.Follows.Where(f => f.Account1.Id == currAcc.Id).ToListAsync();
@@ -128,7 +129,7 @@ public class PostController : Controller
             var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
             if (user != null)
             {
-                var otherUserPosts = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == user.Email).ToListAsync();
+                var otherUserPosts = await _context.Post.Include(p=>p.Comments).Include(p=>p.Likes).Include(p => p.Images).Include(p=>p.PDFs).Where(p => p.Poster.Email == user.Email).ToListAsync();
                 allPosts.AddRange(CreatePostViews(otherUserPosts, user));
             }
         }
@@ -136,7 +137,7 @@ public class PostController : Controller
         var users = await _context.Accounts.Where(p => p.Email != User.Identity.Name).ToListAsync();
         foreach (var user in users)
         {
-            var announcements = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostType == "Announcement" && p.Poster.Id == user.Id).ToListAsync();
+            var announcements = await _context.Post.Include(p=>p.Comments).Include(p=>p.Likes).Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostType == "Announcement" && p.Poster.Id == user.Id).ToListAsync();
             allPosts.AddRange(CreatePostViews(announcements, user));
         }
         var sortedPosts = SortPosts(allPosts);
@@ -219,8 +220,26 @@ public class PostController : Controller
             PostType = post.PostType,
             Email = acc.Email,
             Images = post.Images,
-            PDFs= post.PDFs
+            PDFs= post.PDFs,
+            LikeCount = post.Likes.Count,
+            Comments = CreateCommentViews(post.Comments)
         })
+            .ToList();
+    }
+    
+    private List<CommentViewModel> CreateCommentViews(List<Comment> comments)
+    {
+        return comments.Select(comment => new CommentViewModel
+            {
+                CommentContent = comment.CommentContent,
+                CommentTime = DateTime.Now.Subtract(comment.DateCreated).TotalHours,
+                CommentId = comment.CommentId,
+                AccountType = comment.Account.AccountType,
+                FirstName = comment.Account.FirstName,
+                LastName = comment.Account.LastName,
+                Email = comment.Account.Email,
+                Account = comment.Account
+            })
             .ToList();
     }
 

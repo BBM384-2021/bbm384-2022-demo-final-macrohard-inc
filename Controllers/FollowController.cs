@@ -205,26 +205,6 @@ public class FollowController : Controller
         return Redirect("/Profile/ViewProfile?id="+ userId);
 
     }
-    
-    [HttpPost]
-    public async Task<IActionResult> UnfollowUser(string userId)
-    {
-        var userToUnfollow = await _context.Accounts.Where(m => m.Id == userId)
-            .FirstOrDefaultAsync();
-        var currUser = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
-            .FirstOrDefaultAsync();
-
-        if (userToUnfollow is null)
-            return Json(false);
-        if (currUser is null)
-            return Json(false);
-        var follow = _context.Follows.Where(f => f.Account1.Id == currUser.Id && f.Account2.Id == userId).FirstOrDefaultAsync();
-        if (follow.Result is null)
-            return Json(false);
-        _context.Remove(follow.Result);
-        return RedirectToAction("ViewProfile", "Profile");
-
-    }
 
     private bool FollowExists(int id)
     {
