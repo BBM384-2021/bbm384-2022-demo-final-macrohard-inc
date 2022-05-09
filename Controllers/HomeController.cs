@@ -219,7 +219,7 @@ public class HomeController : Controller
         await _context.SaveChangesAsync();
         return RedirectToAction("Homepage", "Home");
     }
-
+/*
     public async Task<IActionResult> RequestUserData()
     {
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
@@ -239,7 +239,7 @@ public class HomeController : Controller
         await _context.SaveChangesAsync();
         return RedirectToAction("Homepage", "Home");
     }
-
+*/
 
 
     [AllowAnonymous]

@@ -1,5 +1,4 @@
-
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using System.Drawing;
 
@@ -16,17 +15,13 @@ public class PostViewModel
     public string? LastName { get; set; }
     public string? AccountType { get; set; }
     public Account? PosterAccount { get; set; }
-
-
     public string? Email { get; set; }
+    public int? LikeCount { get; set; }
     [NotMapped]
-
     public IFormFile[]? ImageFiles { get; set; }
     public List<Image> Images { get; set; } = new List<Image>();
-
     public List<PDF> PDFs { get; set; } = new List<PDF>();
     [NotMapped]
     public IFormFile[]? PDFFiles { get; set; }
-
-
+    public List<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
 }

@@ -37,4 +37,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<PDF> Pdfs { get; set; }
     public DbSet<Resume> Resumes { get; set; }
     public DbSet<Certificate> Certificates { get; set; }
+    public DbSet<Like> Likes { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 }

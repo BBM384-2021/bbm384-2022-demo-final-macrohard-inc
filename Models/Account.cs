@@ -9,8 +9,6 @@ public class Account : IdentityUser
     public string? Url { get; set; }
     public string? Phone { get; set; }
     public string? ProfilePhoto { get; set; }
-    [NotMapped]
-    public IFormFile? ProfilePhotoFile { get; set; }
     public int AccountId { get; set; }
     [Required]
     public bool IsAdmin { get; set; }
@@ -35,4 +33,6 @@ public class Account : IdentityUser
     public string? ProfileBio { get; set; }
     public string? StudentNumber { get; set; }
     public List<Post> Posts { get; set; } = new List<Post>();
+    public List<Like> Likes { get; set; } = new List<Like>();
+    public List<Comment> Comments { get; set; } = new List<Comment>();
 }
