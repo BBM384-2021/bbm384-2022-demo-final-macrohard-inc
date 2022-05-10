@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LinkedHUCENGv2.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -265,6 +265,33 @@ namespace LinkedHUCENGv2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DateCreated = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CommentContent = table.Column<string>(type: "text", nullable: false),
+                    AccountId = table.Column<string>(type: "text", nullable: true),
+                    PostId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.CommentId);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comments_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
@@ -278,6 +305,32 @@ namespace LinkedHUCENGv2.Migrations
                     table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Images_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Likes",
+                columns: table => new
+                {
+                    LikeId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DateCreated = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    AccountId = table.Column<string>(type: "text", nullable: true),
+                    PostId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Likes", x => x.LikeId);
+                    table.ForeignKey(
+                        name: "FK_Likes_AspNetUsers_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Likes_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
                         principalColumn: "PostId",
@@ -395,6 +448,16 @@ namespace LinkedHUCENGv2.Migrations
                 column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_AccountId",
+                table: "Comments",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_PostId",
+                table: "Comments",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Follows_Account1Id",
                 table: "Follows",
                 column: "Account1Id");
@@ -407,6 +470,16 @@ namespace LinkedHUCENGv2.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Images_PostId",
                 table: "Images",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Likes_AccountId",
+                table: "Likes",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Likes_PostId",
+                table: "Likes",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
@@ -451,10 +524,16 @@ namespace LinkedHUCENGv2.Migrations
                 name: "Certificates");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Follows");
 
             migrationBuilder.DropTable(
                 name: "Images");
+
+            migrationBuilder.DropTable(
+                name: "Likes");
 
             migrationBuilder.DropTable(
                 name: "Notifications");

@@ -41,9 +41,7 @@ namespace LinkedHUCENGv2.Migrations
                     b.Property<string>("ApplicationText")
                         .HasColumnType("text");
 
-
                     b.Property<int?>("PostId")
-
                         .HasColumnType("integer");
 
                     b.HasKey("ApplicationId");
@@ -54,7 +52,6 @@ namespace LinkedHUCENGv2.Migrations
 
                     b.ToTable("Applications");
                 });
-
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Certificate", b =>
                 {
@@ -77,6 +74,37 @@ namespace LinkedHUCENGv2.Migrations
 
                     b.ToTable("Certificates");
                 });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CommentId"));
+
+                    b.Property<string>("AccountId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CommentContent")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("LinkedHUCENGv2.Models.Follow", b =>
                 {
                     b.Property<int>("Id")
@@ -114,7 +142,6 @@ namespace LinkedHUCENGv2.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                    
                         .HasColumnType("text");
 
                     b.Property<int>("PostId")
@@ -125,6 +152,32 @@ namespace LinkedHUCENGv2.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Like", b =>
+                {
+                    b.Property<int>("LikeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LikeId"));
+
+                    b.Property<string>("AccountId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("LikeId");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Notification", b =>
@@ -492,15 +545,12 @@ namespace LinkedHUCENGv2.Migrations
 
                     b.HasOne("LinkedHUCENGv2.Models.Post", "Post")
                         .WithMany("Applications")
-
                         .HasForeignKey("PostId");
-
 
                     b.Navigation("Applicant");
 
                     b.Navigation("Post");
                 });
-
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Certificate", b =>
                 {
@@ -511,6 +561,22 @@ namespace LinkedHUCENGv2.Migrations
                     b.Navigation("Application");
                 });
 
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Comment", b =>
+                {
+                    b.HasOne("LinkedHUCENGv2.Models.Account", "Account")
+                        .WithMany("Comments")
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("LinkedHUCENGv2.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Post");
+                });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Follow", b =>
                 {
@@ -533,17 +599,30 @@ namespace LinkedHUCENGv2.Migrations
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Image", b =>
                 {
-
                     b.HasOne("LinkedHUCENGv2.Models.Post", "post")
-
                         .WithMany("Images")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-
                     b.Navigation("post");
+                });
 
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Like", b =>
+                {
+                    b.HasOne("LinkedHUCENGv2.Models.Account", "Account")
+                        .WithMany("Likes")
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("LinkedHUCENGv2.Models.Post", "Post")
+                        .WithMany("Likes")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Notification", b =>
@@ -633,7 +712,6 @@ namespace LinkedHUCENGv2.Migrations
                         .IsRequired();
                 });
 
-
             modelBuilder.Entity("LinkedHUCENGv2.Models.Application", b =>
                 {
                     b.Navigation("Certificates");
@@ -641,22 +719,28 @@ namespace LinkedHUCENGv2.Migrations
                     b.Navigation("Resumes");
                 });
 
-
             modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
                 {
                     b.Navigation("Applications");
 
+                    b.Navigation("Comments");
+
                     b.Navigation("Images");
 
-                    b.Navigation("PDFs");
+                    b.Navigation("Likes");
 
+                    b.Navigation("PDFs");
                 });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Account", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Followers");
 
                     b.Navigation("Following");
+
+                    b.Navigation("Likes");
 
                     b.Navigation("Notifications");
 

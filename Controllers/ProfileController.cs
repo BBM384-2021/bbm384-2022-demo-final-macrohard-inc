@@ -85,7 +85,7 @@ public class ProfileController : Controller
             ViewBag.followBColor = "#F4F1F7";
             ViewBag.FollowText = "Unfollow";
         }
-        var posts = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Id == account.Id).ToListAsync();
+        var posts = await _context.Post.Include(p => p.Likes).Include(p => p.Comments).Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Id == account.Id).ToListAsync();
         var postModels = posts.Select(post => new PostViewModel
         {
             PosterAccount = account,
@@ -99,10 +99,28 @@ public class ProfileController : Controller
             PostType = post.PostType,
             Email = account.Email,
             Images = post.Images,
-            PDFs = post.PDFs
+            PDFs = post.PDFs,
+            Comments = CreateCommentViews(post.Comments),
+            LikeCount = post.Likes.Count
         }).ToList();
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(viewedUser, postModels);
         return View(tuple);
+    }
+    
+    private List<CommentViewModel> CreateCommentViews(List<Comment> comments)
+    {
+        return comments.Select(comment => new CommentViewModel
+            {
+                CommentContent = comment.CommentContent,
+                CommentTime = DateTime.Now.Subtract(comment.DateCreated).TotalHours,
+                CommentId = comment.CommentId,
+                AccountType = comment.Account.AccountType,
+                FirstName = comment.Account.FirstName,
+                LastName = comment.Account.LastName,
+                Email = comment.Account.Email,
+                Account = comment.Account
+            })
+            .ToList();
     }
 
 }
