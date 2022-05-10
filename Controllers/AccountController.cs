@@ -55,7 +55,7 @@ public class AccountController : Controller
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                var notificationController = new NotificationController();
+                var notificationController = new NotificationController(_context);
                 notificationController.CreateRegisterNotification(user);
                 return RedirectToAction("Feed", "Post");
             }

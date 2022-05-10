@@ -9,6 +9,10 @@ namespace LinkedHUCENGv2.Controllers;
 public class NotificationController : Controller
 {
     private ApplicationDbContext _context;
+    public NotificationController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
     public void CreateRegisterNotification(Account account)
     {
         var notification = CreateNotification("register",

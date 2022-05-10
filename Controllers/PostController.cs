@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
+using static LinkedHUCENGv2.Utils.PostUtils;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LinkedHUCENGv2.Controllers;
@@ -115,8 +116,7 @@ public class PostController : Controller
     {
         var allPosts = new List<PostViewModel>();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name).FirstOrDefaultAsync();
-
-        var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var currPosts = await GetPostsOfUser(currAcc, _context);
         
         allPosts.AddRange(CreatePostViews(currPosts, currAcc));
         // get posts from the followings
@@ -126,7 +126,7 @@ public class PostController : Controller
             var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
             if (user != null)
             {
-                var otherUserPosts = await _context.Post.Where(p => p.Poster.Email == user.Email).ToListAsync();
+                var otherUserPosts = await GetPostsOfUser(user, _context);
                 allPosts.AddRange(CreatePostViews(otherUserPosts, user));
             }
         }
@@ -134,7 +134,13 @@ public class PostController : Controller
         var users = await _context.Accounts.Where(p => p.Email != User.Identity.Name).ToListAsync();
         foreach (var user in users)
         {
-            var announcements = await _context.Post.Where(p => p.PostType == "Announcement").ToListAsync();
+            var announcements = await _context.Post.Where(p => p.PostType == "Announcement")
+                .Include(p=>p.Comments)
+                .Include(p=>p.Likes)
+                .Include(p=>p.Images)
+                .Include(p=>p.PDFs)
+                .AsSplitQuery()
+                .ToListAsync();;
             allPosts.AddRange(CreatePostViews(announcements, user));
         }
         var sortedPosts = SortPosts(allPosts);
@@ -230,23 +236,5 @@ public class PostController : Controller
         return retList;
     }
     
-    private static List<CommentViewModel> CreateCommentViews(IEnumerable<Comment> comments)
-    {
-        return (from comment in comments
-            where comment is not null 
-            select new CommentViewModel()
-            {
-                CommentContent = comment.CommentContent,
-                CommentTime = DateTime.Now.Subtract(comment.DateCreated).TotalHours,
-                CommentId = comment.CommentId,
-                AccountType = comment.Account.AccountType,
-                FirstName = comment.Account.FirstName,
-                LastName = comment.Account.LastName,
-                Email = comment.Account.Email,
-                Account = comment.Account
-            }).ToList();
-    }
-
-
 
 }
