@@ -24,6 +24,7 @@
         <p>@Html.ValidationMessageFor(x => x.Email)</p>
         <input type="email" name="Email" placeholder="Email" id="email">
         <input type="password" name="Password" placeholder="Password" id="password">
+        @Html.RadioButtonFor(model => model.RememberMe, true) Remember Me
         <input type="submit" value="Login">
         <p style="font-size:14px; color:#000000; font-weight:bold;text-align: center; margin-top: 20px">
             New to linkedHUceng?
