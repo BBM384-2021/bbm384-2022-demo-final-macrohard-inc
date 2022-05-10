@@ -25,22 +25,22 @@
                         <a href="/Profile/ViewProfile?id=@item.PosterId" style = "font-weight:bold;color:#240046; text-decoration:none">@item.FirstName @item.LastName</a>
                         <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.AccountType</p>
                         <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
-                                                                        @if(item.PostTime >= 24)
-                                                                        {
-                                                                            var i =(int) item.PostTime / 24;
-                                                                            var j = (int) item.PostTime % 24;
-                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i day @j hours ago</p>
-                                                                        }
-                                                                        @if(item.PostTime <= 24 && item.PostTime >= 1)
-                                                                        {
-                                                                            var s = (int)item.PostTime;
-                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@s hours ago</p>
-                                                                        }
-                                                                        @if (item.PostTime < 1)
-                                                                        {
-                                                                            var x = Convert.ToInt32(item.PostTime * 60);
-                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@x minutes ago</p>
-                                                                        }
+                            @if(item.PostTime >= 24)
+                            {
+                                var i =(int) item.PostTime / 24;
+                                var j = (int) item.PostTime % 24;
+                                <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i day @j hours ago</p>
+                            }
+                            @if(item.PostTime <= 24 && item.PostTime >= 1)
+                            {
+                                var s = (int)item.PostTime;
+                                <p style = "font-weight:100;color:#995cd3;font-size:13px;">@s hours ago</p>
+                            }
+                            @if (item.PostTime < 1)
+                            {
+                                var x = Convert.ToInt32(item.PostTime * 60);
+                                <p style = "font-weight:100;color:#995cd3;font-size:13px;">@x minutes ago</p>
+                            }
                                 
                             <p style = "font-weight:bold;color:#240046;font-size:13px;background-color:#8000ff17;width:fit-content;padding:0 20px 0 20px;border-radius:10px">@item.PostType</p>
                             <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
@@ -162,6 +162,37 @@
                                             <div>
                                                 <p style="font-weight:bold;color:#240046">@commentItem.FirstName @commentItem.LastName</p>
                                                 <p style="font-weight:100;color:#995cd3;font-size:13px;">@commentItem.AccountType</p>
+                                                <button>
+                                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13px" height="13px"
+                                                         viewBox="0 0 217.855 217.855" style="enable-background:new 0 0 217.855 217.855;" xml:space="preserve">
+                                                        <path d="M215.658,53.55L164.305,2.196C162.899,0.79,160.991,0,159.002,0c-1.989,0-3.897,0.79-5.303,2.196L3.809,152.086
+                                                            c-1.35,1.352-2.135,3.166-2.193,5.075l-1.611,52.966c-0.063,2.067,0.731,4.069,2.193,5.532c1.409,1.408,3.317,2.196,5.303,2.196
+                                                            c0.076,0,0.152-0.001,0.229-0.004l52.964-1.613c1.909-0.058,3.724-0.842,5.075-2.192l149.89-149.889
+                                                            C218.587,61.228,218.587,56.479,215.658,53.55z M57.264,201.336l-42.024,1.28l1.279-42.026l91.124-91.125l40.75,40.743
+                                                            L57.264,201.336z M159,99.602l-40.751-40.742l40.752-40.753l40.746,40.747L159,99.602z"/>
+                                                    </svg>
+                                                </button>
+                                                @using (Html.BeginForm("DeleteComment", "Comment", FormMethod.Post ,new {enctype = "multipart/form-data"}))
+                                                {
+                                                <div class="deleteComment" style="background-color:white;margin-bottom:50px;height:fit-content; border-radius:20px;box-shadow: 0px 0px 35px rgba(128, 0, 255, 0.1);">
+                                                <input type="hidden" id="commentId" name="commentId" value="@commentItem.CommentId">
+                                                <button>
+                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     width="13px" height="13px" viewBox="0 0 469.404 469.404" style="enable-background:new 0 0 469.404 469.404;"
+                                                     xml:space="preserve">
+                                                    <g>
+                                                    <path d="M310.4,235.083L459.88,85.527c12.545-12.546,12.545-32.972,0-45.671L429.433,9.409c-12.547-12.546-32.971-12.546-45.67,0
+                                                    L234.282,158.967L85.642,10.327c-12.546-12.546-32.972-12.546-45.67,0L9.524,40.774c-12.546,12.546-12.546,32.972,0,45.671
+                                                    l148.64,148.639L9.678,383.495c-12.546,12.546-12.546,32.971,0,45.67l30.447,30.447c12.546,12.546,32.972,12.546,45.67,0
+                                                    l148.487-148.41l148.792,148.793c12.547,12.546,32.973,12.546,45.67,0l30.447-30.447c12.547-12.546,12.547-32.972,0-45.671
+                                                    L310.4,235.083z"/>
+                                                </g>
+                                            </svg>
+                                            </button>
+                                            </div>
+                                                    
+                                            }
+                                                 
                                                 <div style="display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
                                                    @if(commentItem.CommentTime >= 24)
                                                    {
@@ -239,7 +270,7 @@
         var container = document.getElementById("commentContainer" + i);
         container.classList.toggle("hideComment");
         commentButton.classList.toggle("colorCommentLike");
-        if(commentSvg.getAttribute("stroke") == "#CBCBCB"){
+        if(commentSvg.getAttribute("stroke") === "#CBCBCB"){
             commentSvg.setAttribute("stroke","#8000FF");
             commentSvg.setAttribute("fill","#8000FF");
             
@@ -253,7 +284,7 @@
         var likeSvg = document.getElementById("likeSVG"+i);
         var likeButton = document.getElementById("likeButton"+i);
         likeButton.classList.toggle("colorCommentLike");
-        if(likeSvg.getAttribute("stroke") == "#CBCBCB"){
+        if(likeSvg.getAttribute("stroke") === "#CBCBCB"){
             likeSvg.setAttribute("stroke","#8000FF");
             likeSvg.setAttribute("fill","#8000FF");
             

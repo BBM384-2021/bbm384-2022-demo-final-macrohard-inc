@@ -80,24 +80,17 @@ public class AccountController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Login(LoginViewModel user)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid) return View(user);
+        var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, false);
+
+        if (result.Succeeded)
         {
-            var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, user.RememberMe, false);
-
-            if (result.Succeeded)
-            {
-                var acc = await _context.Accounts.Where(s => s.Email.Equals(user.Email)).ToListAsync();
-                if (acc.First().IsAdmin)
-                {
-                    return RedirectToAction("Index", "Admin");
-                }
-                return RedirectToAction("Feed", "Post");
-            }
-
-            ViewBag.Text = "Invalid login! Check your mail and password.";
-            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-
+            var acc = await _context.Accounts.Where(s => s.Email.Equals(user.Email)).ToListAsync();
+            return acc.First().IsAdmin ? RedirectToAction("Index", "Admin") : RedirectToAction("Feed", "Post");
         }
+
+        ViewBag.Text = "Invalid login! Check your mail and password.";
+        ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
         return View(user);
     }
 
@@ -107,22 +100,19 @@ public class AccountController : Controller
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url")] Account account)
     {
         var user = await _context.Accounts.FindAsync(id);
-        if (id != user.Id)
+        if (id != user?.Id)
         {
             return NotFound();
         }
 
         ModelState.Remove("AccountType");
-        if (ModelState.IsValid)
-        {
-            user.FirstName = account.FirstName;
-            user.LastName = account.LastName;
-            user.Phone = account.Phone;
-            user.Url = account.Url;
-            _context.Update(user);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
-        }
+        if (!ModelState.IsValid) return RedirectToAction("Index", "Home");
+        user.FirstName = account.FirstName;
+        user.LastName = account.LastName;
+        user.Phone = account.Phone;
+        user.Url = account.Url;
+        _context.Update(user);
+        await _context.SaveChangesAsync();
         return RedirectToAction("Index", "Home");
     }
 
