@@ -27,7 +27,7 @@ public class PostController : Controller
         if (!ModelState.IsValid) return await Feed();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        var filePath = Path.Combine(_hostEnvironment.WebRootPath, "img");
+        var filePath = Path.Combine(_hostEnvironment.WebRootPath, "img/usercontent");
         if (!Directory.Exists(filePath))
         {
             Directory.CreateDirectory(filePath);
@@ -36,12 +36,13 @@ public class PostController : Controller
         {
             foreach (var item in post.ImageFiles)
             {
-                var fullFileName = Path.Combine(filePath, item.FileName);
+                var newFileName = Guid.NewGuid() + "." + item.FileName.Split(".").Last();
+                var fullFileName = Path.Combine(filePath, newFileName);
                 await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
                 {
                     await item.CopyToAsync(fileStream);
                 }
-                post.Images.Add(new Image { Name = item.FileName });
+                post.Images.Add(new Image { Name = newFileName});
             }
         }
 

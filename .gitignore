@@ -28,6 +28,8 @@
 [Oo]bj/
 _UpgradeReport_Files/
 [Pp]ackages/
+Migrations/
+wwwroot/img/usercontent/
 
 Thumbs.db
 Desktop.ini
