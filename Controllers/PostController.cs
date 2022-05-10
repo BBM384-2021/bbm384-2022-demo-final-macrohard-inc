@@ -116,7 +116,7 @@ public class PostController : Controller
         var allPosts = new List<PostViewModel>();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name).FirstOrDefaultAsync();
 
-        var currPosts = await _context.Post.Include(p=>p.Comments).Include(p=>p.Likes).Include(p=>p.Images).Include(p=>p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var currPosts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         
         allPosts.AddRange(CreatePostViews(currPosts, currAcc));
         // get posts from the followings
@@ -126,7 +126,7 @@ public class PostController : Controller
             var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
             if (user != null)
             {
-                var otherUserPosts = await _context.Post.Include(p=>p.Comments).Include(p=>p.Likes).Include(p => p.Images).Include(p=>p.PDFs).Where(p => p.Poster.Email == user.Email).ToListAsync();
+                var otherUserPosts = await _context.Post.Where(p => p.Poster.Email == user.Email).ToListAsync();
                 allPosts.AddRange(CreatePostViews(otherUserPosts, user));
             }
         }
@@ -134,7 +134,7 @@ public class PostController : Controller
         var users = await _context.Accounts.Where(p => p.Email != User.Identity.Name).ToListAsync();
         foreach (var user in users)
         {
-            var announcements = await _context.Post.Include(p=>p.Comments).Include(p=>p.Likes).Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostType == "Announcement" && p.Poster.Id == user.Id).ToListAsync();
+            var announcements = await _context.Post.Where(p => p.PostType == "Announcement").ToListAsync();
             allPosts.AddRange(CreatePostViews(announcements, user));
         }
         var sortedPosts = SortPosts(allPosts);
@@ -233,8 +233,7 @@ public class PostController : Controller
     private static List<CommentViewModel> CreateCommentViews(IEnumerable<Comment> comments)
     {
         return (from comment in comments
-            where comment is not null
-            where comment.Account is not null
+            where comment is not null 
             select new CommentViewModel()
             {
                 CommentContent = comment.CommentContent,

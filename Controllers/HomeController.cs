@@ -57,7 +57,7 @@ public class HomeController : Controller
             Email = currAcc.Email
 
         };
-        var posts = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var posts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
         var postModels = posts.Select(post => new PostViewModel
         {
             PosterAccount = currAcc,
