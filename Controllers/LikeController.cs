@@ -50,6 +50,8 @@ public class LikeController : Controller
                 Post = post,
                 DateCreated = DateTime.Now
             };
+            var notifyController = new NotificationController();
+            notifyController.CreateLikeNotification(currUser, post);
             post.Likes.Add(like);
             _context.Post.Update(post);
             _context.Add(like);

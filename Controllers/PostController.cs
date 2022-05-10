@@ -46,7 +46,6 @@ public class PostController : Controller
             }
         }
 
-
         var filePath2 = Path.Combine(_hostEnvironment.WebRootPath, "pdf");
         if (!Directory.Exists(filePath2))
 
@@ -66,9 +65,6 @@ public class PostController : Controller
                 post.PDFs.Add(new PDF { Name = item.FileName });
             }
         }
-
-
-
 
         post.Poster = currAcc;
         post.PostContent = postContent;
@@ -187,6 +183,8 @@ public class PostController : Controller
     {
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return null;
         var followControl = new FollowController(_context);
         var userProfileModel = new UserProfileModel
         {
@@ -206,9 +204,12 @@ public class PostController : Controller
         return userProfileModel;
     }
 
-    private List<PostViewModel> CreatePostViews(List<Post> posts, Account acc)
+    private static IEnumerable<PostViewModel> CreatePostViews(IEnumerable<Post> posts, Account acc)
     {
-        return posts.Select(post => new PostViewModel
+        var retList = new List<PostViewModel>{};
+        retList.AddRange(from post in posts
+        where post is not null
+        select new PostViewModel()
         {
             PosterAccount = acc,
             PostContent = post.PostContent,
@@ -221,16 +222,20 @@ public class PostController : Controller
             PostType = post.PostType,
             Email = acc.Email,
             Images = post.Images,
-            PDFs= post.PDFs,
+            PDFs = post.PDFs,
             LikeCount = post.Likes.Count,
             Comments = CreateCommentViews(post.Comments)
-        })
-            .ToList();
+        });
+
+        return retList;
     }
     
-    private List<CommentViewModel> CreateCommentViews(List<Comment> comments)
+    private static List<CommentViewModel> CreateCommentViews(IEnumerable<Comment> comments)
     {
-        return comments.Select(comment => new CommentViewModel
+        return (from comment in comments
+            where comment is not null
+            where comment.Account is not null
+            select new CommentViewModel()
             {
                 CommentContent = comment.CommentContent,
                 CommentTime = DateTime.Now.Subtract(comment.DateCreated).TotalHours,
@@ -240,8 +245,7 @@ public class PostController : Controller
                 LastName = comment.Account.LastName,
                 Email = comment.Account.Email,
                 Account = comment.Account
-            })
-            .ToList();
+            }).ToList();
     }
 
 
