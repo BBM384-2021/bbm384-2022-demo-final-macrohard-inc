@@ -199,11 +199,13 @@ public class PostController : Controller
         return userProfileModel;
     }
 
-    private static IEnumerable<PostViewModel> CreatePostViews(IEnumerable<Post> posts, Account acc)
+    private IEnumerable<PostViewModel> CreatePostViews(IEnumerable<Post> posts, Account acc)
     {
+        
         var retList = new List<PostViewModel>{};
         retList.AddRange(from post in posts
-        where post is not null
+                         where post is not null
+        
         select new PostViewModel()
         {
             PosterAccount = acc,
@@ -220,9 +222,60 @@ public class PostController : Controller
             PDFs = post.PDFs,
             LikeCount = post.Likes.Count,
             Comments = CreateCommentViews(post.Comments)
-        });
+        }); ;
 
         return retList;
     }
-    
+    public PostViewModel GeneratePostViewModel(Post post)
+    {
+        var account = post.Poster;
+        var postViewModel = new PostViewModel
+        {
+            PosterAccount = account,
+            PostContent = post.PostContent,
+            PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
+            PostId = post.PostId,
+            AccountType = account.AccountType,
+            FirstName = account.FirstName,
+            LastName = account.LastName,
+            PosterId = account.Id,
+            PostType = post.PostType,
+            Email = account.Email,
+            Images = post.Images,
+            PDFs = post.PDFs,
+            Comments = CreateCommentViews(post.Comments),
+            LikeCount = post.Likes.Count
+        };
+        return postViewModel;
+    }
+    public List<CommentViewModel> CreateCommentViews(List<Comment> comments)
+    {
+        var retList = new List<CommentViewModel>();
+        if (comments.Count == 0)
+        {
+            return retList;
+        }
+
+        foreach (var comment in comments)
+        {
+
+            var acc = _context.Accounts.Where(p => p.Id == comment.AccountId).FirstOrDefaultAsync();
+            var cvw = new CommentViewModel()
+            {
+                CommentContent = comment.CommentContent,
+                CommentTime = DateTime.Now.Subtract(comment.DateCreated).TotalHours,
+                CommentId = comment.CommentId
+            };
+
+            cvw.AccountType = acc.Result.AccountType;
+            cvw.FirstName = acc.Result.FirstName;
+            cvw.LastName = acc.Result.LastName;
+            cvw.Email = acc.Result.Email;
+            cvw.Account = acc.Result;
+            retList.Add(cvw);
+        }
+
+        return retList;
+    }
+
 }

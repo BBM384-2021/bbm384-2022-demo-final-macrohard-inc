@@ -30,11 +30,13 @@ public class CommentController : Controller
             return Redirect("/Post/Feed");
         var comment = new Comment
         {
+            AccountId = currAcc.Id,
             Account = currAcc,
             Post = post,
             CommentContent = commentContent,
             DateCreated = DateTime.Now
         };
+        
         currAcc.Comments.Add(comment);
         post.Comments.Add(comment);
         _context.Add(comment);
@@ -43,7 +45,7 @@ public class CommentController : Controller
         var notifyController = new NotificationController(_context);
         notifyController.CreateCommentNotification(currAcc, post);
         await _context.SaveChangesAsync();
-        return Redirect("/Post/Feed");
+        return await Task.Run(() => Redirect("/Post/Feed"));
     }
     [HttpPost]
     public async Task<IActionResult> EditComment(int commentId, string commentContent)

@@ -304,6 +304,17 @@
 
 <script type = "text/javascript">
 
+    function commentEdit(id){
+        var content = document.getElementById("commentContent"+id)
+        console.log(id)
+        console.log(content.textContent)
+        var textbox = document.createElement('textarea')
+        textbox.id = 'commentEdit'+id
+        textbox.textContent = content.textContent
+        content.parentNode.replaceChild(textbox, content)
+  
+    }
+
     const myText = document.getElementById("myCommentArea" );
         
     myText.addEventListener("input",function(){
@@ -350,5 +361,6 @@
             this.style.height = "33px";
             this.style.height = `${this.scrollHeight}px`       
     });
+    $.get("/Reader/GetData/", function(data) { someJavacriptMethodOnData(data); });
 </script>
 </html>
