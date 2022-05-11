@@ -31,6 +31,7 @@ _UpgradeReport_Files/
 Migrations/
 wwwroot/img/usercontent/
 
+appsettings.json
 Thumbs.db
 Desktop.ini
 .DS_Store
