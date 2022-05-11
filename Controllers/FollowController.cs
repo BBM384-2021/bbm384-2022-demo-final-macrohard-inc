@@ -166,6 +166,8 @@ public class FollowController : Controller
             DateCreated = DateTime.Now
         };
         _context.Add(follow);
+        var notificationController = new NotificationController(_context);
+        notificationController.CreateFollowNotification(currUser, userToFollow);
         await _context.SaveChangesAsync();
 
         

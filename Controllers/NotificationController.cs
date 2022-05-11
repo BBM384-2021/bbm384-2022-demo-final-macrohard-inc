@@ -37,6 +37,13 @@ public class NotificationController : Controller
         _context.SaveChanges();
     }
 
+    public void CreateFollowNotification(Account followerAccount, Account followingAccount)
+    {
+        var notification = CreateNotification("follow", GetFullName(followerAccount) + " has started to follow you.");
+        followingAccount.Notifications.Add(notification);
+        _context.SaveChanges();
+    }
+
     private static Notification CreateNotification(string notificationType, string notificationContent)
     {
         return new Notification

@@ -33,7 +33,7 @@ public class HomeController : Controller
         if (!User.Identity.IsAuthenticated) return View();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        return currAcc.IsAdmin ? RedirectToAction("Index", "Admin") : RedirectToAction("Homepage");
+        return currAcc.IsAdmin ? RedirectToAction("Index", "Admin") : RedirectToAction("Feed", "Post");
     }
 
     public async Task<IActionResult> Homepage()
