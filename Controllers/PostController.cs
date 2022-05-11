@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
 using static LinkedHUCENGv2.Utils.PostUtils;
+using static LinkedHUCENGv2.Utils.UserUtils;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LinkedHUCENGv2.Controllers;
@@ -181,7 +182,6 @@ public class PostController : Controller
     private static List<PostViewModel> SortPosts(IEnumerable<PostViewModel> posts)
     {
         var sort = posts.OrderBy(p => p.PostTime).ToList();
-        
         return sort;
     }
 
@@ -191,22 +191,7 @@ public class PostController : Controller
             .FirstOrDefaultAsync();
         if (currAcc is null)
             return null;
-        var followControl = new FollowController(_context);
-        var userProfileModel = new UserProfileModel
-        {
-            Id = currAcc.Id,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            ProfileBio = currAcc.ProfileBio,
-            Phone = currAcc.Phone,
-            Url = currAcc.Url,
-            ProfilePhoto = currAcc.ProfilePhoto,
-            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
-            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber,
-            AccountType = currAcc.AccountType,
-            Email = currAcc.Email
-        };
+        var userProfileModel = GenerateUserProfileModel(currAcc, _context);
         return userProfileModel;
     }
 
@@ -236,5 +221,4 @@ public class PostController : Controller
         return retList;
     }
     
-
 }

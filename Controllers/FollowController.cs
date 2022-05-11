@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
+using static LinkedHUCENGv2.Utils.UserUtils;
 
 namespace LinkedHUCENGv2.Controllers;
 public class FollowController : Controller
@@ -49,12 +50,8 @@ public class FollowController : Controller
     {
         var followingUsers = _context.Follows.Where(a => a.Account1Id == userId);
         foreach (var following in followingUsers)
-        {
             if (userIdToFollow == following.Account2Id)
-            {
                 return true;
-            }
-        }
         return false;
     }
 
@@ -79,7 +76,6 @@ public class FollowController : Controller
         var userLookedUp = await _context.Accounts.Where(a => a.Id == userId).FirstOrDefaultAsync();
         foreach (var follow in followings)
         {
-            
             var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
             followingUsers.Add(user);
         }
@@ -88,22 +84,8 @@ public class FollowController : Controller
         if (currAcc is null)
             return RedirectToAction("Login", "Account");
         var followControl = new FollowController(_context);
-        var userProfileModel = new UserProfileModel
-        {
-            Id = currAcc.Id,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            ProfileBio = currAcc.ProfileBio,
-            Phone = currAcc.Phone,
-            Url = currAcc.Url,
-            ProfilePhoto = currAcc.ProfilePhoto,
-            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
-            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber,
-            AccountType = currAcc.AccountType,
-            Email = currAcc.Email
-        };
-        ViewBag.UserName = userLookedUp.FirstName + " " + userLookedUp.LastName;
+        var userProfileModel = GenerateUserProfileModel(currAcc, _context);
+        ViewBag.UserName = GetFullName(userLookedUp);
         ViewBag.header = "Followings";
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
@@ -126,33 +108,18 @@ public class FollowController : Controller
         if (currAcc is null)
             return RedirectToAction("Login", "Account");
         var followControl = new FollowController(_context);
-        var userProfileModel = new UserProfileModel
-        {
-            Id = currAcc.Id,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            ProfileBio = currAcc.ProfileBio,
-            Phone = currAcc.Phone,
-            Url = currAcc.Url,
-            ProfilePhoto = currAcc.ProfilePhoto,
-            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
-            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber,
-            AccountType = currAcc.AccountType,
-            Email = currAcc.Email
-        };
+        var userProfileModel = GenerateUserProfileModel(currAcc, _context);
 
         var followers = await _context.Follows.Where(a => a.Account2Id == userId).ToListAsync();
         var followerUsers = new List<Account>();
 
         foreach (var follow in followers)
         {
-           
             var user = await _context.Accounts.Where(a => a.Id == follow.Account1Id).FirstOrDefaultAsync();
             followerUsers.Add(user);
         }
 
-        ViewBag.UserName = userLookedUp.FirstName + " " + userLookedUp.LastName;
+        ViewBag.UserName = GetFullName(userLookedUp);
         ViewBag.header = "Followers";
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
