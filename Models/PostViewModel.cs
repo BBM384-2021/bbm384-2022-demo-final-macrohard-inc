@@ -1,12 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-using System.Drawing;
-
 namespace LinkedHUCENGv2.Models;
 
 public class PostViewModel
 {
-    public int? PostId { get; set; }
+    public int PostId { get; set; }
     public string? PosterId { get; set; }
     public string? PostContent { get; set; }
     public string? PostType { get; set; }
@@ -24,4 +22,5 @@ public class PostViewModel
     [NotMapped]
     public IFormFile[]? PDFFiles { get; set; }
     public List<CommentViewModel>? Comments { get; set; } = new List<CommentViewModel>();
+    public bool IsLiked { get; set; } = false;
 }

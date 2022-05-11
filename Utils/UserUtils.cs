@@ -28,7 +28,7 @@ public class UserUtils
             FollowingCount = followControl.GetFollowingCount(account.Id),
             StudentNumber = account.StudentNumber,
             AccountType = account.AccountType,
-            Email = account.Email
+            Email = account.Email,
         };
         return userProfileModel;
 

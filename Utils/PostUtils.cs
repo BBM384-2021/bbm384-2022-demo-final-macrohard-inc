@@ -1,3 +1,4 @@
+using LinkedHUCENGv2.Controllers;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
 using Microsoft.EntityFrameworkCore;
@@ -19,4 +20,3 @@ public class PostUtils
         return retList;
     }
 
-}
