@@ -3,6 +3,7 @@ using LinkedHUCENGv2.Data;
 using Microsoft.AspNetCore.Mvc;
 using LinkedHUCENGv2.Models;
 using static LinkedHUCENGv2.Utils.UserUtils;
+using static LinkedHUCENGv2.Utils.PostUtils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,45 +43,9 @@ public class HomeController : Controller
         if (currAcc is null)
             return RedirectToAction("Login", "Account");
         var followControl = new FollowController(_context);
-        var userProfileModel = new UserProfileModel
-        {
-            Id = currAcc.Id,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            ProfileBio = currAcc.ProfileBio,
-            Phone = currAcc.Phone,
-            Url = currAcc.Url,
-            ProfilePhoto = currAcc.ProfilePhoto,
-            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
-            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber,
-            AccountType = currAcc.AccountType,
-            Email = currAcc.Email
-
-        };
-        var posts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name)
-            .Include(p=>p.Comments)
-            .Include(p=>p.Likes)
-            .Include(p=>p.Images)
-            .Include(p=>p.PDFs)
-            .AsSplitQuery()
-            .ToListAsync();
-        var postModels = posts.Select(post => new PostViewModel
-        {
-            PosterAccount = currAcc,
-            PostContent = post.PostContent,
-            PostTime = DateTime.Now.Subtract(post.PostTime).TotalHours,
-            PostId = post.PostId,
-            AccountType = currAcc.AccountType,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            PosterId = currAcc.Id,
-            PostType = post.PostType,
-            Email = currAcc.Email,
-            Images = post.Images,
-            PDFs = post.PDFs
-        })
-            .ToList();
+        var userProfileModel = GenerateUserProfileModel(currAcc, _context);
+        var posts = await GetPostsOfUser(currAcc, _context);
+        var postModels = posts.Select(GeneratePostViewModel).ToList();
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#8000FF";
         ViewBag.color3 = "#CBCBCB";
@@ -132,10 +97,7 @@ public class HomeController : Controller
         return View("~/Views/Home/Notifications.cshtml");
     }
 
-
-
     [HttpPost]
-
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url, ProfileBio,ProfilePhoto,ProfilePhotoFile")] Account account)
 
     {

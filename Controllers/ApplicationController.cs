@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
+using static LinkedHUCENGv2.Utils.PostUtils;
+using static LinkedHUCENGv2.Utils.UserUtils;
 
 namespace LinkedHUCENGv2.Controllers;
 
@@ -29,20 +31,7 @@ public class ApplicationController : Controller
             .FirstOrDefault(m => m.Email == User.Identity.Name);
         if (currAcc is null)
             return RedirectToAction("Login", "Account");
-        var followControl = new FollowController(_context);
-        var userProfileModel = new UserProfileModel
-        {
-            Id = currAcc.Id,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            ProfileBio = currAcc.ProfileBio,
-            Phone = currAcc.Phone,
-            Url = currAcc.Url,
-            ProfilePhoto = currAcc.ProfilePhoto,
-            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
-            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber
-        };
+        var userProfileModel = GenerateUserProfileModel(currAcc, _context);
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
         ViewBag.color3 = "#CBCBCB";
@@ -60,10 +49,6 @@ public class ApplicationController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("ApplicationId,ApplicationText,ApplicationDate,Post, ResumeFiles, CertificateFiles")] Application application,int postId)
     {
-        Console.WriteLine("77246823" + postId);
-        
-        
-        
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
         if (currAcc is null)
@@ -73,7 +58,6 @@ public class ApplicationController : Controller
             Directory.CreateDirectory(filePath);
         if (application.ResumeFiles != null)
         {
-
             foreach (var item in application.ResumeFiles)
             {
 
@@ -91,20 +75,7 @@ public class ApplicationController : Controller
         application.Applicant = currAcc;
         _context.Add(application);
         await _context.SaveChangesAsync();
-        var followControl = new FollowController(_context);
-        var userProfileModel = new UserProfileModel
-        {
-            Id = currAcc.Id,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            ProfileBio = currAcc.ProfileBio,
-            Phone = currAcc.Phone,
-            Url = currAcc.Url,
-            ProfilePhoto = currAcc.ProfilePhoto,
-            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
-            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber
-        };
+        var userProfileModel = GenerateUserProfileModel(currAcc, _context);
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
         ViewBag.color3 = "#CBCBCB";
