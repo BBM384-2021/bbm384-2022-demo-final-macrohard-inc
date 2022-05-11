@@ -19,9 +19,14 @@ public class LikeController : Controller
     
     [HttpGet]
     [ActionName("IsLiked")]
-    public async Task<bool> IsPostLiked(string userId, int postId)
+    public async Task<bool> IsPostLikedAsync(string userId, int postId)
     {
         var like = await _context.Likes.FirstOrDefaultAsync(l => l.Account.Id == userId && l.Post.PostId == postId);
+        return like != null;
+    }
+    public bool IsPostLiked(string userId, int postId)
+    {
+        var like = _context.Likes.FirstOrDefault(l => l.Account.Id == userId && l.Post.PostId == postId);
         return like != null;
     }
 
@@ -57,7 +62,7 @@ public class LikeController : Controller
         if (currUser is null)
             return Json(-1);
 
-        if (await IsPostLiked(currUser.Id, postId))
+        if (await IsPostLikedAsync(currUser.Id, postId))
         {
             var like = await _context.Likes.FirstOrDefaultAsync(l => l.Account.Id == currUser.Id && l.Post.PostId == postId);
             post.Likes.Remove(like);

@@ -1,3 +1,4 @@
+using LinkedHUCENGv2.Controllers;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
 using Microsoft.EntityFrameworkCore;
@@ -37,8 +38,9 @@ public class PostUtils
             Images = post.Images,
             PDFs = post.PDFs,
             Comments = CreateCommentViews(post.Comments),
-            LikeCount = post.Likes.Count
+            LikeCount = post.Likes.Count,
         };
+        
         return postViewModel;
     }
     

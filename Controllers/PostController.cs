@@ -115,6 +115,7 @@ public class PostController : Controller
     [HttpGet]
     public async Task<IActionResult> Feed()
     {
+        var likeController = new LikeController(_context);
         var allPosts = new List<PostViewModel>();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name).FirstOrDefaultAsync();
         var currPosts = await _context.Post.Where(p => p.Poster.Id == currAcc.Id)
@@ -148,6 +149,10 @@ public class PostController : Controller
             allPosts.AddRange(CreatePostViews(announcements, user));
         }
 
+        foreach (var post in allPosts)
+        {
+            post.IsLiked = await likeController.IsPostLikedAsync(currAcc.Id, post.PostId);
+        }
         var sortedPosts = SortPosts(allPosts);
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(await Profile(), sortedPosts);
 
