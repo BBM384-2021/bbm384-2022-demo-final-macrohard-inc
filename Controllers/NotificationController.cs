@@ -1,7 +1,6 @@
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
-using LinkedHUCENGv2.Utils;
-using static LinkedHUCENGv2.Utils.NameUtils;
+using static LinkedHUCENGv2.Utils.UserUtils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LinkedHUCENGv2.Controllers;
@@ -30,7 +29,15 @@ public class NotificationController : Controller
         _context.SaveChanges();
     }
 
-    private Notification CreateNotification(string notificationType, string notificationContent)
+    public void CreateCommentNotification(Account commenterAccount, Post commentedPost)
+    {
+        var notification = CreateNotification("comment", GetFullName(commenterAccount)
+                                                         + " has commented your post:");
+        commentedPost.Poster?.Notifications.Add(notification);
+        _context.SaveChanges();
+    }
+
+    private static Notification CreateNotification(string notificationType, string notificationContent)
     {
         return new Notification
         {
