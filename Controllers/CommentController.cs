@@ -18,8 +18,10 @@ public class CommentController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateComment(int postId, string commentContent)
     {
-        var currAcc = await _context.Accounts.FirstOrDefaultAsync(m => m.Email == User.Identity.Name);
-        var post = await _context.Post.FirstOrDefaultAsync(p => p.PostId == postId);
+        var currAcc = await _context.Accounts.Include(a => a.Comments)
+            .FirstOrDefaultAsync(m => m.Email == User.Identity.Name);
+        var post = await _context.Post.Include(p => p.Comments)
+            .FirstOrDefaultAsync(p => p.PostId == postId);
         if (currAcc is null)
             return Json("currAcc is null");
         if (post is null)
@@ -36,6 +38,8 @@ public class CommentController : Controller
         currAcc.Comments.Add(comment);
         post.Comments.Add(comment);
         _context.Add(comment);
+        _context.Update(post);
+        _context.Update(currAcc);
         var notifyController = new NotificationController(_context);
         notifyController.CreateCommentNotification(currAcc, post);
         await _context.SaveChangesAsync();

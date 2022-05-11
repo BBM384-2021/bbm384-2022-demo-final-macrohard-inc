@@ -1,0 +1,60 @@
+@model IEnumerable<LinkedHUCENGv2.Models.Account>
+@{
+    Layout = "~/Views/Home/layout.cshtml";
+}
+<!DOCTYPE html>
+<html lan="en" style="height: auto;">
+
+    <head>
+        <link rel="stylesheet" href="~/css/profile.css?v=3.4.1"/>
+        
+    </head>
+    <div style = "display:flex; justify-content:center; width:100%;">
+    <div style = "width:50%;">
+    <div class="settingsModal" style = "margin:50px;padding:30px;border:1px solid #F4F1F7;border-radius:10px;">
+        <h1 style = "margin-bottom:10px;">
+           Likes
+        </h1>
+        <div class="tablefollow" style = "border-collapse:collapse;width:100%;height:fit-content;">
+            <div style = "background-color:#F4F1F7;height:50px;display:inline-grid;grid-template-columns:50px 100px auto 100px;width:100%;padding:5px;border-radius:20px;align-items:center">
+                <p >
+
+                </p>
+                <p style = "font-weight:bold;">
+                    Name
+                </p>
+                <p style = "font-weight:bold;">
+                    Account Type
+                </p>
+            </div>
+            
+            <div style = "text-align:center;display:inline-grid;grid-template-columns:50px 100px auto 100px;width:100%;height:fit-content;padding:5px;align-items:center">
+            @foreach (var item in Model) {
+                
+                    
+                    <div style ="padding-top:10px">
+                        <img src="~/img/profilephotos/@item.ProfilePhoto" style=" height: 30px;width:30px; border-radius:10px;position: relative;">
+                    </div>
+                    
+                    <div style = "text-align:left;padding-top:10px">
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </div>
+                    <div style = "text-align:left;padding-top:10px">
+                        @Html.DisplayFor(modelItem => item.AccountType)
+                    </div>
+                    
+                    <div style ="padding-top:10px">
+                        <a href="~/Profile/ViewProfile?id=@item.Id" style = "background-color:#F4F1F7;font-weight:bold;color:black;text-decoration:none;
+                            padding:8px 10px 8px 10px;border-radius:20px;font-size:13px;">View Profile</a>
+                    </div>
+                    
+                
+            }
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    </div>
+</html>

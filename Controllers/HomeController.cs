@@ -83,7 +83,6 @@ public class HomeController : Controller
             .FirstOrDefaultAsync();
         if (currAcc is null)
             return RedirectToAction("Login", "Account");
-        var followControl = new FollowController(_context);
         var userProfileModel = GenerateUserProfileModel(currAcc, _context);
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
@@ -94,7 +93,7 @@ public class HomeController : Controller
         ViewBag.left = "block";
         ViewBag.leftInside = "block";
         ViewBag.accountForViewBag = userProfileModel;
-        return View("~/Views/Home/Notifications.cshtml");
+        return View("~/Views/Home/Notifications.cshtml", currAcc.Notifications);
     }
 
     [HttpPost]

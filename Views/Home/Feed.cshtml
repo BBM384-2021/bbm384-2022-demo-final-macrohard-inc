@@ -109,19 +109,14 @@
                         <p style = "border-bottom: 0.5px solid #8080802b;margin-top:10px;"></p>
                         <div style = "display:inline-grid;grid-template-columns:auto auto;height:20px;column-gap:20px;margin-top:10px;">
                             <div style="display:flex;justify-content:center">
-                                @using (Html.BeginForm("LikePost", "Like", FormMethod.Post ,new {enctype = "multipart/form-data"}))
-                                {
-                                    <div class="createPost" style="background-color:white;margin-bottom:50px;height:fit-content; border-radius:20px;box-shadow: 0px 0px 35px rgba(128, 0, 255, 0.1);">
-                                        <input type="hidden" id="PostId" value="@item.PostId" name="PostId" />
+ 
                                         <button style="display:inline-grid;grid-template-columns:auto auto;background-color:transparent;border:none" value="Like" name="Like">
                                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 816 816" onclick="likeToggle('@item.PostId')">
                                                 <path id="@("likeSVG" + item.PostId)" fill="none" fill-rule="evenodd" stroke="#CBCBCB" stroke-width="40" d="M 408,223.824 C 476.78,101.333 612.625,102.281 680.12,164.239 C 747.613,226.196 746.755,349.161 677.973,471.652 C 629.783,563.545 506.877,654.916 404.565,715.687 C 303.111,653.493 181.493,560.415 134.591,467.859 C 67.5267,344.42 68.3853,221.453 136.737,160.445 C 205.089,99.4373 340.935,100.385 408,223.824 Z "/>
                                             </svg>
                                             
-                                            <p class="commentLikeButton" id="@("likeButton" + item.PostId)" style="font-weight:bold;padding:2px 0 0 5px;">@item.LikeCount Likes</p>
+                                            <a asp-action="Likes" asp-controller="Like" asp-route-postId=@item.PostId><p class="commentLikeButton" id="@("likeButton" + item.PostId)" style="font-weight:bold;padding:2px 0 0 5px;">@item.LikeCount Likes</p></a>
                                         </button>
-                                    </div>
-                                }
                             </div>
                             <div  onclick = "commentToggle('@item.PostId')">
                             <button  style = "display:inline-grid;grid-template-columns:auto auto;background-color:transparent;border:none">
@@ -162,7 +157,7 @@
                                             <div>
                                                 <p style="font-weight:bold;color:#240046">@commentItem.FirstName @commentItem.LastName</p>
                                                 <p style="font-weight:100;color:#995cd3;font-size:13px;">@commentItem.AccountType</p>
-                                                <button>
+                                                <button onclick="commentEdit('@commentItem.CommentId')">
                                                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13px" height="13px"
                                                          viewBox="0 0 217.855 217.855" style="enable-background:new 0 0 217.855 217.855;" xml:space="preserve">
                                                         <path d="M215.658,53.55L164.305,2.196C162.899,0.79,160.991,0,159.002,0c-1.989,0-3.897,0.79-5.303,2.196L3.809,152.086
@@ -212,7 +207,7 @@
                                                    }
                                                 </div>
                                                 <div style="height:fit-content;width:fit-content;background-color:#E8E6EE;border-radius:10px;margin-top:10px;">
-                                                    <p style="padding:5px 10px 5px 10px;">@commentItem.CommentContent</p>
+                                                    <p id="@("commentContent" + commentItem.CommentId)" style="padding:5px 10px 5px 10px;">@commentItem.CommentContent</p>
                                                 </div>
                                             </div>
 
@@ -264,6 +259,16 @@
 </div>
 </body>
 <script type = "text/javascript">
+    function commentEdit(id){
+        var content = document.getElementById("commentContent"+id)
+        console.log(id)
+        console.log(content.textContent)
+        var textbox = document.createElement('textarea')
+        textbox.id = 'commentEdit'+id
+        textbox.textContent = content.textContent
+        content.parentNode.replaceChild(textbox, content)
+  
+    }
     function commentToggle(i){
         var commentSvg = document.getElementById("commentSVG"+i);
         var commentButton = document.getElementById("commentButton"+i);
@@ -283,16 +288,25 @@
     function likeToggle(i){
         var likeSvg = document.getElementById("likeSVG"+i);
         var likeButton = document.getElementById("likeButton"+i);
-        likeButton.classList.toggle("colorCommentLike");
-        if(likeSvg.getAttribute("stroke") === "#CBCBCB"){
-            likeSvg.setAttribute("stroke","#8000FF");
-            likeSvg.setAttribute("fill","#8000FF");
-            
-        }
-        else{
-            likeSvg.setAttribute("stroke","#CBCBCB");
-            likeSvg.setAttribute("fill","none");
-        }
+        //likeButton.classList.toggle("colorCommentLike");
+        var likeCount = parseInt(likeButton.textContent.slice(0,-6));
+
+        $.post('/Like/LikePost/',  // url
+               { 'postId': i }, // data to be submit
+               function(data, status, xhr) {   // success callback function
+                        console.log(likeCount);
+                        if (data === 0) {
+                            likeSvg.setAttribute("stroke","#CBCBCB");
+                            likeSvg.setAttribute("fill","none");
+                            likeButton.textContent = likeCount-1 + " Likes";
+                        }
+                        if (data === 1) {
+                            likeSvg.setAttribute("stroke","#8000FF");
+                            likeSvg.setAttribute("fill","#8000FF");
+                            likeButton.textContent = likeCount+1 + " Likes";
+                        }
+                    },
+               'json');
     }
     const myCommentText = document.getElementById("myCommentArea" );
         
