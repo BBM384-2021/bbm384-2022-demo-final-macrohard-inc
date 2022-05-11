@@ -26,12 +26,13 @@ public class LikeController : Controller
     [HttpPost]
     public async Task<IActionResult> LikePost(int postId)
     {
+        Console.WriteLine(postId);
         var post = await _context.Post.FirstOrDefaultAsync(p => p.PostId == postId);
         var currUser = await _context.Accounts.FirstOrDefaultAsync(m => m.Email == User.Identity.Name);
         if (post is null)
-            return Json("post is null");
+            return Json(-1);
         if (currUser is null)
-            return Json("currUser is null");
+            return Json(-1);
 
         if (await IsPostLiked(currUser.Id, postId))
         {
@@ -40,7 +41,7 @@ public class LikeController : Controller
             _context.Post.Update(post);
             _context.Likes.Remove(like);
             await _context.SaveChangesAsync();
-            return Redirect("/Post/Feed");
+            return Json(0);
         }
         else
         {
@@ -56,7 +57,7 @@ public class LikeController : Controller
             var notifyController = new NotificationController(_context);
             notifyController.CreateLikeNotification(currUser, post);
             await _context.SaveChangesAsync();
-            return Redirect("/Post/Feed");
+            return Json(1);
         }
     }
     
