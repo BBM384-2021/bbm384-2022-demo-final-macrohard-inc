@@ -70,7 +70,7 @@ public class PostController : Controller
 
 
 
-
+        Console.WriteLine(post.Images.Count);
         post.Poster = currAcc;
         post.PostContent = postContent;
         post.PostType = postType;
@@ -204,10 +204,24 @@ public class PostController : Controller
         ViewBag.colorBG3 = "none";
         ViewBag.left = "block";
         ViewBag.leftInside = "block";
+        ViewBag.announcementBlock = "100";
+        ViewBag.otherBlocks = "100";
+        if (currAcc.AccountType == "Student")
+        {
+            Console.WriteLine("student");
+            ViewBag.announcementBlock = "0";
+            ViewBag.otherBlocks = "0";
+        }
+        if (currAcc.AccountType == "StudentRep")
+        {
+            Console.WriteLine("studentRep");
+            ViewBag.otherBlocks = "0";
+        }
         ViewBag.accountForViewBag = userProfileModel;
         if (id is null)
             return NotFound();
-        var post = await _context.Post.FindAsync(id);
+        //var post = await _context.Post.FindAsync(id).Include(p => p.Images).Include(p => p.PDFs);
+        var post = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostId == id).FirstOrDefaultAsync();
         if (post is null)
             return NotFound();
         return View(post);
@@ -243,9 +257,23 @@ public class PostController : Controller
         ViewBag.colorBG3 = "none";
         ViewBag.left = "block";
         ViewBag.leftInside = "block";
+        ViewBag.announcementBlock = "100";
+        ViewBag.otherBlocks = "100";
+        if (currAcc.AccountType == "Student")
+        {
+            Console.WriteLine("student");
+            ViewBag.announcementBlock = "0";
+            ViewBag.otherBlocks = "0";
+        }
+        if (currAcc.AccountType == "StudentRep")
+        {
+            Console.WriteLine("studentRep");
+            ViewBag.otherBlocks = "0";
+        }
         ViewBag.accountForViewBag = userProfileModel;
         if (!ModelState.IsValid) return View(post);
-        var postAcc = await _context.Post.FindAsync(id);
+
+        var postAcc = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostId == id).FirstOrDefaultAsync();
         if (postAcc is null)
             return NotFound();
         postAcc.PostContent = post.PostContent;

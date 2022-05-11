@@ -7,18 +7,204 @@
     <link rel="stylesheet" href="~/css/feed.css?v=3.4.1"/>
 </head>
 
-<form asp-action="EditPost">
+@using (Html.BeginForm("EditPost", "Post", FormMethod.Post ,new {enctype = "multipart/form-data"}))
+
+
+{
+
+    <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);margin-bottom:15px;padding-bottom:10px;">
+                    <h1>Edit Post</h1>
+                </div>
     <div style = "display:flex; justify-content:center; width:100%;">
         <div style = "width:50%;">
             <div class="settingsModal" style = "margin:50px;padding:30px;border:1px solid #F4F1F7;border-radius:10px;">
-                <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);margin-bottom:15px;padding-bottom:10px;">
-                    <h1>Edit Post</h1>
+                <div class="createPost" style="background-color:white;margin-bottom:50px;height:fit-content; border-radius:20px;box-shadow: 0px 0px 35px rgba(128, 0, 255, 0.1)">
+    <div class="postTypeContainer" style="padding:10px;text-align:center">
+        <div class="postTypeColumn">
+
+                <div name="typeContainer" id="PostContainer" >
+                    <input type="radio" id="Post" name="PostType" value="Post" class="checkbox" onclick="typeSelector(this)" checked/>
+                    <label for="Post" name="checkBoxLabel" id="postLabel">Post</label>
                 </div>
-                <p>@mainAccount.FirstName @mainAccount.LastName</p>
-                <input asp-for="PostContent" placeholder="@Model.PostContent"/>
-                <input asp-for="PostType" placeholder="@Model.PostType"/>
+                <div name="typeContainer"  style = "opacity:@ViewBag.announcementBlock">
+                    <input type="radio" id="Announcement" value="Announcement" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="Announcement" name="checkBoxLabel">Announcement</label>
+                </div>
+                <div name="typeContainer" style = "opacity:@ViewBag.otherBlocks">
+                    <input type="radio" id="JobOpportunity" value="JobOpportunity" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="JobOpportunity" name="checkBoxLabel">Job Opportunity</label>
+                </div>
+                <div name="typeContainer" style = "opacity:@ViewBag.otherBlocks">
+                    <input type="radio" id="Internship" value="Internship" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="Internship" name="checkBoxLabel">Internship</label>
+                </div>
+                <div name="typeContainer" style = "opacity:@ViewBag.otherBlocks">
+                    <input type="radio" id="Scholarship" value="Scholarship" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="Scholarship" name="checkBoxLabel">Scholarship</label>
+                </div>
+                <div name="typeContainer" style = "opacity:@ViewBag.otherBlocks">
+
+                    <input type="radio" id="LectureMaterials" value="LectureMaterials" class="checkbox" name="PostType" onclick="typeSelector(this)"/>
+                    <label for="LectureMaterials" name="checkBoxLabel">Lecture Materials</label>
+                </div>
+        </div>
+        <div class="postTypeTextContainer" id="postTypeText">
+            <div class="postTypeText">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23.8035 8.61761L21.3827 6.19655C21.2504 6.06429 21.0778 6 20.9051 6C20.7324 6 20.5598 6.06429 20.4276 6.19655L11.062 15.563V18.9393H14.438L23.8035 9.57098C23.9357 9.43872 24 9.26605 24 9.09338C24 8.92071 23.9357 8.74804 23.8035 8.61761ZM13.8741 17.2511H12.75V16.127L20.9051 7.97102L22.031 9.09705L13.8741 17.2511ZM22.031 14.4388C21.5645 14.4388 21.188 14.8154 21.188 15.282V22.3137H7.68796V8.81233H14.719C15.1855 8.81233 15.562 8.43576 15.562 7.96918C15.562 7.5026 15.1855 7.12603 14.719 7.12603H7.12592C6.50327 7.1242 6 7.62935 6 8.25023V22.8758C6 23.4967 6.50327 24 7.12592 24H21.75C22.3708 24 22.8759 23.4967 22.8759 22.874V15.282C22.8741 14.8154 22.4957 14.4388 22.031 14.4388Z" fill="black" />
+                </svg>
+                <div style = "height:fit-content;width:100%">
+                    <textarea name="PostContent"  id="myTextArea" >@Model.PostContent</textarea>
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+            <div>
+
             </div>
         </div>
-        <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" value="Submit" type="submit">
     </div>
-</form>
+</div>
+            <div class="posts " style="background-color:white;margin-bottom:25px;height:fit-content; border-radius:20px;box-shadow: 0px 0px 50px rgba(128, 0, 255, 0.1);">
+                <div class = "postColumnContainer">
+                    <div style = "width:3em;height:3em;">
+
+                        <img src="~/img/@mainAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative">
+                    </div>
+                    <div>
+                        <a href="/Profile/ViewProfile?id=@mainAccount.Id" style = "font-weight:bold;color:#240046; text-decoration:none">@mainAccount.FirstName @mainAccount.LastName</a>
+                        <p style = "font-weight:100;color:#995cd3;font-size:13px;">@mainAccount.AccountType</p>
+                        <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
+                                                                        @if(DateTime.Now.Subtract(Model.PostTime).TotalHours >= 24)
+                                                                        {
+                                                                            var i =(int) DateTime.Now.Subtract(Model.PostTime).TotalHours / 24;
+                                                                            var j = (int) DateTime.Now.Subtract(Model.PostTime).TotalHours % 24;
+                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i day @j hours ago</p>
+                                                                        }
+                                                                        @if(DateTime.Now.Subtract(Model.PostTime).TotalHours <= 24 && DateTime.Now.Subtract(Model.PostTime).TotalHours >= 1)
+                                                                        {
+                                                                            var s = (int)DateTime.Now.Subtract(Model.PostTime).TotalHours;
+                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@s hours ago</p>
+                                                                        }
+                                                                        @if (DateTime.Now.Subtract(Model.PostTime).TotalHours < 1)
+                                                                        {
+                                                                            var x = Convert.ToInt32(DateTime.Now.Subtract(Model.PostTime).TotalHours * 60);
+                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@x minutes ago</p>
+                                                                        }
+                                
+                            <p style = "font-weight:bold;color:#240046;font-size:13px;background-color:#8000ff17;width:fit-content;padding:0 20px 0 20px;border-radius:10px">@Model.PostType</p>
+                            <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
+                            <p style = "font-weight:300;color:black;margin-top:10px;padding-bottom:20px;">@Model.PostContent @Model.Images.Count</p>
+
+                            </div>
+
+                        </div>
+                            @if(Model.Images.Count == 1)
+                            {
+                                @foreach(var image in Model.Images)
+                                {
+                                    <div style="background-image: url('/img/@image.Name');background-repeat: no-repeat;width:100%;height:height:fit-content;background-size: 100% auto;background-position: center center;" >
+                                        <img src="~/img/@image.Name" style="height:auto;width:100%;opacity:0; ">
+                                    </div>
+                                    
+                                }
+                            }
+                            @if(Model.Images.Count == 2 || Model.Images.Count == 4)
+                            {
+                                
+                                <div style = "display:inline-grid;grid-template-columns:1fr 1fr;width:100%;height:fit-content;">
+                                @foreach(var image in Model.Images)
+                                {
+                                    <div style="background-image: url('/img/@image.Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                        <img src="~/img/@image.Name" style="height:auto;width:100%;opacity:0; ">
+                                    </div>
+                                    
+                                }
+                                </div>
+                            }
+
+
+                            @if(Model.Images.Count == 3)
+                            {
+                                
+                                <div style = "display:inline-grid;grid-template-columns:1.5fr 1fr;width:100%;height:fit-content;">
+                               
+                                    <div style="background-image: url('/img/@Model.Images[0].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                        <img src="~/img/@Model.Images[0].Name" style="height:500px;width:100%;opacity:0; ">
+                                    </div>
+                                    <div style = "width:100%;height:500px;">
+                                        <div style="background-image: url('/img/@Model.Images[1].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                            <img src="~/img/@Model.Images[1].Name" style="height:250px;width:100%;opacity:0; ">
+                                        </div>
+                                        <div style="background-image: url('/img/@Model.Images[2].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                            <img src="~/img/@Model.Images[2].Name" style="height:250px;width:100%;opacity:0; ">
+                                        </div>
+                                    </div>
+
+                                    
+                                
+                                </div>
+                            }
+
+                            @foreach(var pdf in Model.PDFs)
+                            {
+                               <a href=@Url.Content("~/pdf/"+ @pdf.Name)>Link </a>
+                            }
+                        
+                        @if(@Model.PostType == "JobOpportunity" || @Model.PostType == "Scholarship" || @Model.PostType == "Internship"){
+                            <div style="display:flex;justify-content:center;">
+                              <a asp-action="Create" asp-controller="Application" asp-route-postId = "@Model.PostId" style = "margin-bottom:15px;padding:10px 20px 10px 20px;font-weight:bold;font-size:13;border-radius:20px;background-color:#240046;color:white;text-decoration:none" >Apply</a>      
+                            </div>
+                        }
+                       
+                    </div>
+
+                </div>
+
+
+            </div> 
+                
+                
+            </div>
+        </div>
+
+    </div>
+}
+<script type="text/javascript">
+        function typeSelector(checkbox){
+
+            var checked = document.getElementsByClassName("checkbox");
+            var typeContainer = document.getElementsByName("typeContainer");
+            var checkBoxLabel = document.getElementsByName("checkBoxLabel");
+            var textPart = document.getElementById("postTypeText");
+            if(checkbox.id === "Post"){
+                textPart.style.borderRadius = "0 20px 20px 20px"
+            }
+            else if (checkbox.id === "LectureMaterials"){
+                textPart.style.borderRadius = "20px 0px 20px 20px"
+            }
+            else{
+                textPart.style.borderRadius = "20px"
+            }
+            for(let i = 0; i < checked.length;i++){
+                if (checked[i] !== checkbox) {
+                    checked[i].checked = false
+                    typeContainer[i].style.backgroundColor = "white";
+                    checkBoxLabel[i].style.color = "darkslategray";
+
+                }
+                else{
+                    typeContainer[i].style.backgroundColor = "#240046";
+                    checkBoxLabel[i].style.color = "#8000FF";
+                }
+            }
+        }
+
+        const myText = document.getElementById("myTextArea" );
+        
+        myText.addEventListener("input",function(){
+            console.log(this.scrollHeight);
+            this.style.height = "33px";
+            this.style.height = `${this.scrollHeight}px`
+            
+        });
+</script>

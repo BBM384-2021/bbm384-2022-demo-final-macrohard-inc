@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LinkedHUCENGv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220505182317_AddImage")]
-    partial class AddImage
+    [Migration("20220511104349_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,59 @@ namespace LinkedHUCENGv2.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Application", b =>
+                {
+                    b.Property<int>("ApplicationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ApplicationId"));
+
+                    b.Property<string>("ApplicantId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ApplicationDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ApplicationText")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("PostId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ApplicationId");
+
+                    b.HasIndex("ApplicantId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Applications");
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Certificate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ApplicationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.ToTable("Certificates");
+                });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Follow", b =>
                 {
@@ -63,7 +116,12 @@ namespace LinkedHUCENGv2.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<int>("PostId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Images");
                 });
@@ -100,6 +158,27 @@ namespace LinkedHUCENGv2.Migrations
                     b.ToTable("Notifications");
                 });
 
+            modelBuilder.Entity("LinkedHUCENGv2.Models.PDF", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Pdfs");
+                });
+
             modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
                 {
                     b.Property<int>("PostId")
@@ -127,6 +206,28 @@ namespace LinkedHUCENGv2.Migrations
                     b.HasIndex("PosterId");
 
                     b.ToTable("Post");
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Resume", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ApplicationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.ToTable("Resumes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -380,6 +481,32 @@ namespace LinkedHUCENGv2.Migrations
                     b.HasDiscriminator().HasValue("Account");
                 });
 
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Application", b =>
+                {
+                    b.HasOne("LinkedHUCENGv2.Models.Account", "Applicant")
+                        .WithMany()
+                        .HasForeignKey("ApplicantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LinkedHUCENGv2.Models.Post", "Post")
+                        .WithMany("Applications")
+                        .HasForeignKey("PostId");
+
+                    b.Navigation("Applicant");
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Certificate", b =>
+                {
+                    b.HasOne("LinkedHUCENGv2.Models.Application", "Application")
+                        .WithMany("Certificates")
+                        .HasForeignKey("ApplicationId");
+
+                    b.Navigation("Application");
+                });
+
             modelBuilder.Entity("LinkedHUCENGv2.Models.Follow", b =>
                 {
                     b.HasOne("LinkedHUCENGv2.Models.Account", "Account1")
@@ -399,11 +526,33 @@ namespace LinkedHUCENGv2.Migrations
                     b.Navigation("Account2");
                 });
 
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Image", b =>
+                {
+                    b.HasOne("LinkedHUCENGv2.Models.Post", "post")
+                        .WithMany("Images")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("post");
+                });
+
             modelBuilder.Entity("LinkedHUCENGv2.Models.Notification", b =>
                 {
                     b.HasOne("LinkedHUCENGv2.Models.Account", null)
                         .WithMany("Notifications")
                         .HasForeignKey("AccountId");
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.PDF", b =>
+                {
+                    b.HasOne("LinkedHUCENGv2.Models.Post", "post")
+                        .WithMany("PDFs")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("post");
                 });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
@@ -413,6 +562,15 @@ namespace LinkedHUCENGv2.Migrations
                         .HasForeignKey("PosterId");
 
                     b.Navigation("Poster");
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Resume", b =>
+                {
+                    b.HasOne("LinkedHUCENGv2.Models.Application", "Application")
+                        .WithMany("Resumes")
+                        .HasForeignKey("ApplicationId");
+
+                    b.Navigation("Application");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -464,6 +622,22 @@ namespace LinkedHUCENGv2.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Application", b =>
+                {
+                    b.Navigation("Certificates");
+
+                    b.Navigation("Resumes");
+                });
+
+            modelBuilder.Entity("LinkedHUCENGv2.Models.Post", b =>
+                {
+                    b.Navigation("Applications");
+
+                    b.Navigation("Images");
+
+                    b.Navigation("PDFs");
                 });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Account", b =>

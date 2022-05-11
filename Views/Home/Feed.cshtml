@@ -149,15 +149,22 @@
                                         <p style = "font-weight:bold;color:#240046">@item.FirstName @item.LastName</p>
                                         <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.AccountType</p>
                                         <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
-                                                @if(item.PostTime >= 60)
-                                                {
-                                                    var i = item.PostTime / 60;
-                                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i hours ago</p>
-                                                }
-                                                else
-                                                {
-                                                    <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.PostTime minutes ago</p>
-                                                }
+                                                @if(item.PostTime >= 24)
+                                                                        {
+                                                                            var i =(int) item.PostTime / 24;
+                                                                            var j = (int) item.PostTime % 24;
+                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i day @j hours ago</p>
+                                                                        }
+                                                                        @if(item.PostTime <= 24 && item.PostTime >= 1)
+                                                                        {
+                                                                            var s = (int)item.PostTime;
+                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@s hours ago</p>
+                                                                        }
+                                                                        @if (item.PostTime < 1)
+                                                                        {
+                                                                            var x = Convert.ToInt32(item.PostTime * 60);
+                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@x minutes ago</p>
+                                                                        }
                                 
                                             <p style = "font-weight:bold;color:#240046;font-size:13px;background-color:#8000ff17;width:fit-content;padding:0 20px 0 20px;border-radius:10px">@item.PostType</p>
                                         </div>
