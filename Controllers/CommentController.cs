@@ -36,6 +36,8 @@ public class CommentController : Controller
         currAcc.Comments.Add(comment);
         post.Comments.Add(comment);
         _context.Add(comment);
+        var notifyController = new NotificationController(_context);
+        notifyController.CreateCommentNotification(currAcc, post);
         await _context.SaveChangesAsync();
         return Redirect("/Post/Feed");
     }

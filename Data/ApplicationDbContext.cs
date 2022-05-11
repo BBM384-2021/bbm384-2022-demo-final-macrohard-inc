@@ -2,6 +2,7 @@ using LinkedHUCENGv2.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace LinkedHUCENGv2.Data;
 
@@ -25,6 +26,11 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .HasForeignKey(f => f.Account2Id);
         base.OnModelCreating(modelBuilder);
 
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
     }
 
     public DbSet<Account> Accounts { get; set; }

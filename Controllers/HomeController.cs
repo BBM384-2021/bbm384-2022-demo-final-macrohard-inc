@@ -2,6 +2,7 @@
 using LinkedHUCENGv2.Data;
 using Microsoft.AspNetCore.Mvc;
 using LinkedHUCENGv2.Models;
+using static LinkedHUCENGv2.Utils.UserUtils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,7 +58,13 @@ public class HomeController : Controller
             Email = currAcc.Email
 
         };
-        var posts = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var posts = await _context.Post.Where(p => p.Poster.Email == User.Identity.Name)
+            .Include(p=>p.Comments)
+            .Include(p=>p.Likes)
+            .Include(p=>p.Images)
+            .Include(p=>p.PDFs)
+            .AsSplitQuery()
+            .ToListAsync();
         var postModels = posts.Select(post => new PostViewModel
         {
             PosterAccount = currAcc,
@@ -92,22 +99,7 @@ public class HomeController : Controller
     .FirstOrDefaultAsync();
         if (currAcc is null)
             return RedirectToAction("Login", "Account");
-        var followControl = new FollowController(_context);
-        var userProfileModel = new UserProfileModel
-        {
-            Id = currAcc.Id,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            ProfileBio = currAcc.ProfileBio,
-            Phone = currAcc.Phone,
-            Url = currAcc.Url,
-            ProfilePhoto = currAcc.ProfilePhoto,
-            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
-            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber,
-            AccountType = currAcc.AccountType,
-            Email = currAcc.Email
-        };
+        var userProfileModel = GenerateUserProfileModel(currAcc, _context);
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
         ViewBag.color3 = "#8000FF";
@@ -122,25 +114,12 @@ public class HomeController : Controller
     public async Task<IActionResult> Notifications()
     {
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
-    .FirstOrDefaultAsync();
+            .Include(m => m.Notifications)
+            .FirstOrDefaultAsync();
         if (currAcc is null)
             return RedirectToAction("Login", "Account");
         var followControl = new FollowController(_context);
-        var userProfileModel = new UserProfileModel
-        {
-            Id = currAcc.Id,
-            FirstName = currAcc.FirstName,
-            LastName = currAcc.LastName,
-            ProfileBio = currAcc.ProfileBio,
-            Phone = currAcc.Phone,
-            Url = currAcc.Url,
-            ProfilePhoto = currAcc.ProfilePhoto,
-            FollowersCount = followControl.GetFollowerCount(currAcc.Id),
-            FollowingCount = followControl.GetFollowingCount(currAcc.Id),
-            StudentNumber = currAcc.StudentNumber,
-            AccountType = currAcc.AccountType,
-            Email = currAcc.Email
-        };
+        var userProfileModel = GenerateUserProfileModel(currAcc, _context);
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
         ViewBag.color3 = "#CBCBCB";
@@ -152,8 +131,6 @@ public class HomeController : Controller
         ViewBag.accountForViewBag = userProfileModel;
         return View("~/Views/Home/Notifications.cshtml");
     }
-
-
 
 
 

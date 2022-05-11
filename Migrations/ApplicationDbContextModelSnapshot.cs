@@ -188,9 +188,6 @@ namespace LinkedHUCENGv2.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NotificationId"));
 
-                    b.Property<string>("AccountId")
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
@@ -205,9 +202,12 @@ namespace LinkedHUCENGv2.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("NotifierId")
+                        .HasColumnType("text");
+
                     b.HasKey("NotificationId");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("NotifierId");
 
                     b.ToTable("Notifications");
                 });
@@ -627,9 +627,11 @@ namespace LinkedHUCENGv2.Migrations
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.Notification", b =>
                 {
-                    b.HasOne("LinkedHUCENGv2.Models.Account", null)
+                    b.HasOne("LinkedHUCENGv2.Models.Account", "Notifier")
                         .WithMany("Notifications")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("NotifierId");
+
+                    b.Navigation("Notifier");
                 });
 
             modelBuilder.Entity("LinkedHUCENGv2.Models.PDF", b =>

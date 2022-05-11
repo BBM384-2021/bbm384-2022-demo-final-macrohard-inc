@@ -14,4 +14,5 @@ public class Notification
     public string? NotificationType { get; set; }
     [Required]
     public bool IsRead { get; set; }
+    public Account? Notifier { get; set; }
 }

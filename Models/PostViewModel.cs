@@ -23,5 +23,5 @@ public class PostViewModel
     public List<PDF> PDFs { get; set; } = new List<PDF>();
     [NotMapped]
     public IFormFile[]? PDFFiles { get; set; }
-    public List<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
+    public List<CommentViewModel>? Comments { get; set; } = new List<CommentViewModel>();
 }

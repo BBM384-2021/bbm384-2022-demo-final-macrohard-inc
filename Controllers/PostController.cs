@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
+using static LinkedHUCENGv2.Utils.PostUtils;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LinkedHUCENGv2.Controllers;
@@ -27,7 +28,7 @@ public class PostController : Controller
         if (!ModelState.IsValid) return await Feed();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
-        var filePath = Path.Combine(_hostEnvironment.WebRootPath, "img");
+        var filePath = Path.Combine(_hostEnvironment.WebRootPath, "img/usercontent");
         if (!Directory.Exists(filePath))
         {
             Directory.CreateDirectory(filePath);
@@ -36,15 +37,15 @@ public class PostController : Controller
         {
             foreach (var item in post.ImageFiles)
             {
-                var fullFileName = Path.Combine(filePath, item.FileName);
+                var newFileName = Guid.NewGuid() + "." + item.FileName.Split(".").Last();
+                var fullFileName = Path.Combine(filePath, newFileName);
                 await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
                 {
                     await item.CopyToAsync(fileStream);
                 }
-                post.Images.Add(new Image { Name = item.FileName });
+                post.Images.Add(new Image { Name = newFileName});
             }
         }
-
 
         var filePath2 = Path.Combine(_hostEnvironment.WebRootPath, "pdf");
         if (!Directory.Exists(filePath2))
@@ -65,9 +66,6 @@ public class PostController : Controller
                 post.PDFs.Add(new PDF { Name = item.FileName });
             }
         }
-
-
-
 
         post.Poster = currAcc;
         post.PostContent = postContent;
@@ -118,8 +116,7 @@ public class PostController : Controller
     {
         var allPosts = new List<PostViewModel>();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name).FirstOrDefaultAsync();
-
-        var currPosts = await _context.Post.Include(p=>p.Comments).Include(p=>p.Likes).Include(p=>p.Images).Include(p=>p.PDFs).Where(p => p.Poster.Email == User.Identity.Name).ToListAsync();
+        var currPosts = await GetPostsOfUser(currAcc, _context);
         
         allPosts.AddRange(CreatePostViews(currPosts, currAcc));
         // get posts from the followings
@@ -129,7 +126,7 @@ public class PostController : Controller
             var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
             if (user != null)
             {
-                var otherUserPosts = await _context.Post.Include(p=>p.Comments).Include(p=>p.Likes).Include(p => p.Images).Include(p=>p.PDFs).Where(p => p.Poster.Email == user.Email).ToListAsync();
+                var otherUserPosts = await GetPostsOfUser(user, _context);
                 allPosts.AddRange(CreatePostViews(otherUserPosts, user));
             }
         }
@@ -137,7 +134,13 @@ public class PostController : Controller
         var users = await _context.Accounts.Where(p => p.Email != User.Identity.Name).ToListAsync();
         foreach (var user in users)
         {
-            var announcements = await _context.Post.Include(p=>p.Comments).Include(p=>p.Likes).Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostType == "Announcement" && p.Poster.Id == user.Id).ToListAsync();
+            var announcements = await _context.Post.Where(p => p.PostType == "Announcement")
+                .Include(p=>p.Comments)
+                .Include(p=>p.Likes)
+                .Include(p=>p.Images)
+                .Include(p=>p.PDFs)
+                .AsSplitQuery()
+                .ToListAsync();;
             allPosts.AddRange(CreatePostViews(announcements, user));
         }
         var sortedPosts = SortPosts(allPosts);
@@ -186,6 +189,8 @@ public class PostController : Controller
     {
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return null;
         var followControl = new FollowController(_context);
         var userProfileModel = new UserProfileModel
         {
@@ -205,9 +210,12 @@ public class PostController : Controller
         return userProfileModel;
     }
 
-    private List<PostViewModel> CreatePostViews(List<Post> posts, Account acc)
+    private static IEnumerable<PostViewModel> CreatePostViews(IEnumerable<Post> posts, Account acc)
     {
-        return posts.Select(post => new PostViewModel
+        var retList = new List<PostViewModel>{};
+        retList.AddRange(from post in posts
+        where post is not null
+        select new PostViewModel()
         {
             PosterAccount = acc,
             PostContent = post.PostContent,
@@ -220,29 +228,13 @@ public class PostController : Controller
             PostType = post.PostType,
             Email = acc.Email,
             Images = post.Images,
-            PDFs= post.PDFs,
+            PDFs = post.PDFs,
             LikeCount = post.Likes.Count,
             Comments = CreateCommentViews(post.Comments)
-        })
-            .ToList();
+        });
+
+        return retList;
     }
     
-    private List<CommentViewModel> CreateCommentViews(List<Comment> comments)
-    {
-        return comments.Select(comment => new CommentViewModel
-            {
-                CommentContent = comment.CommentContent,
-                CommentTime = DateTime.Now.Subtract(comment.DateCreated).TotalHours,
-                CommentId = comment.CommentId,
-                AccountType = comment.Account.AccountType,
-                FirstName = comment.Account.FirstName,
-                LastName = comment.Account.LastName,
-                Email = comment.Account.Email,
-                Account = comment.Account
-            })
-            .ToList();
-    }
-
-
 
 }
