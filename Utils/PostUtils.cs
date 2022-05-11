@@ -15,6 +15,7 @@ public class PostUtils
             .Include(p => p.PDFs)
             .AsSplitQuery()
             .ToListAsync();
+
         return retList;
     }
 
@@ -41,20 +42,34 @@ public class PostUtils
         return postViewModel;
     }
     
-    public static List<CommentViewModel> CreateCommentViews(IEnumerable<Comment> comments)
+    public static List<CommentViewModel> CreateCommentViews(List<Comment> comments)
     {
-        return (from comment in comments
-            where comment is not null 
-            select new CommentViewModel()
+        var retList = new List<CommentViewModel>();
+        if (comments.Count == 0)
+        {
+            return retList;
+        }
+
+        foreach (var comment in comments)
+        {
+            var cvw = new CommentViewModel()
             {
                 CommentContent = comment.CommentContent,
                 CommentTime = DateTime.Now.Subtract(comment.DateCreated).TotalHours,
-                CommentId = comment.CommentId,
-                AccountType = comment.Account.AccountType,
-                FirstName = comment.Account.FirstName,
-                LastName = comment.Account.LastName,
-                Email = comment.Account.Email,
-                Account = comment.Account
-            }).ToList();
+                CommentId = comment.CommentId
+            };
+            if (comment.Account is null)
+            {
+                continue;
+            }
+            cvw.AccountType = comment.Account.AccountType;
+            cvw.FirstName = comment.Account.FirstName;
+            cvw.LastName = comment.Account.LastName;
+            cvw.Email = comment.Account.Email;
+            cvw.Account = comment.Account;
+            retList.Add(cvw);
+        }
+
+        return retList;
     }
 }

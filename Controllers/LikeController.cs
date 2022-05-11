@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
+using static LinkedHUCENGv2.Utils.UserUtils;
+using static LinkedHUCENGv2.Utils.PostUtils;
 
 namespace LinkedHUCENGv2.Controllers;
 public class LikeController : Controller
@@ -21,6 +23,27 @@ public class LikeController : Controller
     {
         var like = await _context.Likes.FirstOrDefaultAsync(l => l.Account.Id == userId && l.Post.PostId == postId);
         return like != null;
+    }
+
+    [HttpGet]
+    [ActionName("Likes")]
+    public async Task<IActionResult> GetLikeList(int postId)
+    {
+        var likes = await _context.Likes.Where(l => l.Post.PostId == 13).Include(l => l.Account).ToListAsync();
+        var accounts = likes.Select(like => like.Account).ToList(); 
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .FirstOrDefaultAsync();
+        ViewBag.UserName = GetFullName(currAcc);
+        ViewBag.color1 = "#CBCBCB";
+        ViewBag.color2 = "#CBCBCB";
+        ViewBag.color3 = "#CBCBCB";
+        ViewBag.colorBG1 = "none";
+        ViewBag.colorBG2 = "none";
+        ViewBag.colorBG3 = "none";
+        ViewBag.left = "block";
+        ViewBag.leftInside = "block";
+        ViewBag.accountForViewBag = GenerateUserProfileModel(currAcc, _context);;
+        return View("ListAccounts", accounts);
     }
     
     [HttpPost]

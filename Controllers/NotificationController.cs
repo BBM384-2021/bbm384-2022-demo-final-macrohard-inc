@@ -2,6 +2,7 @@ using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
 using static LinkedHUCENGv2.Utils.UserUtils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LinkedHUCENGv2.Controllers;
 
@@ -12,6 +13,7 @@ public class NotificationController : Controller
     {
         _context = context;
     }
+
     public void CreateRegisterNotification(Account account)
     {
         var notification = CreateNotification("register",

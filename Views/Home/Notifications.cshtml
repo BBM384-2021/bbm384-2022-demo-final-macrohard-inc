@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<LinkedHUCENGv2.Models.Notification>
+@{
     Layout = "~/Views/Home/layout.cshtml";
 }
 <!DOCTYPE html>
@@ -23,7 +24,10 @@
             </div>
             
             <div style = "text-align:center;display:inline-grid;grid-template-columns:50px 100px auto 100px;width:100%;height:fit-content;padding:5px;align-items:center">
-
+                 @foreach (var notification in Model)
+                 {
+                     @notification.NotificationContent;<br/>
+                 }
             </div>
             
         </div>

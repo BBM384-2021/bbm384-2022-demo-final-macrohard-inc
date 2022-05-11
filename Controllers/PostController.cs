@@ -117,19 +117,22 @@ public class PostController : Controller
     {
         var allPosts = new List<PostViewModel>();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name).FirstOrDefaultAsync();
-        var currPosts = await GetPostsOfUser(currAcc, _context);
-        
+        var currPosts = await _context.Post.Where(p => p.Poster.Id == currAcc.Id)
+            .Include(p => p.Comments)
+            .Include(p => p.Likes)
+            .Include(p => p.Images)
+            .Include(p => p.PDFs)
+            .AsSplitQuery()
+            .ToListAsync();
         allPosts.AddRange(CreatePostViews(currPosts, currAcc));
         // get posts from the followings
         var followings = await _context.Follows.Where(f => f.Account1.Id == currAcc.Id).ToListAsync();
         foreach (var follow in followings)
         {
-            var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).FirstOrDefaultAsync();
-            if (user != null)
-            {
-                var otherUserPosts = await GetPostsOfUser(user, _context);
-                allPosts.AddRange(CreatePostViews(otherUserPosts, user));
-            }
+            var user = await _context.Accounts.Where(a => a.Id == follow.Account2Id).Include(a => a.Comments).FirstOrDefaultAsync();
+            if (user == null) continue;
+            var otherUserPosts = await GetPostsOfUser(user, _context);
+            allPosts.AddRange(CreatePostViews(otherUserPosts, user));
         }
         // get announcements
         var users = await _context.Accounts.Where(p => p.Email != User.Identity.Name).ToListAsync();
@@ -144,6 +147,7 @@ public class PostController : Controller
                 .ToListAsync();;
             allPosts.AddRange(CreatePostViews(announcements, user));
         }
+
         var sortedPosts = SortPosts(allPosts);
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(await Profile(), sortedPosts);
 
