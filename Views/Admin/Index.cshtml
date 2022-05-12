@@ -19,8 +19,9 @@
     @foreach (var item in Model.Notifications)
     {
         @item.NotificationContent
-        <br/><br/> 
         <a asp-controller="Admin" asp-action="DeleteNotification" asp-route-id="@item.NotificationId">Delete</a>
+        <br>
+        <br>
     }
 </div>
 
