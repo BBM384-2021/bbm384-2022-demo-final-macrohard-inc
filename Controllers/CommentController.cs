@@ -16,7 +16,7 @@ public class CommentController : Controller
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateComment(int postId, string commentContent)
+    public async Task<IActionResult> CreateComment(string redirect, int postId, string commentContent)
     {
         var currAcc = await _context.Accounts.Include(a => a.Comments)
             .FirstOrDefaultAsync(m => m.Email == User.Identity.Name);
@@ -45,8 +45,9 @@ public class CommentController : Controller
         var notifyController = new NotificationController(_context);
         notifyController.CreateCommentNotification(currAcc, post);
         await _context.SaveChangesAsync();
-        return await Task.Run(() => Redirect("/Post/Feed"));
+        return await Task.Run(() => Redirect(redirect));
     }
+
     [HttpPost]
     public async Task<IActionResult> EditComment(int commentId, string commentContent)
     {

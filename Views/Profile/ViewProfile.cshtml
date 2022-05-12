@@ -191,8 +191,9 @@
                                         <div >
                                             
                                             <div style="margin-top:0.5em">
+                                                <input type="hidden" id="redirect" name="redirect" value="/Post/Feed?id=@Model.Item1.Id"/>
                                                 <textarea name="commentContent" placeholder="Comment Here" id="myCommentArea" style = "border:1px solid #2400463d;border-radius:10px"></textarea>
-                                                <input type="hidden" id="postId" value="@item.PostId" name="postId" />
+                                                <input type="hidden" id="postId" value="@item.PostId" name="postId"/>
                                             </div>
                                             
                                         </div>

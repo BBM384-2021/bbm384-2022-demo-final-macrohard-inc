@@ -111,7 +111,7 @@ public class ProfileController : Controller
             Email = account.Email,
             Images = post.Images,
             PDFs = post.PDFs,
-            Comments = CreateCommentViews(post.Comments),
+            Comments = SortComments(CreateCommentViews(post.Comments)),
             LikeCount = post.Likes.Count,
             IsLiked = like != null
         };

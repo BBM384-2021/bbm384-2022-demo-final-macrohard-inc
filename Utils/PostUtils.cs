@@ -25,4 +25,10 @@ public class PostUtils
         var sort = posts.OrderBy(p => p.PostTime).ToList();
         return sort;
     }
+    
+    public static List<CommentViewModel> SortComments(IEnumerable<CommentViewModel> comments)
+    {
+        var sort = comments.OrderBy(c => c.CommentTime).ToList();
+        return sort;
+    }
 }

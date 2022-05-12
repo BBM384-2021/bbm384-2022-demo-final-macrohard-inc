@@ -25,6 +25,7 @@ public class HomeController : Controller
         _context = context;
         _hostEnvironment = hostEnvironment;
     }
+    
     [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
@@ -58,6 +59,7 @@ public class HomeController : Controller
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(userProfileModel, postModels);
         return View(tuple);
     }
+    
     public async Task<IActionResult> Settings()
     {
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
@@ -76,6 +78,7 @@ public class HomeController : Controller
         ViewBag.accountForViewBag = userProfileModel;
         return View("~/Views/Home/Settings.cshtml");
     }
+    
     public async Task<IActionResult> Notifications()
     {
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
@@ -98,7 +101,6 @@ public class HomeController : Controller
 
     [HttpPost]
     public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,Phone,Url, ProfileBio,ProfilePhoto,ProfilePhotoFile")] Account account)
-
     {
         var user = await _context.Accounts.FindAsync(id);
         if (user is null)
@@ -111,11 +113,7 @@ public class HomeController : Controller
         {
             var filePath = Path.Combine(_hostEnvironment.WebRootPath, "img");
             if (!Directory.Exists(filePath))
-            {
                 Directory.CreateDirectory(filePath);
-            }
-
-
             if (account.ProfilePhotoFile != null)
             {
                 var fullFileName = Path.Combine(filePath, account.ProfilePhotoFile.FileName);
@@ -179,7 +177,6 @@ public class HomeController : Controller
     }
 */
 
-
     [AllowAnonymous]
     public IActionResult Privacy()
     {
@@ -192,10 +189,9 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+    
     public PostViewModel GeneratePostViewModel(Post post)
-
     {
-        
         var account = post.Poster;
         var like = _context.Likes.FirstOrDefault(l => l.Account.Id == account.Id && l.Post.PostId == post.PostId);
         var postViewModel = new PostViewModel
@@ -212,7 +208,7 @@ public class HomeController : Controller
             Email = account.Email,
             Images = post.Images,
             PDFs = post.PDFs,
-            Comments = CreateCommentViews(post.Comments),
+            Comments = SortComments(CreateCommentViews(post.Comments)),
             LikeCount = post.Likes.Count,
             IsLiked = like != null
         };
@@ -222,13 +218,10 @@ public class HomeController : Controller
     {
         var retList = new List<CommentViewModel>();
         if (comments.Count == 0)
-        {
             return retList;
-        }
-
+        
         foreach (var comment in comments)
         {
-
             var acc = _context.Accounts.Where(p => p.Id == comment.AccountId).FirstOrDefaultAsync();
             var cvw = new CommentViewModel()
             {
@@ -236,7 +229,6 @@ public class HomeController : Controller
                 CommentTime = DateTime.Now.Subtract(comment.DateCreated).TotalHours,
                 CommentId = comment.CommentId
             };
-
             cvw.AccountType = acc.Result.AccountType;
             cvw.FirstName = acc.Result.FirstName;
             cvw.LastName = acc.Result.LastName;
@@ -244,7 +236,6 @@ public class HomeController : Controller
             cvw.Account = acc.Result;
             retList.Add(cvw);
         }
-
         return retList;
     }
 }
