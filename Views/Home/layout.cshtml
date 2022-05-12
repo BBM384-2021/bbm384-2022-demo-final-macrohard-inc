@@ -116,36 +116,40 @@
                                 </svg>
                             </div>
                         </button>
-
-                                                <div class="chatContainer">
+                    </div>
+                        <div class="chatContainer" style = "position:absolute;top:50px;margin:20px;">
                             <div class="container">
                                 <div class="row">&nbsp;</div>
 
 
                                 <div class="row">
-                                    <div class="col-2">Message</div>
+                                    <div class="col-2">
+                                        <h1>Online Chat</h1>
+                                    </div>
                                     <input type="hidden" id="userInput" value="@mainAccount.FirstName @mainAccount.LastName" />
-                                    <div class="col-4"><input type="text" id="messageInput" /></div>
-                                </div>
-                                <div class="row">&nbsp;</div>
-                                <div class="row">
+                                    <div style = "display:grid;grid-template-columns:90% 10%">
+                                    <div class="col-4">
+                                        <input type="text" id="messageInput" placeholder = "Type Message here" 
+                                        style = "border:none;border-radius:10px;height:40px; padding:15px" />
+                                    </div>
+                                    <div class="row">
                                     <div class="col-6">
-                                        <input type="button" id="sendButton" value="Send Message" />
+                                        <input type="button" id="sendButton" value="Send" 
+                                        style = "background-color:#240046;text-align:center;font-weight:bold;border:none;border-radius:10px;height:40px;color:white;padding:5px" />
+                                    </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <hr />
-                                </div>
-                            </div>
+                            
                             <div class="row">
                                 <div class="col-6">
-                                    <ul id="messagesList"></ul>
+                                    <div id="messagesList">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
             <div class="leftSideContainer" style = "display:@ViewBag.left " >
