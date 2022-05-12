@@ -147,28 +147,15 @@
                                     <div style = "width:3em;height:3em;">
                                         <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
                                     </div>
-                                    <div>
-                                        <p style = "font-weight:bold;color:#240046">@item.FirstName @item.LastName</p>
-                                        <p style = "font-weight:100;color:#995cd3;font-size:13px;">@item.AccountType</p>
-                                        <div style = "display:inline-grid;grid-template-columns:auto auto;column-gap:5px">
-                                                @if(item.PostTime >= 24)
-                                                                        {
-                                                                            var i =(int) item.PostTime / 24;
-                                                                            var j = (int) item.PostTime % 24;
-                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@i day @j hours ago</p>
-                                                                        }
-                                                                        @if(item.PostTime <= 24 && item.PostTime >= 1)
-                                                                        {
-                                                                            var s = (int)item.PostTime;
-                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@s hours ago</p>
-                                                                        }
-                                                                        @if (item.PostTime < 1)
-                                                                        {
-                                                                            var x = Convert.ToInt32(item.PostTime * 60);
-                                                                            <p style = "font-weight:100;color:#995cd3;font-size:13px;">@x minutes ago</p>
-                                                                        }
-                                
-                                            <p style = "font-weight:bold;color:#240046;font-size:13px;background-color:#8000ff17;width:fit-content;padding:0 20px 0 20px;border-radius:10px">@item.PostType</p>
+                                    
+                                        <div >
+                                            
+                                            <div style="margin-top:0.5em">
+                                                <input type="hidden" id="redirect" value="/Post/Feed" name="redirect"/>
+                                                <textarea name="commentContent" placeholder="Comment Here" id="myCommentArea" style = "border:1px solid #2400463d;border-radius:10px"></textarea>
+                                                <input type="hidden" id="postId" value="@item.PostId" name="postId"/>
+                                            </div>
+                                            
                                         </div>
                                         <input type="submit" value="Comment" class="btn btn-primary" style="margin-top:0.5em;background-color:#240046"/>
                                     
@@ -264,7 +251,7 @@
                         @if (User.Identity.Name == @item.Email)
                         {
 
-                            <a asp-action="EditPost" asp-controller="Post" asp-route-id="@item.PostId">
+                            <a asp-action="EditPost" asp-controller="Post" asp-route-id="@item.PostId" style = "font-weight:bold;text-decoration:none ; color:black" >
                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  width="13px" height="13px"
 	                                 viewBox="0 0 217.855 217.855" style="enable-background:new 0 0 217.855 217.855;" xml:space="preserve">
                                 <path d="M215.658,53.55L164.305,2.196C162.899,0.79,160.991,0,159.002,0c-1.989,0-3.897,0.79-5.303,2.196L3.809,152.086

@@ -236,7 +236,11 @@ public class PostController : Controller
         if (id is null)
             return NotFound();
         //var post = await _context.Post.FindAsync(id).Include(p => p.Images).Include(p => p.PDFs);
-        var post = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostId == id).FirstOrDefaultAsync();
+        var post = await _context.Post.Include(p => p.Images)
+            .Include(p => p.PDFs)
+            .Where(p => p.PostId == id)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync();
         if (post is null)
             return NotFound();
         return View(post);
