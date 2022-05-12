@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static LinkedHUCENGv2.Utils.UserUtils;
 
 namespace LinkedHUCENGv2.Controllers;
@@ -45,7 +47,7 @@ public class ApplicationController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("ApplicationId,ApplicationText,ApplicationDate,Post, ResumeFiles, CertificateFiles")] Application application,int postId)
+    public async Task<IActionResult> Create(string applicationText, IFormFile[] resumeFiles,int postId)
     {
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
@@ -54,25 +56,7 @@ public class ApplicationController : Controller
         var filePath = Path.Combine(_hostEnvironment.WebRootPath, "pdf");
         if (!Directory.Exists(filePath))
             Directory.CreateDirectory(filePath);
-        if (application.ResumeFiles != null)
-        {
-            foreach (var item in application.ResumeFiles)
-            {
 
-                var fullFileName = Path.Combine(filePath, item.FileName);
-                await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
-                {
-                    await item.CopyToAsync(fileStream);
-                }
-                application.Resumes.Add(new Resume { Name = item.FileName, Application = application });
-            }
-
-        }
-        application.Post = await _context.Post.Where(p => p.PostId == postId).Include(p => p.Poster).FirstOrDefaultAsync();
-        application.ApplicationDate = DateTime.Now;
-        application.Applicant = currAcc;
-        _context.Add(application);
-        await _context.SaveChangesAsync();
         var userProfileModel = GenerateUserProfileModel(currAcc, _context);
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#CBCBCB";
@@ -82,9 +66,36 @@ public class ApplicationController : Controller
         ViewBag.colorBG3 = "none";
         ViewBag.left = "block";
         ViewBag.leftInside = "block";
+        ViewBag.err = "";
         ViewBag.accountForViewBag = userProfileModel;
         ViewBag.postId = postId;
+        var application = new Application
+        {
+            ApplicationText = applicationText,
+            Applicant = currAcc,
+            Post = await _context.Post.Where(p => p.PostId == postId).Include(p => p.Poster).FirstOrDefaultAsync(),
+            ApplicationDate = DateTime.Now,
+            ResumeFiles = resumeFiles
+        };
+        if (resumeFiles.Length == 0)
+        {
+            ViewBag.err = "resume";
+            return View(application);
+        }
+
+        foreach (var item in application.ResumeFiles)
+        {
+            var fullFileName = Path.Combine(filePath, item.FileName);
+            await using (var fileStream = new FileStream(fullFileName, FileMode.Create))
+            {
+                await item.CopyToAsync(fileStream);
+            }
+            application.Resumes.Add(new Resume { Name = item.FileName, Application = application });
+        }
+
         SendApplicationMail(application, application.Post.Poster);
+        _context.Add(application);
+        await _context.SaveChangesAsync();
         return View(application);
     }
 

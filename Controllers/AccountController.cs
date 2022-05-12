@@ -31,43 +31,40 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid) return View(model);
+        var user = new Account
         {
-            var user = new Account
-            {
-                UserName = model.Email,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                AccountType = model.AccountType,
-                Followers = new List<Follow>(),
-                Following = new List<Follow>(),
-                Url = "",
-                StudentNumber = "",
-                ProfileBio = "",
-                ProfilePhoto = "studentProfile.png",
-                RegistrationDate = DateTime.Now,
-                Posts = new List<Post>()
-            };
+            UserName = model.Email,
+            Email = model.Email,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            AccountType = model.AccountType,
+            Followers = new List<Follow>(),
+            Following = new List<Follow>(),
+            Url = "",
+            StudentNumber = "",
+            ProfileBio = "",
+            ProfilePhoto = "studentProfile.png",
+            RegistrationDate = DateTime.Now,
+            Posts = new List<Post>()
+        };
 
-            var result = await _userManager.CreateAsync(user, model.Password);
+        var result = await _userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                var notificationController = new NotificationController(_context);
-                notificationController.CreateRegisterNotification(user);
-                return RedirectToAction("Feed", "Post");
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-            }
-
-            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-
+        if (result.Succeeded)
+        {
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            var notificationController = new NotificationController(_context);
+            notificationController.CreateRegisterNotification(user);
+            return RedirectToAction("Feed", "Post");
         }
+
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError("", error.Description);
+        }
+
+        ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
         return View(model);
     }
 

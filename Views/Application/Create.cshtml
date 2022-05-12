@@ -17,6 +17,7 @@
                 <h1>Apply To Post @postId</h1>
             </div>
             <div class="forms" style="box-sizing: border-box;margin: 0;">
+                <p style="background-color: #ccc;color: #000;border: 4px;border-radius: 2px;margin: 10px;margin-bottom: 30px;">@Html.ValidationMessageFor(x => x.ResumeFiles)</p>
                 <div class="settingsModal-container">
                     <input type="hidden" name="Id" value=@mainAccount.Id>
                     <input type="text" placeholder="Firstname*" value="@mainAccount.FirstName" name="FirstName">
@@ -36,8 +37,12 @@
                     <div>
                         <input type="file" id="resume" name="ResumeFiles"/>
                         <input type="hidden" id="resume" name="postId" value = '@postId'/>
-                        
-                        <p style="visibility: hidden" id="resumeError">Please upload your resume</p>
+                        @if (ViewBag.err == "resume")
+                        {
+                            <p id="resumeError">Please upload your resume</p>
+                            <br>
+                            <br>
+                        }
                     </div>
                     <div class="settingsModal-container" style="justify-items: center; align-items: center;">
                         <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" value="Submit" type="submit">
@@ -49,9 +54,3 @@
     </div>
 </div>
 </html>
-<script>
-var myInput = document.getElementById("resume");
-if (!(myInput && myInput.value)) {
-  document.getElementById("resumeError").style.visibility = "block";
-}
-</script>
