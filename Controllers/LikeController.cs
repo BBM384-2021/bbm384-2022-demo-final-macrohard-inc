@@ -34,7 +34,7 @@ public class LikeController : Controller
     [ActionName("Likes")]
     public async Task<IActionResult> GetLikeList(int postId)
     {
-        var likes = await _context.Likes.Where(l => l.Post.PostId == 13).Include(l => l.Account).ToListAsync();
+        var likes = await _context.Likes.Where(l => l.Post.PostId == postId).Include(l => l.Account).ToListAsync();
         var accounts = likes.Select(like => like.Account).ToList(); 
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
             .FirstOrDefaultAsync();
