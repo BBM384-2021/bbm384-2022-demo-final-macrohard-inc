@@ -207,9 +207,7 @@
                                                     @if (User.Identity.Name == @commentItem.Email)
                                                     {
                                                         <div style = "display:grid;grid-template-columns:2fr 1fr 1fr">
-                                                            <div id="@("commentUpdate" + commentItem.CommentId)">
-
-                                                             </div>
+                                                            
                                                             <button onclick="commentEdit('@commentItem.CommentId')" style ="width:20px;background-color:transparent;border: none;height: 40px;">
                                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13px" height="13px"
                                                          viewBox="0 0 217.855 217.855" style="enable-background:new 0 0 217.855 217.855;" xml:space="preserve">
@@ -240,6 +238,9 @@
 
 
                                                             }
+                                                            <div id="@("commentUpdate" + commentItem.CommentId)">
+                                                            
+                                                                                                                         </div>
                                                         </div>
                                                     }
                                                 </div>
@@ -311,11 +312,33 @@
         commentUpdateButton.style.backgroundColor = "#EBE8F1"
         commentUpdateButton.style.borderRadius = "30px"
         commentUpdateButton.style.border = "none"
+        commentUpdateButton.commentId = id
+        commentUpdateButton.addEventListener("click", submitCommentEdit);
         commentUpdate.appendChild(commentUpdateButton)
-  
     }
 
-    
+    function submitCommentEdit() {
+        var id = this.commentId
+        console.log(id)
+        var textarea = document.getElementById("commentEdit"+id)
+        var content = textarea.value
+        console.log(content)
+        $.post('/Comment/EditComment/',  // url
+           { 'commentId': id, 'commentContent': content }, // data to be submit
+           function(data, status, xhr) {   // success callback function
+                    console.log(data)
+                    if (data === 1) {
+                        var commentUpdate = document.getElementById("commentUpdate" +id)
+                        commentUpdate.innerHTML = ""
+                        var commentContent = document.createElement('p')
+                        commentContent.id = "commentContent"+id
+                        commentContent.style = "padding:5px 10px 5px 10px;"
+                        commentContent.textContent = content;
+                        textarea.parentNode.replaceChild(commentContent, textarea)
+                    }
+                },
+           'json');
+    }
 
     function commentToggle(i){
         var commentSvg = document.getElementById("commentSVG"+i);

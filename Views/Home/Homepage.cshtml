@@ -180,19 +180,20 @@
                                     {
                                 <div class = "postColumnContainer" style = "padding-top:10px;padding-bottom:10px;grid-template-columns: 3em 80% 10%;" >
                                     <div style = "width:3em;height:3em;">
-                                        <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
+                                        <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
                                     </div>
-                                               
-                                                
-                                                <div style="margin-top:0.5em">
-                                                    <input type="hidden" id="postId" value="@item.PostId" name="postId" />
+                                    
+                                        <div >
+                                            
+                                            <div style="margin-top:0.5em">
                                                 <textarea name="commentContent" placeholder="Comment Here" id="myCommentArea" style = "border:1px solid #2400463d;border-radius:10px">
-
+                                                    
                                                 </textarea>
-                                                
+                                                <input type="hidden" id="postId" value="@item.PostId" name="postId" />
                                             </div>
-                                            <input type="submit" value="Comment" class="btn btn-primary" style="margin-top:0.5em;background-color:#240046"/>
-                                        
+                                            
+                                        </div>
+                                        <input type="submit" value="Comment" class="btn btn-primary" style="margin-top:0.5em;background-color:#240046"/>
                                     
                                 </div>
                                 }
@@ -235,10 +236,8 @@
                                                     @if (User.Identity.Name == @commentItem.Email)
                                                     {
                                                         <div style = "display:grid;grid-template-columns:2fr 1fr 1fr">
-                                                            <div id="@("commentUpdate" + commentItem.CommentId)">
-
-                                                             </div>
-                                                            <button onclick="commentEdit('@commentItem.CommentId')" style ="width:20px;background-color:transparent">
+                                                            
+                                                            <button onclick="commentEdit('@commentItem.CommentId')" style ="width:20px;background-color:transparent;border: none;height: 40px;">
                                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13px" height="13px"
                                                          viewBox="0 0 217.855 217.855" style="enable-background:new 0 0 217.855 217.855;" xml:space="preserve">
                                                                     <path d="M215.658,53.55L164.305,2.196C162.899,0.79,160.991,0,159.002,0c-1.989,0-3.897,0.79-5.303,2.196L3.809,152.086
@@ -252,7 +251,7 @@
                                                             {
 
                                                                 <input type="hidden" id="commentId" name="commentId" value="@commentItem.CommentId">
-                                                                <button style ="width:20px;background-color:transparent">
+                                                                <button style ="width:20px;background-color:transparent;border: none;height: 40px;">
                                                                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                      width="13px" height="13px" viewBox="0 0 469.404 469.404" style="enable-background:new 0 0 469.404 469.404;"
                                                      xml:space="preserve">
@@ -268,6 +267,9 @@
 
 
                                                             }
+                                                            <div id="@("commentUpdate" + commentItem.CommentId)">
+                                                            
+                                                                                                                         </div>
                                                         </div>
                                                     }
                                                 </div>
@@ -319,22 +321,49 @@
 </div>
 <script type = "text/javascript">
     function commentEdit(id){
-        var content = document.getElementById("commentContent"+id)
-        console.log(id)
-        console.log(content.textContent)
-        var textbox = document.createElement('textarea')
-        textbox.id = 'commentEdit'+id
-        textbox.textContent = content.textContent
-        content.parentNode.replaceChild(textbox, content)
-        var commentUpdate = document.getElementById("commentUpdate" +id)
-        var commentUpdateButton = document.createElement('button')
-        commentUpdateButton.textContent = "Update"
-        commentUpdateButton.style.width = "50px"
-        commentUpdate.appendChild(commentUpdateButton)
-  
-    }
-
-    const myText = document.getElementById("myCommentArea" );
+            var content = document.getElementById("commentContent"+id)
+            console.log(id)
+            console.log(content.textContent)
+            var textbox = document.createElement('textarea')
+            textbox.id = 'commentEdit'+id
+            textbox.textContent = content.textContent
+            content.parentNode.replaceChild(textbox, content)
+            var commentUpdate = document.getElementById("commentUpdate" +id)
+            var commentUpdateButton = document.createElement('button')
+            commentUpdateButton.textContent = "Update"
+            commentUpdateButton.style.width = "50px"
+            commentUpdateButton.style.height = "40px"
+            commentUpdateButton.style.fontWeight = "bold"
+            commentUpdateButton.style.backgroundColor = "#EBE8F1"
+            commentUpdateButton.style.borderRadius = "30px"
+            commentUpdateButton.style.border = "none"
+            commentUpdateButton.commentId = id
+            commentUpdateButton.addEventListener("click", submitCommentEdit);
+            commentUpdate.appendChild(commentUpdateButton)
+        }
+    
+        function submitCommentEdit() {
+            var id = this.commentId
+            console.log(id)
+            var textarea = document.getElementById("commentEdit"+id)
+            var content = textarea.value
+            console.log(content)
+            $.post('/Comment/EditComment/',  // url
+               { 'commentId': id, 'commentContent': content }, // data to be submit
+               function(data, status, xhr) {   // success callback function
+                        console.log(data)
+                        if (data === 1) {
+                            var commentUpdate = document.getElementById("commentUpdate" +id)
+                            commentUpdate.innerHTML = ""
+                            var commentContent = document.createElement('p')
+                            commentContent.id = "commentContent"+id
+                            commentContent.style = "padding:5px 10px 5px 10px;"
+                            commentContent.textContent = content;
+                            textarea.parentNode.replaceChild(commentContent, textarea)
+                        }
+                    },
+               'json');
+        }
         
     myText.addEventListener("input",function(){
             console.log(this.scrollHeight);

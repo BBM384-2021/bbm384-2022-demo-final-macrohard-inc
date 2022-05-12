@@ -52,14 +52,14 @@ public class CommentController : Controller
     {
         var currAcc = await _context.Accounts.FirstOrDefaultAsync(m => m.Email == User.Identity.Name);
         if (currAcc is null)
-            return Json("currAcc is null");
+            return Json(0);
         var comment = await _context.Comments.FirstOrDefaultAsync(p => p.CommentId == commentId);
         if (comment is null)
-            return Json("comment is null");
+            return Json(0);
         comment.CommentContent = commentContent;
         _context.Comments.Update(comment);
         await _context.SaveChangesAsync();
-        return Redirect("/Post/Feed");
+        return Json(1);
 
     }
 
