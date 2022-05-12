@@ -178,7 +178,7 @@
                             <div style = "height:fit-content;width:100%">
                                 @using (Html.BeginForm("CreateComment", "Comment", FormMethod.Post, new {enctype = "multipart/form-data"}))
                                     {
-                                <div class = "postColumnContainer" style = "padding-top:10px;padding-bottom:10px;grid-template-columns: 3em 80% 10%;" >
+                                <div class = "postColumnContainer" style = "padding-top:10px;padding-bottom:10px;grid-template-columns: 3em 80% 10%; padding-bottom:10px;" >
                                     <div style = "width:3em;height:3em;">
                                         <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
                                     </div>
@@ -330,12 +330,13 @@
             var commentUpdate = document.getElementById("commentUpdate" +id)
             var commentUpdateButton = document.createElement('button')
             commentUpdateButton.textContent = "Update"
-            commentUpdateButton.style.width = "50px"
+            commentUpdateButton.style.width = "70px"
             commentUpdateButton.style.height = "40px"
             commentUpdateButton.style.fontWeight = "bold"
             commentUpdateButton.style.backgroundColor = "#EBE8F1"
             commentUpdateButton.style.borderRadius = "30px"
             commentUpdateButton.style.border = "none"
+            commentUpdateButton.style.marginLeft = "10px"
             commentUpdateButton.commentId = id
             commentUpdateButton.addEventListener("click", submitCommentEdit);
             commentUpdate.appendChild(commentUpdateButton)
