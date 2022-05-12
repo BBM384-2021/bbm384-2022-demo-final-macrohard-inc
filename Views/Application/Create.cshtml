@@ -37,12 +37,8 @@
                     <div>
                         <input type="file" id="resume" name="ResumeFiles"/>
                         <input type="hidden" id="resume" name="postId" value = '@postId'/>
-                        @if (ViewBag.err == "resume")
-                        {
-                            <p id="resumeError">Please upload your resume</p>
-                            <br>
-                            <br>
-                        }
+                        <input type="file" id="certificate" name="CertificateFiles"/>
+                        <p>@ViewBag.ResumeError</p>
                     </div>
                     <div class="settingsModal-container" style="justify-items: center; align-items: center;">
                         <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white;" value="Submit" type="submit">
