@@ -20,4 +20,3 @@ public class PostUtils
         return retList;
     }
 }
-
