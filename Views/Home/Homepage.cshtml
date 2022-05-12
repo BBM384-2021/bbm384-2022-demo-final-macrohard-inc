@@ -77,12 +77,12 @@
                             </div>
 
                         </div>
-                            @if(item.Images.Count == 1)
+                           @if(item.Images.Count == 1)
                             {
                                 @foreach(var image in item.Images)
                                 {
-                                    <div style="background-image: url('/img/@image.Name');background-repeat: no-repeat;width:100%;height:height:fit-content;background-size: 100% auto;background-position: center center;" >
-                                        <img src="~/img/@image.Name" style="height:auto;width:100%;opacity:0; ">
+                                    <div style="background-image: url('/img/usercontent/@image.Name');background-repeat: no-repeat;width:100%;height:height:fit-content;background-size: 100% auto;background-position: center center;" >
+                                        <img src="~/img/usercontent/@image.Name" style="height:auto;width:100%;opacity:0; ">
                                     </div>
                                     
                                 }
@@ -93,8 +93,8 @@
                                 <div style = "display:inline-grid;grid-template-columns:1fr 1fr;width:100%;height:fit-content;">
                                 @foreach(var image in item.Images)
                                 {
-                                    <div style="background-image: url('/img/@image.Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
-                                        <img src="~/img/@image.Name" style="height:auto;width:100%;opacity:0; ">
+                                    <div style="background-image: url('/img/usercontent/@image.Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                        <img src="~/img/usercontent/@image.Name" style="height:auto;width:100%;opacity:0; ">
                                     </div>
                                     
                                 }
@@ -107,15 +107,15 @@
                                 
                                 <div style = "display:inline-grid;grid-template-columns:1.5fr 1fr;width:100%;height:fit-content;">
                                
-                                    <div style="background-image: url('/img/@item.Images[0].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
-                                        <img src="~/img/@item.Images[0].Name" style="height:500px;width:100%;opacity:0; ">
+                                    <div style="background-image: url('/img/usercontent/@item.Images[0].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                        <img src="~/img/usercontent/@item.Images[0].Name" style="height:500px;width:100%;opacity:0; ">
                                     </div>
                                     <div style = "width:100%;height:500px;">
-                                        <div style="background-image: url('/img/@item.Images[1].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
-                                            <img src="~/img/@item.Images[1].Name" style="height:250px;width:100%;opacity:0; ">
+                                        <div style="background-image: url('/img/usercontent/@item.Images[1].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                            <img src="~/img/usercontent/@item.Images[1].Name" style="height:250px;width:100%;opacity:0; ">
                                         </div>
-                                        <div style="background-image: url('/img/@item.Images[2].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
-                                            <img src="~/img/@item.Images[2].Name" style="height:250px;width:100%;opacity:0; ">
+                                        <div style="background-image: url('/img/usercontent/@item.Images[2].Name');background-position: center center;background-repeat: no-repeat;width:100%;height:fit-content;background-size: 100% auto;" >
+                                            <img src="~/img/usercontent/@item.Images[2].Name" style="height:250px;width:100%;opacity:0; ">
                                         </div>
                                     </div>
 
@@ -123,7 +123,6 @@
                                 
                                 </div>
                             }
-
                             @foreach(var pdf in item.PDFs)
                             {
                                <a href=@Url.Content("~/pdf/"+ @pdf.Name)>Link </a>
