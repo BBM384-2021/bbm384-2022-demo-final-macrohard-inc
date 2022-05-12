@@ -115,6 +115,34 @@
                                 </svg>
                             </div>
                         </button>
+                        
+                        <div class="chatContainer">
+                            <div class="container">
+                                <div class="row">&nbsp;</div>
+                                
+                                <div class="row">
+                                    <div class="col-2">Message</div>
+                                    <input type="hidden" id="userInput" value="@mainAccount.FirstName @mainAccount.LastName" />
+                                    <div class="col-4"><input type="text" id="messageInput" /></div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="button" id="sendButton" value="Send Message" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul id="messagesList"></ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,5 +236,7 @@
     </body>
 <script src="~/js/userProfile.js" type="text/javascript"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/signalr/signalr.js"></script>
+<script src="~/js/chat.js"></script>
 
 </html>
