@@ -96,6 +96,7 @@ public class ProfileController : Controller
     public PostViewModel GeneratePostViewModel(Post post)
     {
         var account = post.Poster;
+        var like = _context.Likes.FirstOrDefault(l => l.Account.Id == account.Id && l.Post.PostId == post.PostId);
         var postViewModel = new PostViewModel
         {
             PosterAccount = account,
@@ -111,7 +112,8 @@ public class ProfileController : Controller
             Images = post.Images,
             PDFs = post.PDFs,
             Comments = CreateCommentViews(post.Comments),
-            LikeCount = post.Likes.Count
+            LikeCount = post.Likes.Count,
+            IsLiked = like != null
         };
         return postViewModel;
     }
