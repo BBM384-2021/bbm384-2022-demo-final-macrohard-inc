@@ -116,6 +116,7 @@ public class PostController : Controller
     public async Task<IActionResult> Feed()
     {
         var likeController = new LikeController(_context);
+        var followController = new FollowController(_context);
         var allPosts = new List<PostViewModel>();
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name).FirstOrDefaultAsync();
         var currPosts = await _context.Post.Where(p => p.Poster.Id == currAcc.Id)
@@ -145,8 +146,8 @@ public class PostController : Controller
                 .AsSplitQuery()
                 .ToListAsync();;
         allPosts.AddRange(from announcement in announcements 
-            let accViewModel = GeneratePostViewModel(announcement) 
-            where announcement.Poster != currAcc 
+            let accViewModel = GeneratePostViewModel(announcement)
+            where !(announcement.Poster == currAcc || followController.IsUserFollowed(currAcc?.Id, announcement.Poster.Id)) 
             select accViewModel);
 
         foreach (var post in allPosts)
