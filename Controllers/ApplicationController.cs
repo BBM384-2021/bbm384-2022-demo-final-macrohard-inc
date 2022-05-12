@@ -1,14 +1,12 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models;
-using static LinkedHUCENGv2.Utils.PostUtils;
 using static LinkedHUCENGv2.Utils.UserUtils;
 
 namespace LinkedHUCENGv2.Controllers;
@@ -70,7 +68,7 @@ public class ApplicationController : Controller
             }
 
         }
-        application.Post = await _context.Post.Where(p => p.PostId == postId).FirstOrDefaultAsync();
+        application.Post = await _context.Post.Where(p => p.PostId == postId).Include(p => p.Poster).FirstOrDefaultAsync();
         application.ApplicationDate = DateTime.Now;
         application.Applicant = currAcc;
         _context.Add(application);
@@ -86,6 +84,47 @@ public class ApplicationController : Controller
         ViewBag.leftInside = "block";
         ViewBag.accountForViewBag = userProfileModel;
         ViewBag.postId = postId;
+        SendApplicationMail(application, application.Post.Poster);
         return View(application);
+    }
+
+    private void SendApplicationMail(Application application, Account poster)
+    {
+        if (application.Applicant is null)
+            return;
+        var toMail = poster.Email;
+        const string fromMail = "linkedhuceng.applications@gmail.com";
+
+        var message = new MailMessage(fromMail, toMail);
+        message.BodyEncoding = Encoding.UTF8;
+        message.Subject = GetFullName(application.Applicant) + " has applied to your post!";
+        message.Body = message.Subject + "\nHere is the application details below.\n" + application.ApplicationText
+                       + "\n" + application.Applicant.Url;
+        foreach (var resume in application.ResumeFiles)
+        {
+            var file = "wwwroot/pdf/" + resume.FileName;
+            var data = new Attachment(file, MediaTypeNames.Application.Octet);
+            var disposition = data.ContentDisposition;
+            disposition.CreationDate = System.IO.File.GetCreationTime(file);
+            disposition.ModificationDate = System.IO.File.GetLastWriteTime(file);
+            disposition.ReadDate = System.IO.File.GetLastAccessTime(file);
+            message.Attachments.Add(data);
+        }
+        var client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
+        var myCred = new NetworkCredential(
+            fromMail,"linkedhuceng");
+        client.EnableSsl = true;  
+        client.UseDefaultCredentials = false;  
+        client.Credentials = myCred;  
+        try   
+        {  
+            client.Send(message);  
+        }   
+  
+        catch (Exception ex)   
+        {  
+            throw ex;  
+        }  
+
     }
 }
