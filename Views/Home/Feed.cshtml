@@ -146,7 +146,7 @@
                             <div style = "height:fit-content;width:100%">
                                 <div class = "postColumnContainer" style = "padding-top:10px;padding-bottom:10px;grid-template-columns: 3em 80% 10%;" >
                                     <div style = "width:3em;height:3em;">
-                                        <img src="~/img/@item.PosterAccount.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
+                                        <img src="~/img/@Model.Item1.ProfilePhoto" style=" height: 100%;width:100%; border-radius:10px;position: relative; ">
                                     </div>
                                     @using (Html.BeginForm("CreateComment", "Comment", FormMethod.Post, new {enctype = "multipart/form-data"}))
                                     {
