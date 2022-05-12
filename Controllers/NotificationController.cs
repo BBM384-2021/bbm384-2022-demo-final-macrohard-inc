@@ -40,7 +40,7 @@ public class NotificationController : Controller
     public void CreateLikeNotification(Account accountWhoLiked, Post likedPost)
     {
         var notification = CreateNotification("like", GetFullName(accountWhoLiked) + " liked your post!");
-        likedPost.Poster?.Notifications.Add(notification);
+        likedPost.Poster.Notifications.Add(notification);
         _context.SaveChanges();
     }
 
@@ -48,7 +48,7 @@ public class NotificationController : Controller
     {
         var notification = CreateNotification("comment", GetFullName(commenterAccount)
                                                          + " commented on your post!");
-        commentedPost.Poster?.Notifications.Add(notification);
+        commentedPost.Poster.Notifications.Add(notification);
         _context.SaveChanges();
     }
 

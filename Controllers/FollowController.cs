@@ -107,7 +107,6 @@ public class FollowController : Controller
             .FirstOrDefaultAsync();
         if (currAcc is null)
             return RedirectToAction("Login", "Account");
-        var followControl = new FollowController(_context);
         var userProfileModel = GenerateUserProfileModel(currAcc, _context);
 
         var followers = await _context.Follows.Where(a => a.Account2Id == userId).ToListAsync();

@@ -283,7 +283,7 @@
                     <div style = "display:inline-grid;grid-template-columns:auto auto">
                         @if (User.Identity.Name == @item.Email)
                         {
-                            <a>
+                            <a asp-action="EditPost" asp-controller="Post" asp-route-id="@item.PostId" style = "font-weight:bold;text-decoration:none ; color:black" >
                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  width="13px" height="13px"
 	                                 viewBox="0 0 217.855 217.855" style="enable-background:new 0 0 217.855 217.855;" xml:space="preserve">
                                 <path d="M215.658,53.55L164.305,2.196C162.899,0.79,160.991,0,159.002,0c-1.989,0-3.897,0.79-5.303,2.196L3.809,152.086

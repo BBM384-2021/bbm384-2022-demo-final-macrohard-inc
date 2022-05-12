@@ -55,7 +55,10 @@ public class LikeController : Controller
     public async Task<IActionResult> LikePost(int postId)
     {
         Console.WriteLine(postId);
-        var post = await _context.Post.FirstOrDefaultAsync(p => p.PostId == postId);
+        var post = await _context.Post.Include(p => p.Likes)
+            .Include(p => p.Poster)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync(p => p.PostId == postId);
         var currUser = await _context.Accounts.FirstOrDefaultAsync(m => m.Email == User.Identity.Name);
         if (post is null)
             return Json(-1);

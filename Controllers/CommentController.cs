@@ -19,8 +19,12 @@ public class CommentController : Controller
     public async Task<IActionResult> CreateComment(string redirect, int postId, string commentContent)
     {
         var currAcc = await _context.Accounts.Include(a => a.Comments)
+            .Include(a => a.Notifications)
+            .AsSplitQuery()
             .FirstOrDefaultAsync(m => m.Email == User.Identity.Name);
         var post = await _context.Post.Include(p => p.Comments)
+            .Include(p => p.Poster)
+            .AsSplitQuery()
             .FirstOrDefaultAsync(p => p.PostId == postId);
         if (currAcc is null)
             return Json("currAcc is null");
