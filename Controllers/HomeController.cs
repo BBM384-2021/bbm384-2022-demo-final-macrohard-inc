@@ -96,7 +96,7 @@ public class HomeController : Controller
         ViewBag.left = "block";
         ViewBag.leftInside = "block";
         ViewBag.accountForViewBag = userProfileModel;
-        return View("~/Views/Home/Notifications.cshtml", currAcc.Notifications);
+        return View("~/Views/Home/Notifications.cshtml", NotificationController.SortNotifications(currAcc.Notifications));
     }
 
     [HttpPost]

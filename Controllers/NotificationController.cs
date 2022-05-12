@@ -14,6 +14,19 @@ public class NotificationController : Controller
         _context = context;
     }
 
+    public async Task<IActionResult> LastNotifications()
+    {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .Include(m => m.Notifications)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return Json(-1);
+        var notifications = SortNotifications(currAcc.Notifications);
+        return Json(notifications.Count > 3 ? notifications.GetRange(0, 3) : notifications);
+
+
+    }
+    
     public void CreateRegisterNotification(Account account)
     {
         var notification = CreateNotification("register",
@@ -46,6 +59,12 @@ public class NotificationController : Controller
         _context.SaveChanges();
     }
 
+    public static List<Notification> SortNotifications(List<Notification> notifications)
+    {
+        var sort = notifications.OrderBy(n => DateTime.Now.Subtract(n.NotificationTime).TotalHours).ToList();
+        return sort;
+
+    }
     private static Notification CreateNotification(string notificationType, string notificationContent)
     {
         return new Notification

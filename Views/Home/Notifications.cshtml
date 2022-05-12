@@ -11,7 +11,7 @@
             Notifications
         </h1>
         <div class="tablefollow" style = "border-collapse:collapse;width:100%;height:fit-content;">
-            <div style = "background-color:#F4F1F7;height:50px;display:inline-grid;grid-template-columns:50px 100px auto 100px;width:100%;padding:5px;border-radius:20px;align-items:center">
+            <div style = "background-color:#F4F1F7;height:50px;display:inline-grid;grid-template-columns:0% 50% auto auto;width:100%;padding:5px;border-radius:20px;align-items:center">
                 <p >
 
                 </p>
@@ -22,16 +22,17 @@
                     Date
                 </p>
             </div>
-            
-            <div style = "text-align:center;display:inline-grid;grid-template-columns:50px 100px auto 100px;width:100%;height:fit-content;padding:5px;align-items:center">
-                 @foreach (var notification in Model)
-                 {
-                     @notification.NotificationContent;<br/>
-                 }
+                @foreach (var notification in Model)
+                {
+                    <div style = "text-align:left;display:inline-grid;grid-template-columns:50% 50% auto auto;width:100%;height:fit-content;padding:5px;align-items:center">
+                        <div class="grid-item">@notification.NotificationContent</div>
+                        <div class="grid-item">@notification.NotificationTime</div>
+                    </div>
+                        }
             </div>
             
+            
         </div>
-    </div>
     </div>
     </div>
 </html>

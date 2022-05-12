@@ -67,11 +67,13 @@
     <div class="modal" id = "modal2" style="z-index:5;margin: 0">
         <div class="modal-layout" style = "right:130px;">
             <div class=grid-container style="color: aliceblue;text-align: left;">
-                <div style = "height:fit-content;width:100px;padding:20px;">
+                <div style = "height:fit-content;width: 100%;padding:20px;">
                     <a asp-controller="Home" asp-action="Notifications" style = "color:white;text-decoration:none;font-size:20px;font-weight:bold;">
-                        Notificaitons
+                        Notifications
                     </a>
-                    <div style = "height:100%"></div>
+                    <div style="height:100%; width:100%; margin-top: 10px" id="notificationList">
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -244,5 +246,17 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/signalr/signalr.js"></script>
 <script src="~/js/chat.js"></script>
-
+<script>
+    $(function(){
+       $.get("/Notification/LastNotifications", function(data, status){
+           var notificationList = document.getElementById("notificationList");
+           var innerHTML = "<ul style=\"list-style-type:none;\">"
+           for (i in data) {
+               if (data[i])
+                   innerHTML += "<li>"+data[i].notificationContent+"</li>"
+           }
+           notificationList.innerHTML = innerHTML+"</ul>"
+       });
+    })
+</script>
 </html>

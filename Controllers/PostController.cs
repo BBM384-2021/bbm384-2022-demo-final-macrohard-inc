@@ -292,7 +292,11 @@ public class PostController : Controller
         ViewBag.accountForViewBag = userProfileModel;
         if (!ModelState.IsValid) return View(post);
 
-        var postAcc = await _context.Post.Include(p => p.Images).Include(p => p.PDFs).Where(p => p.PostId == id).FirstOrDefaultAsync();
+        var postAcc = await _context.Post.Include(p => p.Images)
+            .Include(p => p.PDFs)
+            .Where(p => p.PostId == id)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync();
         if (postAcc is null)
             return NotFound();
         postAcc.PostContent = post.PostContent;
