@@ -39,7 +39,7 @@ public class NotificationController : Controller
 
     public void CreateLikeNotification(Account accountWhoLiked, Post likedPost)
     {
-        var notification = CreateNotification("like", GetFullName(accountWhoLiked) + " has liked your post!");
+        var notification = CreateNotification("like", GetFullName(accountWhoLiked) + " liked your post!");
         likedPost.Poster?.Notifications.Add(notification);
         _context.SaveChanges();
     }
@@ -47,14 +47,14 @@ public class NotificationController : Controller
     public void CreateCommentNotification(Account commenterAccount, Post commentedPost)
     {
         var notification = CreateNotification("comment", GetFullName(commenterAccount)
-                                                         + " has commented your post:");
+                                                         + " commented on your post!");
         commentedPost.Poster?.Notifications.Add(notification);
         _context.SaveChanges();
     }
 
     public void CreateFollowNotification(Account followerAccount, Account followingAccount)
     {
-        var notification = CreateNotification("follow", GetFullName(followerAccount) + " has started to follow you.");
+        var notification = CreateNotification("follow", GetFullName(followerAccount) + " is following you!");
         followingAccount.Notifications.Add(notification);
         _context.SaveChanges();
     }
