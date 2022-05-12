@@ -330,7 +330,7 @@ public class PostController : Controller
             Images = post.Images,
             PDFs = post.PDFs,
             LikeCount = post.Likes.Count,
-            Comments = CreateCommentViews(post.Comments),
+            Comments = SortComments(CreateCommentViews(post.Comments)),
             IsLiked = _context.Likes.FirstOrDefault(l => l.Account.Id == acc.Id && l.Post.PostId == post.PostId) != null
         }); ;
 
@@ -354,7 +354,7 @@ public class PostController : Controller
             Email = account.Email,
             Images = post.Images,
             PDFs = post.PDFs,
-            Comments = CreateCommentViews(post.Comments),
+            Comments = SortComments(CreateCommentViews(post.Comments)),
             LikeCount = post.Likes.Count,
             IsLiked = like != null
         };
