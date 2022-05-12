@@ -88,7 +88,7 @@ public class ProfileController : Controller
         }
 
         var posts = await GetPostsOfUser(account, _context);
-        var postModels = posts.Select(GeneratePostViewModel).ToList();
+        var postModels = SortPosts(posts.Select(GeneratePostViewModel).ToList());
         var tuple = new Tuple<UserProfileModel, List<PostViewModel>>(viewedUser, postModels);
         return View(tuple);
     }

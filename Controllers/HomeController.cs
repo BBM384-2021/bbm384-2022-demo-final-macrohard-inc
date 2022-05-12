@@ -45,7 +45,7 @@ public class HomeController : Controller
         var followControl = new FollowController(_context);
         var userProfileModel = GenerateUserProfileModel(currAcc, _context);
         var posts = await GetPostsOfUser(currAcc, _context);
-        var postModels = posts.Select(GeneratePostViewModel).ToList();
+        var postModels = SortPosts(posts.Select(GeneratePostViewModel).ToList());
         ViewBag.color1 = "#CBCBCB";
         ViewBag.color2 = "#8000FF";
         ViewBag.color3 = "#CBCBCB";

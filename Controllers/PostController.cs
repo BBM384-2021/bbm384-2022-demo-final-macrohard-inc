@@ -189,12 +189,6 @@ public class PostController : Controller
         return _context.Post.Any(e => e.PostId == id);
     }
 
-    private static List<PostViewModel> SortPosts(IEnumerable<PostViewModel> posts)
-    {
-        var sort = posts.OrderBy(p => p.PostTime).ToList();
-        return sort;
-    }
-
     private async Task<UserProfileModel> Profile()
     {
         var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)

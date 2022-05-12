@@ -19,4 +19,10 @@ public class PostUtils
 
         return retList;
     }
+    
+    public static List<PostViewModel> SortPosts(IEnumerable<PostViewModel> posts)
+    {
+        var sort = posts.OrderBy(p => p.PostTime).ToList();
+        return sort;
+    }
 }
