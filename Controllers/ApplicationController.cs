@@ -96,7 +96,7 @@ public class ApplicationController : Controller
         SendApplicationMail(application, application.Post.Poster);
         _context.Add(application);
         await _context.SaveChangesAsync();
-        return View(application);
+        return RedirectToAction("Feed", "Post");
     }
 
     private void SendApplicationMail(Application application, Account poster)
