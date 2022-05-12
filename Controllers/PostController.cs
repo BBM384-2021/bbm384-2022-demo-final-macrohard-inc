@@ -137,17 +137,17 @@ public class PostController : Controller
         }
         // get announcements
         var users = await _context.Accounts.Where(p => p.Email != User.Identity.Name).ToListAsync();
-        foreach (var user in users)
-        {
-            var announcements = await _context.Post.Where(p => p.PostType == "Announcement")
+        var announcements = await _context.Post.Where(p => p.PostType == "Announcement")
                 .Include(p=>p.Comments)
                 .Include(p=>p.Likes)
                 .Include(p=>p.Images)
                 .Include(p=>p.PDFs)
                 .AsSplitQuery()
                 .ToListAsync();;
-            allPosts.AddRange(CreatePostViews(announcements, user));
-        }
+        allPosts.AddRange(from announcement in announcements 
+            let accViewModel = GeneratePostViewModel(announcement) 
+            where announcement.Poster != currAcc 
+            select accViewModel);
 
         foreach (var post in allPosts)
         {
