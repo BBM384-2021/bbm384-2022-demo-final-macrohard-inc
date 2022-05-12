@@ -1,12 +1,14 @@
 using LinkedHUCENGv2.Models;
 using LinkedHUCENGv2.Data;
 using LinkedHUCENGv2.Models.AdminViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 
 namespace LinkedHUCENGv2.Controllers;
 
+[Authorize]
 public class AdminController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -19,6 +21,13 @@ public class AdminController : Controller
     // GET: Admin
     public async Task<IActionResult> Index(string searchString)
     {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .Include(m => m.Notifications)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Index", "Home");
+        if (!currAcc.IsAdmin)
+            return RedirectToAction("Feed", "Post");
         var accounts = _context.Accounts.Where(a => !a.IsAdmin);
         if (!String.IsNullOrEmpty(searchString))
         {
@@ -50,6 +59,13 @@ public class AdminController : Controller
     // GET: Admin/Details/5
     public async Task<IActionResult> Details(string? id)
     {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .Include(m => m.Notifications)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Index", "Home");
+        if (!currAcc.IsAdmin)
+            return RedirectToAction("Feed", "Post");
         if (id == null)
         {
             return NotFound();
@@ -69,6 +85,13 @@ public class AdminController : Controller
     // GET: Admin/Edit/5
     public async Task<IActionResult> Edit(string? id)
     {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .Include(m => m.Notifications)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Index", "Home");
+        if (!currAcc.IsAdmin)
+            return RedirectToAction("Feed", "Post");
         if (id == null)
         {
             return NotFound();
@@ -90,6 +113,13 @@ public class AdminController : Controller
         [Bind("Url,Phone,ProfilePhoto,AccountId,IsAdmin,FirstName,LastName,AccountType,Password,Email")]
         Account account)
     {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .Include(m => m.Notifications)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Index", "Home");
+        if (!currAcc.IsAdmin)
+            return RedirectToAction("Feed", "Post");
 
         var user = await _context.Accounts.FindAsync(id);
         if (id != user.Id)
@@ -117,6 +147,13 @@ public class AdminController : Controller
     // GET: Admin/Delete/5
     public async Task<IActionResult> Delete(string? id)
     {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .Include(m => m.Notifications)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Index", "Home");
+        if (!currAcc.IsAdmin)
+            return RedirectToAction("Feed", "Post");
         if (id == null)
         {
             return NotFound();
@@ -137,6 +174,13 @@ public class AdminController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(string id)
     {
+        var currAcc = await _context.Accounts.Where(m => m.Email == User.Identity.Name)
+            .Include(m => m.Notifications)
+            .FirstOrDefaultAsync();
+        if (currAcc is null)
+            return RedirectToAction("Index", "Home");
+        if (!currAcc.IsAdmin)
+            return RedirectToAction("Feed", "Post");
         var account = await _context.Accounts.FindAsync(id);
         _context.Accounts.Remove(account);
         await _context.SaveChangesAsync();
