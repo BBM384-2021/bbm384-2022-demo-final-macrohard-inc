@@ -111,20 +111,25 @@
                             <div style="display:flex;justify-content:center">
  
                                 <button style="display:inline-grid;grid-template-columns:auto auto;background-color:transparent;border:none" value="Like" name="Like">
+                                       @{ var textColor = " ";
+                                        }
+
                                     @if (@item.IsLiked)
                                     {
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 816 816" onclick="likeToggle('@item.PostId')">
                                             <path id="@("likeSVG" + item.PostId)" fill="#8000FF" fill-rule="evenodd" stroke="#8000FF" stroke-width="40" d="M 408,223.824 C 476.78,101.333 612.625,102.281 680.12,164.239 C 747.613,226.196 746.755,349.161 677.973,471.652 C 629.783,563.545 506.877,654.916 404.565,715.687 C 303.111,653.493 181.493,560.415 134.591,467.859 C 67.5267,344.42 68.3853,221.453 136.737,160.445 C 205.089,99.4373 340.935,100.385 408,223.824 Z "/>
                                         </svg>
+                                        textColor = "#8000FF";
                                     }
                                     else
                                     {
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 816 816" onclick="likeToggle('@item.PostId')">
                                             <path id="@("likeSVG" + item.PostId)" fill="none" fill-rule="evenodd" stroke="#CBCBCB" stroke-width="40" d="M 408,223.824 C 476.78,101.333 612.625,102.281 680.12,164.239 C 747.613,226.196 746.755,349.161 677.973,471.652 C 629.783,563.545 506.877,654.916 404.565,715.687 C 303.111,653.493 181.493,560.415 134.591,467.859 C 67.5267,344.42 68.3853,221.453 136.737,160.445 C 205.089,99.4373 340.935,100.385 408,223.824 Z "/>
                                         </svg>
+                                        textColor = "#CBCBCB";
                                     }
-                                    <a asp-action="Likes" asp-controller="Like" asp-route-postId=@item.PostId>
-                                        <p class="commentLikeButton" id="@("likeButton" + item.PostId)" style="font-weight:bold;padding:2px 0 0 5px;">@item.LikeCount Likes</p></a>
+                                    <a asp-action="Likes" asp-controller="Like" asp-route-postId=@item.PostId id="likeButton">
+                                        <p class="commentLikeButton" id="@("likeButton" + item.PostId)" style="color: @textColor ;font-weight:bold;padding:2px 0 0 5px;">@item.LikeCount Likes</p></a>
                                 </button>
                             </div>
                             <div  onclick = "commentToggle('@item.PostId')">
