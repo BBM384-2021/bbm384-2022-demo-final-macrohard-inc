@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkedHUCENGv2", "LinkedHUCENGv2.csproj", "{FCB25431-1A40-4EB9-9ADC-1E5C87C2CB7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCB25431-1A40-4EB9-9ADC-1E5C87C2CB7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCB25431-1A40-4EB9-9ADC-1E5C87C2CB7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCB25431-1A40-4EB9-9ADC-1E5C87C2CB7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCB25431-1A40-4EB9-9ADC-1E5C87C2CB7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {543383C9-BBFC-4EC4-8B62-69A434D2A795}
+	EndGlobalSection
+EndGlobal

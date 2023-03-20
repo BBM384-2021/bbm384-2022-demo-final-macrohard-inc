@@ -1,0 +1,55 @@
+﻿@model Application
+@{
+    Layout = "~/Views/Home/layout.cshtml";
+    var mainAccount = ViewBag.accountForViewBag;
+    var postId = ViewBag.postId;
+}
+<!DOCTYPE html>
+<html lan="en" style="height: auto;">
+<head>
+    <link rel="stylesheet" href="~/css/feed.css?v=3.4.1"/>
+</head>
+
+<div style = "display:flex; justify-content:center; width:100%;">
+    <div style = "width:50%;">
+        <div class="settingsModal" style = "margin:50px;padding:30px;border:1px solid #F4F1F7;border-radius:10px;">
+            <div style="text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.3);margin-bottom:15px;padding-bottom:10px;">
+                <h1>Apply To Post @postId</h1>
+            </div>
+            <div class="forms" style="box-sizing: border-box;margin: 0;">
+                <p style="background-color: #ccc;color: #000;border: 4px;border-radius: 2px;margin: 10px;margin-bottom: 30px;">@Html.ValidationMessageFor(x => x.ResumeFiles)</p>
+                <div class="settingsModal-container">
+                    <input type="hidden" name="Id" value=@mainAccount.Id>
+                    <input type="text" placeholder="Firstname*" value="@mainAccount.FirstName" name="FirstName">
+                    <input type="text" placeholder="Lastname*" value="@mainAccount.LastName" name="LastName">
+                </div>
+                <div>
+                    <input type="number" placeholder="Phone Number*" value="@mainAccount.Phone" name="Phone">
+                </div>
+                <div>
+                    <input type="url" name="Url" placeholder="Linkedin Url*" value="@mainAccount.Url">
+                </div>
+                @using (Html.BeginForm("Create", "Application",FormMethod.Post,new { enctype = "multipart/form-data" } ))
+                {
+                    <div>
+                        <input name="ApplicationText" placeholder="Tell us about yourself"/>
+                    </div>
+                    <div>
+                        <input type="file" id="resume" name="ResumeFiles"/>
+                        <input type="hidden" id="resume" name="postId" value = '@postId'/>
+                        @if (@ViewBag.err == "resume")
+                        {
+                            <p>Please upload a resume!</p>
+                        }
+                        
+                    </div>
+                    <div class="settingsModal-container" style="justify-items: center; align-items: center;">
+                        <input style="width: 120px;height: 40px;background-color: #240046;border-radius: 30px;border: none;font-weight: bold;color: white; padding: 0 !important;" value="Submit" type="submit">
+                        <a asp-controller="Post" asp-action="Feed" style="width: 100px;height: 40px;border-radius: 30px;border: none;font-weight: bold;">Cancel</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+</html>
